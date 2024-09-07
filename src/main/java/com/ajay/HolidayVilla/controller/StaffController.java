@@ -1,0 +1,26 @@
+package com.ajay.HolidayVilla.controller;
+
+import com.ajay.HolidayVilla.dto.request.StaffRequest;
+import com.ajay.HolidayVilla.dto.response.StaffResponse;
+import com.ajay.HolidayVilla.service.StaffService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/staff")
+public class StaffController {
+
+    @Autowired
+    StaffService staffService;
+
+    @PostMapping("/register")
+    public ResponseEntity registerStaff(@RequestBody StaffRequest staffRequest){
+        StaffResponse staffResponse = staffService.registerStaff(staffRequest);
+        return new ResponseEntity(staffResponse, HttpStatus.CREATED);
+    }
+}
