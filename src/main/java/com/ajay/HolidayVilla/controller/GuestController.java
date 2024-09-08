@@ -24,4 +24,8 @@ public class GuestController {
         GuestResponse guestResponse = guestService.registerGuest(guestRequest);
         return new ResponseEntity(guestResponse, HttpStatus.CREATED);
     }
+
+    //order breakfast - f&b order
+    //order lunch - f&b order
+
 }

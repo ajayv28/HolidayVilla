@@ -13,6 +13,7 @@ public class RoomTransformer {
                 .farePerDay(roomRequest.getFarePerDay())
                 .roomType(roomRequest.getRoomType())
                 .capacity(roomRequest.getCapacity())
+                .roomNO(roomRequest.getRoomNO())
                 .build();
     }
     public static RoomResponse roomToRoomResponse(Room room){
@@ -21,6 +22,7 @@ public class RoomTransformer {
                 .farePerDay(room.getFarePerDay())
                 .roomType(room.getRoomType())
                 .capacity(room.getCapacity())
+                .roomNO(room.getRoomNO())
                 .build();
     }
 }

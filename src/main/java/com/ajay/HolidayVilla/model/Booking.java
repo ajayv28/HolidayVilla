@@ -22,8 +22,10 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
+    @Column(unique = true, nullable = false)
     String bookingId;
 
+    @Enumerated(EnumType.STRING)
     RoomType roomType;
 
     Date fromDate;
@@ -37,7 +39,10 @@ public class Booking {
 
     double totalFare;
 
+    @Enumerated(EnumType.STRING)
     BookingStatus bookingStatus;
+
+    String couponCode;
 
     @ManyToOne
     @JoinColumn

@@ -1,13 +1,12 @@
 package com.ajay.HolidayVilla.model;
 
-import com.ajay.HolidayVilla.Enum.Gender;
+import com.ajay.HolidayVilla.Enum.Department;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Date;
-import java.util.List;
 
 @Entity
 @Getter
@@ -16,34 +15,26 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Staff {
+public class MaterialRequisition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    @Column(nullable = false, unique = true)
-    String email;
-
-    @Column(nullable = false, unique = true)
-    long phoneNumber;
-
-    String password;
-
-    String name;
-
-    Date dob;
-
-    int age;
+    String requisitionId;
 
     @Enumerated(EnumType.STRING)
-    Gender gender;
+    Department department;
 
-    String role;
+    Date expectingDeliveryDate;
 
     @CreationTimestamp
-    Date joiningDate;
+    Date dateOfRequisition;
 
-    @OneToMany(mappedBy = "staff")
-    List<Maintenance> maintenanceList;
+    double requisitionQuantity;
+
+    @ManyToOne
+    @JoinColumn
+    Material requisitionMaterial;
+
 }

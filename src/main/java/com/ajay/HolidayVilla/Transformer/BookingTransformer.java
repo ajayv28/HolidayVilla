@@ -16,6 +16,7 @@ public class BookingTransformer {
                 .toDate(bookingRequest.getToDate())
                 .breakfastIncluded(bookingRequest.isBreakfastIncluded())
                 .bookingId(String.valueOf(UUID.randomUUID()))
+                .couponCode(bookingRequest.getCouponCode())
                 .build();
     }
 

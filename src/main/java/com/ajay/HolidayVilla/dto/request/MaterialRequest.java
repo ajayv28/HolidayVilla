@@ -1,7 +1,5 @@
 package com.ajay.HolidayVilla.dto.request;
 
-import com.ajay.HolidayVilla.Enum.RoomStatus;
-import com.ajay.HolidayVilla.Enum.RoomType;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -10,13 +8,14 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RoomRequest {
+public class MaterialRequest {
 
-    String roomNO;
+    String materialName;
 
-    RoomType roomType;
+    String supplierName;
 
-    int capacity;
+    String supplierEmail;
 
-    double farePerDay;
+    double price;
+
 }
