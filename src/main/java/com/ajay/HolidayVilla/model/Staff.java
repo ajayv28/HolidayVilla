@@ -46,4 +46,7 @@ public class Staff {
 
     @OneToMany(mappedBy = "staff")
     List<Maintenance> maintenanceList;
+
+    @OneToMany(mappedBy = "staff")
+    List<MaterialRequisition> materialRequisitionList;
 }

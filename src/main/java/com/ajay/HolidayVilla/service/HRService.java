@@ -9,7 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class StaffService {
+public class HRService {
 
+    @Autowired
+    StaffRepository staffRepository;
+
+    public StaffResponse onBoardStaff(StaffRequest staffRequest) {
+        Staff savedStaff = staffRepository.save(StaffTransformer.staffRequestToStaff(staffRequest));
+        return StaffTransformer.staffToStaffResponse(savedStaff);
+    }
 
 }

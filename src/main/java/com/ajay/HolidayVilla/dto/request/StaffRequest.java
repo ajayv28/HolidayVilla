@@ -1,5 +1,6 @@
 package com.ajay.HolidayVilla.dto.request;
 
+import com.ajay.HolidayVilla.Enum.Department;
 import com.ajay.HolidayVilla.Enum.Gender;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
@@ -30,6 +31,6 @@ public class StaffRequest {
 
     Gender gender;
 
-    String role;
+    Department department;
 
 }

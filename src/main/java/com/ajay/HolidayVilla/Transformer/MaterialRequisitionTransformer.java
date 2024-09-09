@@ -1,5 +1,6 @@
 package com.ajay.HolidayVilla.Transformer;
 
+import com.ajay.HolidayVilla.Enum.RequisitionStatus;
 import com.ajay.HolidayVilla.dto.request.MaterialRequisitionRequest;
 import com.ajay.HolidayVilla.dto.response.MaterialRequisitionResponse;
 import com.ajay.HolidayVilla.model.MaterialRequisition;
@@ -15,6 +16,7 @@ public class MaterialRequisitionTransformer {
                 .expectingDeliveryDate(materialRequisitionRequest.getExpectingDeliveryDate())
                 .requisitionQuantity(materialRequisitionRequest.getRequisitionQuantity())
                 .department(materialRequisitionRequest.getDepartment())
+                .requisitionStatus(RequisitionStatus.REQUISITION_RECEIVED)
                 .build();
     }
 
