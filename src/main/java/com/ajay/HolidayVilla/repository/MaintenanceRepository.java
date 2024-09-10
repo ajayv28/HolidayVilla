@@ -11,17 +11,24 @@ import java.util.List;
 @Repository
 public interface MaintenanceRepository extends JpaRepository<Maintenance, Integer> {
 
+    
     public Maintenance findByMaintenanceId(String maintenanceId);
 
-    public List<Maintenance> allVacantRoomsDueForMaintenance();
+    @Query(value="select * from room where room_status in ('OUT_OF_SERVICE','OUT_OF_ORDER','VACANT') and (last_maintenance_done + INTERVAL 30 DAY) > :today", nativeQuery=true)
+    public List<Room> allVacantRoomsDueForMaintenance(Date today);
 
-    public List<Maintenance> allOccupiedRoomDueForMaintenanceButOccupiedForMoreThan30UpcomingDays();
+    
+    //public List<Room> allOccupiedRoomDueForMaintenanceButOccupiedForMoreThan30UpcomingDays(Date today);
 
-    public List<Maintenance> allRoomsWithFollowups();
+    @Query(value="select * from room where id in(select distinct room_id from maintenance where LENGTH(followups) > 0)", nativeQuery=true)
+    public List<Room> allRoomsWithFollowups();
 
+    @Query(value="select * from maintenance where room_id =(select id from room where room_no =:roomNo) and LENGTH(followups) > 0", nativeQuery=true)
     public List<Maintenance> allMaintenanceWithFollowupsByRoomNo(String roomNo);
 
+    @Query(value="select * from maintenance where date_of_maintenance between :fromDate and :toDate", nativeQuery=true)
     public List<Maintenance> allMaintenanceBetweenDates(Date fromDate, Date toDate);
 
+    @Query(value="select * from maintenance where staff_id =(select id from staff where email =:staffEmail) and (date_of_maintenance between :fromDate and :toDate)", nativeQuery=true)
     public List<Maintenance> allMaintenanceByStaffBetweenDates(Date fromDate, Date toDate, String staffEmail);
 }
