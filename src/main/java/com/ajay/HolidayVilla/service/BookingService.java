@@ -33,8 +33,38 @@ public class BookingService {
     @Autowired
     RoomRepository roomRepository;
 
-    public BookingResponse createBooking(BookingRequest bookingRequest, String guestEmail) {
+///check with room entity********************************************************
 
+    public List<RoomResponse> getAllTodayInhouseGuestRooms() {
+        Date currDate = Date.valueOf(LocalDate.now());
+        List<Room> roomList = roomRepository.getAllTodayInhouseGuestRooms(currDate);
+        List<RoomResponse> responseList = new ArrayList<>();
+        for(Room room:roomList)
+            responseList.add(RoomTransformer.roomToRoomResponse(room));
+
+        return responseList;
+        }
+    
+
+    public int getCountOfTodayInhouseBooking() {
+        Date currDate = Date.valueOf(LocalDate.now());
+        int count = roomRepository.getCountOfTodayInhouseBooking(currDate);
+            return count;
+        }
+
+    
+    public List<RoomResponse> getAllRoomByRoomStatus(String roomStatus) {
+        List<Room> roomList = roomRepository.getAllRoomByRoomStatus(roomStatus);
+        List<RoomResponse> responseList = new ArrayList<>();
+        for(Room room:roomList)
+            responseList.add(RoomTransformer.roomToRoomResponse(room));
+
+        return responseList;
+        }
+
+//**************************************************************
+    
+    public BookingResponse createBooking(BookingRequest bookingRequest, String guestEmail) {
 
         Guest currGuest = guestRepository.findByEmail(guestEmail);
         if(currGuest.isCurrentlyActiveBooking()==true)
@@ -142,43 +172,99 @@ public class BookingService {
     }
 
     public BookingResponse getBookingByBookingId(String bookingId) {
+        Booking booking = bookingRepository.findByBookingId(bookingId);
+        return BookingTransformer.bookingToBookingResponse(booking);
     }
 
     public List<BookingResponse> getAllUpcomingArrivalBooking() {
+        List<Booking> bookingList = bookingRepository.getAllUpcomingArrivalBooking();
+        List<BookingResponse> responseList = new ArrayList<>();
+        for(Booking booking:bookingList)
+            responseList.add(BookingTransformer.bookingToBookingResponse(booking));
+
+        return responseList;
     }
 
     public List<BookingResponse> getAllUpcomingArrivalBookingByRoomNo(String roomNo) {
+        List<Booking> bookingList = bookingRepository.getAllUpcomingArrivalBookingByRoomNo(roomNo);
+        List<BookingResponse> responseList = new ArrayList<>();
+        for(Booking booking:bookingList)
+            responseList.add(BookingTransformer.bookingToBookingResponse(booking));
+
+        return responseList;
     }
 
     public List<BookingResponse> getAllUpcomingArrivalBookingByGuestEmail(String guestEmail) {
+        List<Booking> bookingList = bookingRepository.getAllUpcomingArrivalBookingByGuestEmail(guestEmail);
+        List<BookingResponse> responseList = new ArrayList<>();
+        for(Booking booking:bookingList)
+            responseList.add(BookingTransformer.bookingToBookingResponse(booking));
+
+        return responseList;
     }
 
     public List<BookingResponse> getAllBookingBetweenDates(Date fromdate, Date toDate) {
+        List<Booking> bookingList = bookingRepository.getAllBookingBetweenDates(fromdate, toDate);
+        List<BookingResponse> responseList = new ArrayList<>();
+        for(Booking booking:bookingList)
+            responseList.add(BookingTransformer.bookingToBookingResponse(booking));
+
+        return responseList;
     }
 
     public List<BookingResponse> getAllCheckedOutBookingBetweenDates(Date fromDate, Date toDate) {
+        List<Booking> bookingList = bookingRepository.getAllCheckedOutBookingBetweenDates(fromdate, toDate);
+        List<BookingResponse> responseList = new ArrayList<>();
+        for(Booking booking:bookingList)
+            responseList.add(BookingTransformer.bookingToBookingResponse(booking));
+
+        return responseList;
     }
 
     public List<BookingResponse> getAllCheckedOutBookingByGuestEmail(String guestEmail) {
+        List<Booking> bookingList = bookingRepository.getAllCheckedOutBookingByGuestEmail(guestEmail);
+        List<BookingResponse> responseList = new ArrayList<>();
+        for(Booking booking:bookingList)
+            responseList.add(BookingTransformer.bookingToBookingResponse(booking));
+
+        return responseList;
     }
 
     public List<BookingResponse> getAllCancelledBookingBetweenDates(Date fromDate, Date toDate) {
+        List<Booking> bookingList = bookingRepository.getAllCancelledBookingBetweenDates(fromdate, toDate);
+        List<BookingResponse> responseList = new ArrayList<>();
+        for(Booking booking:bookingList)
+            responseList.add(BookingTransformer.bookingToBookingResponse(booking));
+
+        return responseList;
     }
 
     public List<BookingResponse> getAllCancelledBookingByGuestEmail(String guestEmail) {
-    }
-    public List<BookingResponse> getAllTodayInhouseBooking() {
-    }
+        List<Booking> bookingList = bookingRepository.getAllCancelledBookingByGuestEmail(guestEmail);
+        List<BookingResponse> responseList = new ArrayList<>();
+        for(Booking booking:bookingList)
+            responseList.add(BookingTransformer.bookingToBookingResponse(booking));
 
-    public int getCountOfTodayInhouseBooking() {
+        return responseList;
     }
+    
 
-    public List<BookingResponse> getAllRoomByRoomStatus(String string) {
-    }
 
     public List<BookingResponse> getAllUpcomingArrivalStayMoreThanNDays(int n) {
+        List<Booking> bookingList = bookingRepository.getAllUpcomingArrivalStayMoreThanNDays(n);
+        List<BookingResponse> responseList = new ArrayList<>();
+        for(Booking booking:bookingList)
+            responseList.add(BookingTransformer.bookingToBookingResponse(booking));
+
+        return responseList;
     }
 
     public List<BookingResponse> getAllBookingOccupiedOnGivenDate(Date date) {
+        List<Booking> bookingList = bookingRepository.getAllBookingOccupiedOnGivenDate(date);
+        List<BookingResponse> responseList = new ArrayList<>();
+        for(Booking booking:bookingList)
+            responseList.add(BookingTransformer.bookingToBookingResponse(booking));
+
+        return responseList;
     }
 }
