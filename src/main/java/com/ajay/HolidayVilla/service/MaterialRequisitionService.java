@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class MaterialRequisitionService {
 
     public MaterialRequisitionResponse processRequisitionByRequisitionId(String requisitionId) {
         MaterialRequisition materialRequisition = materialRequisitionRepository.findByRequisitionId(requisitionId);
-        //send mail
+        //send mail *******************
         materialRequisition.setRequisitionStatus(RequisitionStatus.PROCESSED);
         MaterialRequisition savedMaterialRequisition = materialRequisitionRepository.save(materialRequisition);
         return MaterialRequisitionTransformer.materialRequisitionToMaterialRequisitionResponse(savedMaterialRequisition);
@@ -64,10 +65,12 @@ public class MaterialRequisitionService {
 
 
     public List<MaterialRequisitionResponse> followUpOnAllElapsedRequisition() {
-        List<MaterialRequisition> elapsedRequisitionList = materialRequisitionRepository.getElapsedRequisitionList();
+
+        Date currDate = Date.valueOf(LocalDate.now());
+        List<MaterialRequisition> elapsedRequisitionList = materialRequisitionRepository.getElapsedRequisitionList(currDate);
 
         for (MaterialRequisition curr : elapsedRequisitionList) {
-            //send mail
+            //send mail ********************
         }
 
         List<MaterialRequisitionResponse> responses = new ArrayList<>();
@@ -83,7 +86,7 @@ public class MaterialRequisitionService {
         Date oldDate = materialRequisition.getExpectingDeliveryDate();
         materialRequisition.setExpectingDeliveryDate(newDate);
         MaterialRequisition savedMaterialRequisition = materialRequisitionRepository.save(materialRequisition);
-        //send mail
+        //send mail ********************
         return MaterialRequisitionTransformer.materialRequisitionToMaterialRequisitionResponse(savedMaterialRequisition);
     }
 
@@ -92,7 +95,7 @@ public class MaterialRequisitionService {
         double oldQuantity = materialRequisition.getRequisitionQuantity();
         materialRequisition.setRequisitionQuantity(newQuantity);
         MaterialRequisition savedMaterialRequisition = materialRequisitionRepository.save(materialRequisition);
-        //send mail
+        //send mail ***************
         return MaterialRequisitionTransformer.materialRequisitionToMaterialRequisitionResponse(savedMaterialRequisition);
     }
 

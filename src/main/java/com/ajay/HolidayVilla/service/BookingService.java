@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.ClientInfoStatus;
+import java.sql.Date;
 import java.time.Period;
+import java.util.List;
 
 @Service
 public class BookingService {
@@ -73,7 +75,7 @@ public class BookingService {
             booking.setGuest(currGuest);
             booking.setRoom(currRoom);
 
-            currRoom.getBookings().addLast(booking);
+            currRoom.getBookingList().addLast(booking);
             currGuest.getBookings().addLast(booking);
             currGuest.setCurrentlyActiveBooking(true);
 
@@ -131,5 +133,52 @@ public class BookingService {
 
         guestRepository.save(currGuest);
         return BookingTransformer.bookingToBookingResponse(bookingRepository.save(currBooking));
+    }
+
+    public BookingResponse changeBookingRoomIfPossible(String bookingId) {
+    }
+
+    public BookingResponse changeBookingRoomWithUpgradingIfPossible(String bookingId) {
+    }
+
+    public BookingResponse getBookingByBookingId(String bookingId) {
+    }
+
+    public List<BookingResponse> getAllUpcomingArrivalBooking() {
+    }
+
+    public List<BookingResponse> getAllUpcomingArrivalBookingByRoomNo(String roomNo) {
+    }
+
+    public List<BookingResponse> getAllUpcomingArrivalBookingByGuestEmail(String guestEmail) {
+    }
+
+    public List<BookingResponse> getAllBookingBetweenDates(Date fromdate, Date toDate) {
+    }
+
+    public List<BookingResponse> getAllCheckedOutBookingBetweenDates(Date fromDate, Date toDate) {
+    }
+
+    public List<BookingResponse> getAllCheckedOutBookingByGuestEmail(String guestEmail) {
+    }
+
+    public List<BookingResponse> getAllCancelledBookingBetweenDates(Date fromDate, Date toDate) {
+    }
+
+    public List<BookingResponse> getAllCancelledBookingByGuestEmail(String guestEmail) {
+    }
+    public List<BookingResponse> getAllTodayInhouseBooking() {
+    }
+
+    public int getCountOfTodayInhouseBooking() {
+    }
+
+    public List<BookingResponse> getAllRoomByRoomStatus(String string) {
+    }
+
+    public List<BookingResponse> getAllUpcomingArrivalStayMoreThanNDays(int n) {
+    }
+
+    public List<BookingResponse> getAllBookingOccupiedOnGivenDate(Date date) {
     }
 }

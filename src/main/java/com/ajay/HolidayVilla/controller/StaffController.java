@@ -7,6 +7,7 @@ import com.ajay.HolidayVilla.dto.response.BookingResponse;
 import com.ajay.HolidayVilla.dto.response.MaintenanceResponse;
 import com.ajay.HolidayVilla.dto.response.StaffResponse;
 import com.ajay.HolidayVilla.service.BookingService;
+import com.ajay.HolidayVilla.service.RoomService;
 import com.ajay.HolidayVilla.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,9 @@ public class StaffController {
 
     @Autowired
     BookingService bookingService;
+
+    @Autowired
+    RoomService roomService;
 
 
     @GetMapping("/get-all-inhouse-breakfast-booking")
@@ -95,9 +99,9 @@ public class StaffController {
 
 
 
-    @GetMapping("/get-all-checked_out-booking")
-    public ResponseEntity getAllCheckedOutBooking(){
-        List<BookingResponse> bookingResponse = bookingService.getAllCheckedOutBooking();
+    @GetMapping("/get-all-checkedOut-booking-between-dates")
+    public ResponseEntity getAllCheckedOutBookingBetweenDates(@RequestParam Date fromDate, Date toDate){
+        List<BookingResponse> bookingResponse = bookingService.getAllCheckedOutBookingBetweenDates(fromDate, toDate);
         return new ResponseEntity(bookingResponse, HttpStatus.OK);
     }
 
@@ -107,9 +111,9 @@ public class StaffController {
         return new ResponseEntity(bookingResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/get-all-cancelled-booking")
-    public ResponseEntity getAllCancelledBooking(){
-        List<BookingResponse> bookingResponse = bookingService.getAllCancelledBooking(fromdate,toDate);
+    @GetMapping("/get-all-cancelled-booking-between-dates")
+    public ResponseEntity getAllCancelledBookingBetweenDates(@RequestParam Date fromDate, Date toDate){
+        List<BookingResponse> bookingResponse = bookingService.getAllCancelledBookingBetweenDates(fromDate, toDate);
         return new ResponseEntity(bookingResponse, HttpStatus.OK);
     }
 
@@ -129,7 +133,7 @@ public class StaffController {
 
     @GetMapping("/get-count-of-today-inhouse-booking")
     public ResponseEntity getcCountOfTodayInhouseBooking(){
-        int bookingResponse = bookingService.getcCountOfTodayInhouseBooking();
+        int bookingResponse = bookingService.getCountOfTodayInhouseBooking();
         return new ResponseEntity(bookingResponse, HttpStatus.OK);
     }
 
