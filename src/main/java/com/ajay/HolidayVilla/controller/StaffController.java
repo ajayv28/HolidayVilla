@@ -5,6 +5,7 @@ import com.ajay.HolidayVilla.dto.request.MaintenanceRequest;
 import com.ajay.HolidayVilla.dto.request.StaffRequest;
 import com.ajay.HolidayVilla.dto.response.BookingResponse;
 import com.ajay.HolidayVilla.dto.response.MaintenanceResponse;
+import com.ajay.HolidayVilla.dto.response.RoomResponse;
 import com.ajay.HolidayVilla.dto.response.StaffResponse;
 import com.ajay.HolidayVilla.service.BookingService;
 import com.ajay.HolidayVilla.service.RoomService;
@@ -124,31 +125,9 @@ public class StaffController {
     }
 
 
-
-    @GetMapping("/get-all-today-inhouse-booking")
-    public ResponseEntity getAllTodayInhouseBooking(){
-        List<BookingResponse> bookingResponse = bookingService.getAllTodayInhouseBooking();
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
-    }
-
-    @GetMapping("/get-count-of-today-inhouse-booking")
-    public ResponseEntity getcCountOfTodayInhouseBooking(){
-        int bookingResponse = bookingService.getCountOfTodayInhouseBooking();
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
-    }
-
-
-
-    @GetMapping("/get-all-room-by-room-status")  //use to string
-    public ResponseEntity getAllRoomByRoomStatus(@RequestParam RoomStatus roomStatus){
-        List<BookingResponse> bookingResponse = bookingService.getAllRoomByRoomStatus(roomStatus.toString());
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
-    }
-
-
     @GetMapping("/get-all-upcoming-arrival-stay-more-than-n-days")
     public ResponseEntity getAllUpcomingArrivalStayMoreThanNDays(@RequestParam int n){
-        List<BookingResponse> bookingResponse = bookingService.getAllUpcomingArrivalStayMoreThanNDays(n));
+        List<BookingResponse> bookingResponse = bookingService.getAllUpcomingArrivalStayMoreThanNDays(n);
         return new ResponseEntity(bookingResponse, HttpStatus.OK);
     }
 
@@ -156,6 +135,30 @@ public class StaffController {
     public ResponseEntity getAllBookingOccupiedOnGivenDate(@RequestParam Date date){
         List<BookingResponse> bookingResponse = bookingService.getAllBookingOccupiedOnGivenDate(date);
         return new ResponseEntity(bookingResponse, HttpStatus.OK);
+    }
+
+
+
+
+    /////////// ROOM
+
+    @GetMapping("/get-all-today-inhouse-room")
+    public ResponseEntity getAllTodayInHouseRoom(){
+        List<RoomResponse> roomResponse = roomService.getAllTodayInHouseRoom();
+        return new ResponseEntity(roomResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/get-count-of-today-inhouse-room")
+    public ResponseEntity getCountOfTodayInHouseRoom(){
+        int bookingResponse = roomService.getCountOfTodayInHouseRoom();
+        return new ResponseEntity(bookingResponse, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/get-all-room-by-room-status")  //use to string
+    public ResponseEntity getAllRoomByRoomStatus(@RequestParam RoomStatus roomStatus){
+        List<RoomResponse> roomResponse = roomService.getAllRoomByRoomStatus(roomStatus.toString());
+        return new ResponseEntity(roomResponse, HttpStatus.OK);
     }
 
 }

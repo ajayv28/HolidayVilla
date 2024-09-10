@@ -41,7 +41,7 @@ public class MaterialRequisitionController {
 
 
     @PutMapping("/mark-received-by-requisitionId")
-    public ResponseEntity markReceivedByRequisitionId(){
+    public ResponseEntity markReceivedByRequisitionId(@RequestParam String requisitionId){
         MaterialRequisitionResponse materialRequisitionResponse = materialRequisitionService.markReceivedByRequisitionId(requisitionId);
         return new ResponseEntity(materialRequisitionResponse, HttpStatus.OK);
     }

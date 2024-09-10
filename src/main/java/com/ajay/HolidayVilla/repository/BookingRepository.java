@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.util.List;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
@@ -21,4 +22,33 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
     public Booking findByBookingId(String bookingId);
 
+    @Query(value = "select * from booking where from_date > curdate()", nativeQuery=true)
+    public List<Booking> getAllUpcomingArrivalBooking();
+
+    @Query(value = "select * from booking where from_date > curdate() and room_id = (select id from room where room_no = :roomNo", nativeQuery=true)
+    public List<Booking> getAllUpcomingArrivalBookingByRoomNo(String roomNo);
+
+    @Query(value = "select * from booking where from_date > curdate() and room_id = (select id from guest where email = :guestEmail", nativeQuery=true)
+    public List<Booking> getAllUpcomingArrivalBookingByGuestEmail(String guestEmail);
+
+    @Query(value="select * from booking where from_date <= :toDate and to_date >= :fromDate", nativeQuery=true)
+    public List<Booking> getAllBookingBetweenDates(Date fromdate, Date toDate);
+
+    @Query(value="select * from booking where booking_status = 'GUEST_CHECKED_OUT' and from_date <= :toDate and to_date >= :fromDate", nativeQuery=true)
+    public List<Booking> getAllCheckedOutBookingBetweenDates(Date fromDate, Date toDate);
+
+    @Query(value="select * from booking where guest_id =(select id from guest where email = :guestEmail) and (booking_status = 'GUEST_CHECKED_OUT')", nativeQuery=true)
+    public List<Booking> getAllCheckedOutBookingByGuestEmail(String guestEmail);
+
+    @Query(value="select * from booking where booking_status = 'CANCELLED' and from_date <= :toDate and to_date >= :fromDate", nativeQuery=true)
+    public List<Booking> getAllCancelledBookingBetweenDates(Date fromDate, Date toDate);
+
+    @Query(value="select * from booking where guest_id =(select id from guest where email = :guestEmail) and (booking_status = 'CANCELLED')", nativeQuery=true)
+    public List<Booking> getAllCancelledBookingByGuestEmail(String guestEmail);
+
+    @Query(value="select * from booking where from_date > curdate() and datediff(to_date, from_date) >= :n", nativeQuery=true)
+    public List<Booking> getAllUpcomingArrivalStayMoreThanNDays(int n);
+
+    @Query(value="select * from booking where from_date <= :date and to_date >= :date", nativeQuery=true)
+    public List<Booking> getAllBookingOccupiedOnGivenDate(Date date);
 }

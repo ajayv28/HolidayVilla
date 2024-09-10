@@ -1,8 +1,10 @@
 package com.ajay.HolidayVilla.repository;
 
 import com.ajay.HolidayVilla.model.Maintenance;
+import com.ajay.HolidayVilla.model.Room;
 import com.sun.tools.javac.Main;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
@@ -16,9 +18,6 @@ public interface MaintenanceRepository extends JpaRepository<Maintenance, Intege
 
     @Query(value="select * from room where room_status in ('OUT_OF_SERVICE','OUT_OF_ORDER','VACANT') and (last_maintenance_done + INTERVAL 30 DAY) > :today", nativeQuery=true)
     public List<Room> allVacantRoomsDueForMaintenance(Date today);
-
-    
-    //public List<Room> allOccupiedRoomDueForMaintenanceButOccupiedForMoreThan30UpcomingDays(Date today);
 
     @Query(value="select * from room where id in(select distinct room_id from maintenance where LENGTH(followups) > 0)", nativeQuery=true)
     public List<Room> allRoomsWithFollowups();

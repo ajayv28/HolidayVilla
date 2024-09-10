@@ -1,8 +1,10 @@
 package com.ajay.HolidayVilla.service;
 
 import com.ajay.HolidayVilla.Transformer.MaintenanceTransformer;
+import com.ajay.HolidayVilla.Transformer.RoomTransformer;
 import com.ajay.HolidayVilla.dto.request.MaintenanceRequest;
 import com.ajay.HolidayVilla.dto.response.MaintenanceResponse;
+import com.ajay.HolidayVilla.dto.response.RoomResponse;
 import com.ajay.HolidayVilla.model.Maintenance;
 import com.ajay.HolidayVilla.model.Room;
 import com.ajay.HolidayVilla.model.Staff;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,31 +55,24 @@ public class MaintenanceService {
         return MaintenanceTransformer.maintenanceToMaintenanceResponse(maintenanceRepository.save(maintenance));
     }
 
-    public List<MaintenanceResponse> allVacantRoomsDueForMaintenance() {
-        List<Maintenance> maintenanceList = maintenanceRepository.allVacantRoomsDueForMaintenance();
-        List<MaintenanceResponse> maintenanceResponseList = new ArrayList<>();
-        for(Maintenance maintenance: maintenanceList)
-            maintenanceResponseList.add(MaintenanceTransformer.maintenanceToMaintenanceResponse(maintenance));
+    public List<RoomResponse> allVacantRoomsDueForMaintenance() {
+        Date today = Date.valueOf(LocalDate.now());
+        List<Room> roomList = maintenanceRepository.allVacantRoomsDueForMaintenance(today);
+        List<RoomResponse> roomResponseList = new ArrayList<>();
+        for(Room room: roomList)
+            roomResponseList.add(RoomTransformer.roomToRoomResponse(room));
 
-        return maintenanceResponseList;
+        return roomResponseList;
     }
 
-    public List<MaintenanceResponse> allOccupiedRoomDueForMaintenanceButOccupiedForMoreThan30UpcomingDays() {
-        List<Maintenance> maintenanceList = maintenanceRepository.allOccupiedRoomDueForMaintenanceButOccupiedForMoreThan30UpcomingDays();
-        List<MaintenanceResponse> maintenanceResponseList = new ArrayList<>();
-        for(Maintenance maintenance: maintenanceList)
-            maintenanceResponseList.add(MaintenanceTransformer.maintenanceToMaintenanceResponse(maintenance));
 
-        return maintenanceResponseList;
-    }
+    public List<RoomResponse> allRoomsWithFollowups() {
+        List<Room> maintenanceList = maintenanceRepository.allRoomsWithFollowups();
+        List<RoomResponse> roomResponseList = new ArrayList<>();
+        for(Room room: maintenanceList)
+            roomResponseList.add(RoomTransformer.roomToRoomResponse(room));
 
-    public List<MaintenanceResponse> allRoomsWithFollowups() {
-        List<Maintenance> maintenanceList = maintenanceRepository.allRoomsWithFollowups();
-        List<MaintenanceResponse> maintenanceResponseList = new ArrayList<>();
-        for(Maintenance maintenance: maintenanceList)
-            maintenanceResponseList.add(MaintenanceTransformer.maintenanceToMaintenanceResponse(maintenance));
-
-        return maintenanceResponseList;
+        return roomResponseList;
     }
 
     public List<MaintenanceResponse> allMaintenanceWithFollowupsByRoomNo(String roomNo) {

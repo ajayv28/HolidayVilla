@@ -2,6 +2,7 @@ package com.ajay.HolidayVilla.controller;
 
 import com.ajay.HolidayVilla.dto.request.MaintenanceRequest;
 import com.ajay.HolidayVilla.dto.response.MaintenanceResponse;
+import com.ajay.HolidayVilla.dto.response.RoomResponse;
 import com.ajay.HolidayVilla.service.MaintenanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,14 +38,8 @@ public class MaintenanceController {
 
     @GetMapping("/all-vacant-rooms-due-for-maintenance") //30 days
     public ResponseEntity allVacantRoomsDueForMaintenance(){
-        List<MaintenanceResponse> maintenanceResponseList = maintenanceService.allVacantRoomsDueForMaintenance();
-        return new ResponseEntity(maintenanceResponseList, HttpStatus.OK);
-    }
-
-    @GetMapping("all-occupied-room-due-for-maintenance-but-occupied-for-more-than-30-upcoming-days")
-    public ResponseEntity allOccupiedRoomDueForMaintenanceButOccupiedForMoreThan30UpcomingDays(){
-        List<MaintenanceResponse> maintenanceResponseList = maintenanceService.allOccupiedRoomDueForMaintenanceButOccupiedForMoreThan30UpcomingDays();
-        return new ResponseEntity(maintenanceResponseList, HttpStatus.OK);
+        List<RoomResponse> roomResponseList = maintenanceService.allVacantRoomsDueForMaintenance();
+        return new ResponseEntity(roomResponseList, HttpStatus.OK);
     }
 
 
@@ -53,8 +48,8 @@ public class MaintenanceController {
 
     @GetMapping("/all-rooms-with-followups")
     public ResponseEntity allRoomsWithFollowups(){
-        List<MaintenanceResponse> maintenanceResponseList = maintenanceService.allRoomsWithFollowups();
-        return new ResponseEntity(maintenanceResponseList, HttpStatus.OK);
+        List<RoomResponse> roomResponseList = maintenanceService.allRoomsWithFollowups();
+        return new ResponseEntity(roomResponseList, HttpStatus.OK);
     }
 
     @GetMapping("/all-maintenance-with-followups-by-roomNo")
@@ -69,9 +64,15 @@ public class MaintenanceController {
         return new ResponseEntity(maintenanceResponseList, HttpStatus.OK);
     }
 
-    @GetMapping("/all-maintenance-by-staff-between-dates")
-    public ResponseEntity allMaintenanceByStaffBetweenDates(@RequestParam Date fromDate, @RequestParam Date toDate, @AuthenticationPrincipal UserDetails userDetails){
+    @GetMapping("/all-maintenance-by-logged-in-staff-between-dates")
+    public ResponseEntity allMaintenanceByLoggedInStaffBetweenDates(@RequestParam Date fromDate, @RequestParam Date toDate, @AuthenticationPrincipal UserDetails userDetails){
         String staffEmail = userDetails.getUsername();
+        List<MaintenanceResponse> maintenanceResponseList = maintenanceService.allMaintenanceByStaffBetweenDates(fromDate, toDate, staffEmail);
+        return new ResponseEntity(maintenanceResponseList, HttpStatus.OK);
+    }
+
+    @GetMapping("/all-maintenance-by-staffEmail-between-dates")
+    public ResponseEntity allMaintenanceByStaffEmailBetweenDates(@RequestParam Date fromDate, @RequestParam Date toDate, @RequestParam String staffEmail){
         List<MaintenanceResponse> maintenanceResponseList = maintenanceService.allMaintenanceByStaffBetweenDates(fromDate, toDate, staffEmail);
         return new ResponseEntity(maintenanceResponseList, HttpStatus.OK);
     }

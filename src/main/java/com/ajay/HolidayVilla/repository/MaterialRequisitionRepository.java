@@ -40,11 +40,11 @@ public interface MaterialRequisitionRepository extends JpaRepository<MaterialReq
     @Query(value = "select * from material_requisition where expecting_delivery_date between :fromDate and :toDate", nativeQuery=true)
     public List<MaterialRequisition> getAllMaterialRequisitionBetweenDeliveryDate(Date fromDate, Date toDate);
 
+    @Query(value = "select * from material_requisition where requisition_material_id = (select id from material where material_name = :materialName)", nativeQuery=true)
+    public List<MaterialRequisition> getAllMaterialRequisitionByMaterialName(String materialName);
 
-    //public List<MaterialRequisition> getAllMaterialRequisitionByMaterialName(String materialName);
-
-
-    //public List<MaterialRequisition> getAllMaterialRequisitionByStaffEmail(String staffEmail);
+    @Query(value = "select * from material_requisition where requisition_staff_id = (select id from staff where email = :staffEmail)", nativeQuery=true)
+    public List<MaterialRequisition> getAllMaterialRequisitionByStaffEmail(String staffEmail);
 
     @Query(value = "select * from material_requisition where requisition_status = 'MATERIAL_RECEIVED' and department = :department", nativeQuery=true)
     public List<MaterialRequisition> getAllReceivedMaterialRequisitionByDepartment(String department);

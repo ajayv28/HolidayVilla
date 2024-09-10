@@ -2,8 +2,10 @@ package com.ajay.HolidayVilla.service;
 
 import com.ajay.HolidayVilla.Enum.BookingStatus;
 import com.ajay.HolidayVilla.Transformer.BookingTransformer;
+import com.ajay.HolidayVilla.Transformer.RoomTransformer;
 import com.ajay.HolidayVilla.dto.request.BookingRequest;
 import com.ajay.HolidayVilla.dto.response.BookingResponse;
+import com.ajay.HolidayVilla.dto.response.RoomResponse;
 import com.ajay.HolidayVilla.exception.*;
 import com.ajay.HolidayVilla.model.*;
 import com.ajay.HolidayVilla.repository.BookingRepository;
@@ -15,7 +17,9 @@ import org.springframework.stereotype.Service;
 
 import java.sql.ClientInfoStatus;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,36 +37,6 @@ public class BookingService {
     @Autowired
     RoomRepository roomRepository;
 
-///check with room entity********************************************************
-
-    public List<RoomResponse> getAllTodayInhouseGuestRooms() {
-        Date currDate = Date.valueOf(LocalDate.now());
-        List<Room> roomList = roomRepository.getAllTodayInhouseGuestRooms(currDate);
-        List<RoomResponse> responseList = new ArrayList<>();
-        for(Room room:roomList)
-            responseList.add(RoomTransformer.roomToRoomResponse(room));
-
-        return responseList;
-        }
-    
-
-    public int getCountOfTodayInhouseBooking() {
-        Date currDate = Date.valueOf(LocalDate.now());
-        int count = roomRepository.getCountOfTodayInhouseBooking(currDate);
-            return count;
-        }
-
-    
-    public List<RoomResponse> getAllRoomByRoomStatus(String roomStatus) {
-        List<Room> roomList = roomRepository.getAllRoomByRoomStatus(roomStatus);
-        List<RoomResponse> responseList = new ArrayList<>();
-        for(Room room:roomList)
-            responseList.add(RoomTransformer.roomToRoomResponse(room));
-
-        return responseList;
-        }
-
-//**************************************************************
     
     public BookingResponse createBooking(BookingRequest bookingRequest, String guestEmail) {
 
@@ -213,7 +187,7 @@ public class BookingService {
     }
 
     public List<BookingResponse> getAllCheckedOutBookingBetweenDates(Date fromDate, Date toDate) {
-        List<Booking> bookingList = bookingRepository.getAllCheckedOutBookingBetweenDates(fromdate, toDate);
+        List<Booking> bookingList = bookingRepository.getAllCheckedOutBookingBetweenDates(fromDate, toDate);
         List<BookingResponse> responseList = new ArrayList<>();
         for(Booking booking:bookingList)
             responseList.add(BookingTransformer.bookingToBookingResponse(booking));
@@ -231,7 +205,7 @@ public class BookingService {
     }
 
     public List<BookingResponse> getAllCancelledBookingBetweenDates(Date fromDate, Date toDate) {
-        List<Booking> bookingList = bookingRepository.getAllCancelledBookingBetweenDates(fromdate, toDate);
+        List<Booking> bookingList = bookingRepository.getAllCancelledBookingBetweenDates(fromDate, toDate);
         List<BookingResponse> responseList = new ArrayList<>();
         for(Booking booking:bookingList)
             responseList.add(BookingTransformer.bookingToBookingResponse(booking));
