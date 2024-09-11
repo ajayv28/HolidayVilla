@@ -51,4 +51,7 @@ public class Booking {
     @ManyToOne
     @JoinColumn
     Guest guest;
+
+    @OneToOne
+    Transaction transaction;
 }

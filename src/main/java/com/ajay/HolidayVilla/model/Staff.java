@@ -32,6 +32,8 @@ public class Staff {
 
     String name;
 
+    boolean employmentStatus;
+
     Date dob;
 
     int age;

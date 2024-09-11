@@ -50,4 +50,10 @@ public class Guest {
     @OneToMany(mappedBy = "guest")
     List<Booking> bookings;
 
+    @OneToMany(mappedBy = "guest")
+    List<Transaction> transactionList;
+
+    @OneToMany(mappedBy = "guest")
+    List<FoodOrder> foodOrderList;
+
 }

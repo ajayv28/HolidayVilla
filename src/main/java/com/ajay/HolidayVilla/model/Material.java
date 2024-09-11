@@ -30,4 +30,8 @@ public class Material {
 
     @OneToMany(mappedBy = "material")
     List<MaterialRequisition> materialRequisitionList;
+
+    @OneToMany(mappedBy = "material")
+    List<Transaction> transactionList;
+
 }

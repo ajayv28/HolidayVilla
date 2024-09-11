@@ -1,13 +1,13 @@
 package com.ajay.HolidayVilla.model;
 
-import com.ajay.HolidayVilla.Enum.Department;
-import com.ajay.HolidayVilla.Enum.RequisitionStatus;
+import com.ajay.HolidayVilla.Enum.FoodType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,33 +16,27 @@ import java.sql.Date;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class MaterialRequisition {
+public class FoodOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    String requisitionId;
-
-    @Enumerated(EnumType.STRING)
-    Department department;
-
-    Date expectingDeliveryDate;
+    String orderId;
 
     @CreationTimestamp
-    Date dateOfRequisition;
+    Date orderDateAndTime;
 
-    double requisitionQuantity;
-
-    RequisitionStatus requisitionStatus;
-
-    @ManyToOne
-    @JoinColumn
-    Material requisitionMaterial;
+    @Enumerated(EnumType.STRING)
+    FoodType foodType;
 
     @ManyToOne
     @JoinColumn
-    Staff requisitionStaff;
+    Room room;
+
+    @ManyToOne
+    @JoinColumn
+    Guest guest;
 
     @OneToOne
     Transaction transaction;

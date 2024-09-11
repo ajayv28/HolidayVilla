@@ -24,5 +24,9 @@ public class HRController {
         return new ResponseEntity(staffResponse, HttpStatus.CREATED);
     }
 
+    @PostMapping("/offBoard")
+    //only remove role
+
+
 
 }

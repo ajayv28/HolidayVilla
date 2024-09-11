@@ -32,20 +32,7 @@ public class StaffController {
     RoomService roomService;
 
 
-    @GetMapping("/get-all-inhouse-breakfast-booking")
-    @GetMapping("/get-all-inhouse-no-breakfast-booking")
-
-
-
-
-    @PutMapping("/cancel-booking-by-bookingId")
-    public ResponseEntity cancelBookingByBookingId(@RequestParam String bookingId){
-        BookingResponse bookingResponse = bookingService.cancelBookingByBookingId(bookingId);
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
-    }
-
-
-//    change booking to another room and notify guest ***************************
+    //    change booking to another room and notify guest ***************************
 //return excepotion if no room available
     @GetMapping("/change-booking-room-ifPossible")
     public ResponseEntity changeBookingRoomIfPossible(@RequestParam String bookingId){
@@ -66,11 +53,13 @@ public class StaffController {
         return new ResponseEntity(bookingResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/get-booking-by-bookingId")
-    public ResponseEntity getBookingByBookingId(@RequestParam String bookingId){
-        BookingResponse bookingResponse = bookingService.getBookingByBookingId(bookingId);
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
-    }
+
+
+
+    @GetMapping("/get-all-inhouse-breakfast-booking")
+    @GetMapping("/get-all-inhouse-no-breakfast-booking")
+    @PutMapping("/check-in-with-bookingId")
+    @PutMapping("/check-out-with-bookingId")
 
 
     @GetMapping("/get-all-upcoming-arrival-booking") //sort by room type
@@ -90,6 +79,28 @@ public class StaffController {
         List<BookingResponse> bookingResponse = bookingService.getAllUpcomingArrivalBookingByGuestEmail(guestEmail);
         return new ResponseEntity(bookingResponse, HttpStatus.OK);
     }
+
+
+
+
+
+    @PutMapping("/cancel-booking-by-bookingId")
+    public ResponseEntity cancelBookingByBookingId(@RequestParam String bookingId){
+        BookingResponse bookingResponse = bookingService.cancelBookingByBookingId(bookingId);
+        return new ResponseEntity(bookingResponse, HttpStatus.OK);
+    }
+
+
+
+
+    @GetMapping("/get-booking-by-bookingId")
+    public ResponseEntity getBookingByBookingId(@RequestParam String bookingId){
+        BookingResponse bookingResponse = bookingService.getBookingByBookingId(bookingId);
+        return new ResponseEntity(bookingResponse, HttpStatus.OK);
+    }
+
+
+
 
     @GetMapping("/get-all-booking-between-dates")
     public ResponseEntity getAllBookingBetweenDates(@RequestParam Date fromdate,@RequestParam Date toDate){

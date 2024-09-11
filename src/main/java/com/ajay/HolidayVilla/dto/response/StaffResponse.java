@@ -20,6 +20,8 @@ public class StaffResponse {
 
     String name;
 
+    boolean employmentStatus;
+
     Date dob;
 
     int age;

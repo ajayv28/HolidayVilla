@@ -30,6 +30,7 @@ public class StaffTransformer {
                 .age(staff.getAge())
                 .dob(staff.getDob())
                 .gender(staff.getGender())
+                .employmentStatus(staff.isEmploymentStatus())
                 .build();
     }
 }

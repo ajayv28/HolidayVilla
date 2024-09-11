@@ -48,5 +48,9 @@ public class Room {
     @OneToMany(mappedBy = "room")
     List<Maintenance> maintenanceList;
 
+    @OneToMany(mappedBy = "room")
+    List<Transaction> transactionList;
 
+    @OneToMany(mappedBy = "room")
+    List<FoodOrder> foodOrderList;
 }
