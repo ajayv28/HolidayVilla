@@ -7,6 +7,8 @@ import com.ajay.HolidayVilla.service.MaintenanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -20,8 +22,8 @@ public class MaintenanceController {
     MaintenanceService maintenanceService;
 
 
-    @PostMapping("/postMaintenance")
-    public ResponseEntity postMaintenance(@RequestBody MaintenanceRequest maintenanceRequest, @AuthenticationPrincipal UserDetails userDetails){
+    @PostMapping("/post-maintenance-job")
+    public ResponseEntity postMaintenanceJob(@RequestBody MaintenanceRequest maintenanceRequest, @AuthenticationPrincipal UserDetails userDetails){
         String staffEmail = userDetails.getUsername();
         MaintenanceResponse maintenanceResponse = maintenanceService.postMaintenance(maintenanceRequest, staffEmail);
         return new ResponseEntity(maintenanceResponse, HttpStatus.CREATED);

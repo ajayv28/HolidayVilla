@@ -5,7 +5,7 @@ public enum Department {
     ROOM_DIVISION,
     PURCHASE,
     FINANCE,
-    KITCHEN_FOOD_AND_BEVERAGE,
+    KITCHEN_FOOD,
     HR,
     SALES,
     SECURITY

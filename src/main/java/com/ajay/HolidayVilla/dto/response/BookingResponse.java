@@ -22,8 +22,6 @@ public class BookingResponse {
 
     Date toDate;
 
-    boolean breakfastIncluded;
-
     double totalFare;
 
 }

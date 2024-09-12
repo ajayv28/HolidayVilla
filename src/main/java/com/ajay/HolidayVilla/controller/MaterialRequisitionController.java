@@ -10,6 +10,8 @@ import org.springframework.data.web.ReactiveOffsetScrollPositionHandlerMethodArg
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -33,8 +35,9 @@ public class MaterialRequisitionController {
 
 
     @PutMapping("/cancel-requisition")
-    public ResponseEntity cancelRequisition(@RequestParam String requisitionId){
-        MaterialRequisitionResponse materialRequisitionResponse = materialRequisitionService.cancelRequisition(requisitionId);
+    public ResponseEntity cancelRequisition(@RequestParam String requisitionId, @AuthenticationPrincipal UserDetails userDetails){
+        String staffEmail = userDetails.getUsername();
+        MaterialRequisitionResponse materialRequisitionResponse = materialRequisitionService.cancelRequisition(requisitionId, staffEmail);
         return new ResponseEntity(materialRequisitionResponse, HttpStatus.OK);
     }
 

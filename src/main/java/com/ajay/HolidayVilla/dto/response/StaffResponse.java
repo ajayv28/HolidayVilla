@@ -1,5 +1,6 @@
 package com.ajay.HolidayVilla.dto.response;
 
+import com.ajay.HolidayVilla.Enum.Department;
 import com.ajay.HolidayVilla.Enum.Gender;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -19,6 +20,8 @@ public class StaffResponse {
     long phoneNumber;
 
     String name;
+
+    Department department;
 
     boolean employmentStatus;
 

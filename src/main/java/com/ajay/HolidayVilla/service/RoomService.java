@@ -1,13 +1,21 @@
 package com.ajay.HolidayVilla.service;
 
+import com.ajay.HolidayVilla.Enum.BookingStatus;
+import com.ajay.HolidayVilla.Enum.RoomStatus;
 import com.ajay.HolidayVilla.Transformer.RoomTransformer;
 import com.ajay.HolidayVilla.dto.request.RoomRequest;
 import com.ajay.HolidayVilla.dto.response.RoomResponse;
+import com.ajay.HolidayVilla.model.Booking;
+import com.ajay.HolidayVilla.model.Guest;
 import com.ajay.HolidayVilla.model.Room;
+import com.ajay.HolidayVilla.repository.BookingRepository;
+import com.ajay.HolidayVilla.repository.GuestRepository;
 import com.ajay.HolidayVilla.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Book;
+import java.security.KeyStore;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,12 +27,54 @@ public class RoomService {
     @Autowired
     RoomRepository roomRepository;
 
+    @Autowired
+    BookingRepository bookingRepository;
+
+    @Autowired
+    GuestRepository guestRepository;
+
+
+
     public RoomResponse addRoom(RoomRequest roomRequest) {
         Room savedRoom = roomRepository.save(RoomTransformer.roomRequestToRoom(roomRequest));
         return RoomTransformer.roomToRoomResponse(savedRoom);
     }
 
 
+    public RoomResponse checkInWithBookingId(String bookingId) {
+        Booking booking = bookingRepository.findByBookingId(bookingId);
+        Guest guest = booking.getGuest();
+        Room room = booking.getRoom();
+
+        booking.setBookingStatus(BookingStatus.GUEST_IN_HOUSE);
+        guest.setCurrentlyActiveBooking(false);
+        room.setRoomStatus(RoomStatus.OCCUPIED);
+
+        bookingRepository.save(booking);
+        guestRepository.save(guest);
+        return RoomTransformer.roomToRoomResponse(roomRepository.save(room));
+    }
+
+    public RoomResponse checkOutWithBookingId(String bookingId) {
+        Booking booking = bookingRepository.findByBookingId(bookingId);
+        Guest guest = booking.getGuest();
+        Room room = booking.getRoom();
+
+        booking.setBookingStatus(BookingStatus.GUEST_CHECKED_OUT);
+        room.setRoomStatus(RoomStatus.VACANT);
+
+        //*************notify hk to clean
+
+        bookingRepository.save(booking);
+        return RoomTransformer.roomToRoomResponse(roomRepository.save(room));
+    }
+
+
+    public RoomResponse changeRoomStatusByRoomNo(String roomNo, RoomStatus roomStatus) {
+        Room room = roomRepository.findByRoomNo(roomNo);
+        room.setRoomStatus(roomStatus);
+        return RoomTransformer.roomToRoomResponse(roomRepository.save(room));
+    }
 
     public List<RoomResponse> getAllTodayInHouseRoom() {
         List<Room> roomList = roomRepository.getAllTodayInHouseRoom();
@@ -34,7 +84,6 @@ public class RoomService {
 
         return responseList;
     }
-
 
     public int getCountOfTodayInHouseRoom() {
         int count = roomRepository.getCountOfTodayInHouseRoom();
@@ -50,4 +99,6 @@ public class RoomService {
 
         return responseList;
     }
+
+
 }

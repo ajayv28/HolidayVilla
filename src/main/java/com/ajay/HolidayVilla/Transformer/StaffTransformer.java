@@ -4,6 +4,8 @@ package com.ajay.HolidayVilla.Transformer;
 import com.ajay.HolidayVilla.dto.request.StaffRequest;
 import com.ajay.HolidayVilla.dto.response.StaffResponse;
 import com.ajay.HolidayVilla.model.Staff;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class StaffTransformer {
 
@@ -18,7 +20,9 @@ public class StaffTransformer {
                 .password(passwordEncoder.encode(staffRequest.getPassword()))
                 .name(staffRequest.getName())
                 .dob(staffRequest.getDob())
-                .role("ROLE_" + staffRequest.getRole().toUpperCase())
+                .employmentStatus(true)
+                .role("ROLE_" + staffRequest.getDepartment().toString())
+                .salary(staffRequest.getSalary())
                 .build();
     }
 
@@ -31,6 +35,7 @@ public class StaffTransformer {
                 .dob(staff.getDob())
                 .gender(staff.getGender())
                 .employmentStatus(staff.isEmploymentStatus())
+                .department(staff.getDepartment())
                 .build();
     }
 }

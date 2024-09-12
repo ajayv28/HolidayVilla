@@ -15,6 +15,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class BookingRequest {
 
 
@@ -23,8 +24,6 @@ public class BookingRequest {
     Date fromDate;
 
     Date toDate;
-
-    boolean breakfastIncluded;
 
     String couponCode;
 

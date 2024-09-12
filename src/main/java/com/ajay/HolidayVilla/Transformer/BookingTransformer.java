@@ -14,7 +14,6 @@ public class BookingTransformer {
                 .roomType(bookingRequest.getRoomType())
                 .fromDate(bookingRequest.getFromDate())
                 .toDate(bookingRequest.getToDate())
-                .breakfastIncluded(bookingRequest.isBreakfastIncluded())
                 .bookingId(String.valueOf(UUID.randomUUID()))
                 .couponCode(bookingRequest.getCouponCode())
                 .build();
@@ -25,9 +24,17 @@ public class BookingTransformer {
                 .roomType(booking.getRoomType())
                 .fromDate(booking.getFromDate())
                 .toDate(booking.getToDate())
-                .breakfastIncluded(booking.isBreakfastIncluded())
                 .totalFare(booking.getTotalFare())
                 .bookingId(booking.getBookingId())
+                .build();
+    }
+
+    public static BookingRequest bookingToBookingRequest(Booking booking){
+        return BookingRequest.builder()
+                .roomType(booking.getRoomType())
+                .fromDate(booking.getFromDate())
+                .toDate(booking.getToDate())
+                .couponCode(booking.getCouponCode())
                 .build();
     }
 }

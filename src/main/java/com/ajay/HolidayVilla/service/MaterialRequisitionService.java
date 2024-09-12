@@ -1,14 +1,22 @@
 package com.ajay.HolidayVilla.service;
 
+import com.ajay.HolidayVilla.Enum.Department;
+import com.ajay.HolidayVilla.Enum.FundType;
 import com.ajay.HolidayVilla.Enum.RequisitionStatus;
 import com.ajay.HolidayVilla.Transformer.MaterialRequisitionTransformer;
 import com.ajay.HolidayVilla.Transformer.MaterialTransformer;
+import com.ajay.HolidayVilla.Transformer.TransactionTransformer;
 import com.ajay.HolidayVilla.dto.request.MaterialRequisitionRequest;
+import com.ajay.HolidayVilla.dto.request.TransactionRequest;
 import com.ajay.HolidayVilla.dto.response.MaterialRequisitionResponse;
+import com.ajay.HolidayVilla.exception.NoAccessForThisRequestException;
 import com.ajay.HolidayVilla.model.MaterialRequisition;
 import com.ajay.HolidayVilla.model.Staff;
+import com.ajay.HolidayVilla.model.Transaction;
+import com.ajay.HolidayVilla.repository.MaterialRepository;
 import com.ajay.HolidayVilla.repository.MaterialRequisitionRepository;
 import com.ajay.HolidayVilla.repository.StaffRepository;
+import com.ajay.HolidayVilla.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +34,12 @@ public class MaterialRequisitionService {
     @Autowired
     StaffRepository staffRepository;
 
+    @Autowired
+    MaterialRepository materialRepository;
+
+    @Autowired
+    TransactionRepository transactionRepository;
+
     public MaterialRequisitionResponse raiseMaterialRequisition(MaterialRequisitionRequest materialRequisitionRequest, String staffEmail) {
 
         Staff staff = staffRepository.findByEmail(staffEmail);
@@ -40,8 +54,12 @@ public class MaterialRequisitionService {
         return MaterialRequisitionTransformer.materialRequisitionToMaterialRequisitionResponse(savedMaterialRequisition);
     }
 
-    public MaterialRequisitionResponse cancelRequisition(String requisitionId) {
+    public MaterialRequisitionResponse cancelRequisition(String requisitionId, String staffEmail) {
         MaterialRequisition materialRequisition = materialRequisitionRepository.findByRequisitionId(requisitionId);
+        Staff staff = staffRepository.findByEmail(staffEmail);
+        if((materialRequisition.getRequisitionStaff() != staff) && !(staff.getRole().equals("ROLE_MANAGER")))
+            throw new NoAccessForThisRequestException("You do not have access to proceed with this request");
+
         materialRequisition.setRequisitionStatus(RequisitionStatus.CANCELLED);
         MaterialRequisition savedMaterialRequisition = materialRequisitionRepository.save(materialRequisition);
         return MaterialRequisitionTransformer.materialRequisitionToMaterialRequisitionResponse(savedMaterialRequisition);
@@ -50,6 +68,21 @@ public class MaterialRequisitionService {
     public MaterialRequisitionResponse markReceivedByRequisitionId(String requisitionId) {
         MaterialRequisition materialRequisition = materialRequisitionRepository.findByRequisitionId(requisitionId);
         materialRequisition.setRequisitionStatus(RequisitionStatus.MATERIAL_RECEIVED);
+
+        TransactionRequest transactionRequest = new TransactionRequest();
+        transactionRequest.setFundType(FundType.DEBIT);
+        Transaction transaction = TransactionTransformer.transactionRequestToTransaction(transactionRequest);
+        transaction.setDepartment(materialRequisition.getDepartment());
+        transaction.setMaterial(materialRequisition.getRequisitionMaterial());
+        transaction.setMaterialRequisition(materialRequisition);
+        transaction.setComments("MATERIAL PURCHASE");
+        Transaction savedTransaction = transactionRepository.save(transaction);
+
+        materialRequisition.setTransaction(savedTransaction);
+        materialRequisition.getRequisitionMaterial().getTransactionList().add(savedTransaction);
+        materialRequisitionRepository.save(materialRequisition);
+        materialRepository.save(materialRequisition.getRequisitionMaterial());
+
         MaterialRequisition savedMaterialRequisition = materialRequisitionRepository.save(materialRequisition);
         return MaterialRequisitionTransformer.materialRequisitionToMaterialRequisitionResponse(savedMaterialRequisition);
     }

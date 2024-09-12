@@ -1,5 +1,6 @@
 package com.ajay.HolidayVilla.model;
 
+import com.ajay.HolidayVilla.Enum.Department;
 import com.ajay.HolidayVilla.Enum.Gender;
 import jakarta.persistence.*;
 import lombok.*;
@@ -32,6 +33,9 @@ public class Staff {
 
     String name;
 
+    @Enumerated(EnumType.STRING)
+    Department department;
+
     boolean employmentStatus;
 
     Date dob;
@@ -43,6 +47,8 @@ public class Staff {
 
     String role;
 
+    double salary;
+
     @CreationTimestamp
     Date joiningDate;
 
@@ -51,4 +57,7 @@ public class Staff {
 
     @OneToMany(mappedBy = "staff")
     List<MaterialRequisition> materialRequisitionList;
+
+    @OneToMany(mappedBy = "staff")
+    List<Transaction> transactionList;
 }

@@ -1,17 +1,18 @@
 package com.ajay.HolidayVilla.service;
 
 import com.ajay.HolidayVilla.Enum.BookingStatus;
+import com.ajay.HolidayVilla.Enum.Department;
+import com.ajay.HolidayVilla.Enum.FundType;
 import com.ajay.HolidayVilla.Transformer.BookingTransformer;
 import com.ajay.HolidayVilla.Transformer.RoomTransformer;
+import com.ajay.HolidayVilla.Transformer.TransactionTransformer;
 import com.ajay.HolidayVilla.dto.request.BookingRequest;
+import com.ajay.HolidayVilla.dto.request.TransactionRequest;
 import com.ajay.HolidayVilla.dto.response.BookingResponse;
 import com.ajay.HolidayVilla.dto.response.RoomResponse;
 import com.ajay.HolidayVilla.exception.*;
 import com.ajay.HolidayVilla.model.*;
-import com.ajay.HolidayVilla.repository.BookingRepository;
-import com.ajay.HolidayVilla.repository.CouponRepository;
-import com.ajay.HolidayVilla.repository.GuestRepository;
-import com.ajay.HolidayVilla.repository.RoomRepository;
+import com.ajay.HolidayVilla.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class BookingService {
@@ -36,6 +38,9 @@ public class BookingService {
 
     @Autowired
     RoomRepository roomRepository;
+
+    @Autowired
+    TransactionRepository transactionRepository;
 
     
     public BookingResponse createBooking(BookingRequest bookingRequest, String guestEmail) {
@@ -68,6 +73,7 @@ public class BookingService {
             offerPercent = coupon.getOfferPercentage();
             coupon.setQuantityRemaining(coupon.getQuantityRemaining() - 1);
             couponRepository.save(coupon);
+            booking.setCouponCode(coupon.getCouponCode());
         }
             Period period = Period.between(booking.getFromDate().toLocalDate(), booking.getToDate().toLocalDate());
             double totalDays= period.getDays()+1;
@@ -84,16 +90,32 @@ public class BookingService {
             currGuest.setCurrentlyActiveBooking(true);
 
             //******* send mail to HSK, FO that booking made on OOS room*******
+            //*********send confrimation mail to guest
 
+            TransactionRequest transactionRequest = new TransactionRequest();
+            transactionRequest.setFundType(FundType.CREDIT);
+            Transaction transaction = TransactionTransformer.transactionRequestToTransaction(transactionRequest);
+            transaction.setDepartment(Department.ROOM_DIVISION);
+            transaction.setGuest(currGuest);
+            transaction.setRoom(currRoom);
+            transaction.setComments("New Room Booking");
+            transactionRepository.save(transaction);
+
+            currGuest.getTransactionList().add(transaction);
+            currRoom.getTransactionList().add(transaction);
             roomRepository.save(currRoom);
             guestRepository.save(currGuest);
-
-            return BookingTransformer.bookingToBookingResponse(booking);
+            booking.setTransaction(transaction);
+            Booking savedBooking = bookingRepository.save(booking);
+            transaction.setBooking(savedBooking);
+            transactionRepository.save(transaction);
+            return BookingTransformer.bookingToBookingResponse(savedBooking);
 
     }
 
 
-    public BookingResponse cancelBooking(String guestEmail) {
+
+    public BookingResponse cancelLastBooking(String guestEmail) {
         Guest currGuest = guestRepository.findByEmail(guestEmail);
         if(currGuest.isCurrentlyActiveBooking()==false)
             throw new NoOngoingBookingException("Sorry, there is no upcoming booking found for you");
@@ -114,8 +136,33 @@ public class BookingService {
         currGuest.setCurrentlyActiveBooking(false);
 
         guestRepository.save(currGuest);
-        return BookingTransformer.bookingToBookingResponse(bookingRepository.save(booking));
+
+
+
+        TransactionRequest transactionRequest = new TransactionRequest();
+        transactionRequest.setFundType(FundType.DEBIT);
+        Transaction transaction = TransactionTransformer.transactionRequestToTransaction(transactionRequest);
+        transaction.setDepartment(Department.ROOM_DIVISION);
+        transaction.setGuest(currGuest);
+        transaction.setRoom(booking.getRoom());
+        transaction.setComments("Refund - Room Booking Cancellation");
+
+        currGuest.getTransactionList().add(transaction);
+        booking.getRoom().getTransactionList().add(transaction);
+        guestRepository.save(currGuest);
+        roomRepository.save(booking.getRoom());
+        booking.setTransaction(transaction);
+        //****send mail to guest
+
+        Booking savedBooking = bookingRepository.save(booking);
+        transaction.setBooking(savedBooking);
+        transactionRepository.save(transaction);
+        return BookingTransformer.bookingToBookingResponse(savedBooking);
     }
+
+
+
+
 
 
     public BookingResponse cancelBookingByBookingId(String bookingId) {
@@ -136,19 +183,145 @@ public class BookingService {
         currGuest.setCurrentlyActiveBooking(false);
 
         guestRepository.save(currGuest);
-        return BookingTransformer.bookingToBookingResponse(bookingRepository.save(currBooking));
+
+        TransactionRequest transactionRequest = new TransactionRequest();
+        transactionRequest.setFundType(FundType.DEBIT);
+        Transaction transaction = TransactionTransformer.transactionRequestToTransaction(transactionRequest);
+        transaction.setDepartment(Department.ROOM_DIVISION);
+        transaction.setGuest(currGuest);
+        transaction.setRoom(currBooking.getRoom());
+        transaction.setComments("Refund - Room Booking Cancellation");
+
+        currGuest.getTransactionList().add(transaction);
+        currBooking.getRoom().getTransactionList().add(transaction);
+        guestRepository.save(currGuest);
+        roomRepository.save(currBooking.getRoom());
+        currBooking.setTransaction(transaction);
+        //****send mail to guest
+
+        Booking savedBooking = bookingRepository.save(currBooking);
+        transaction.setBooking(savedBooking);
+        transactionRepository.save(transaction);
+        return BookingTransformer.bookingToBookingResponse(savedBooking);
     }
+
+
+
 
     public BookingResponse changeBookingRoomIfPossible(String bookingId) {
+        Booking currBooking = bookingRepository.findByBookingId(bookingId);
+        Guest currGuest = currBooking.getGuest();
+
+        if(currBooking.getBookingStatus().toString().equals("GUEST_IN_HOUSE"))
+            throw new CancellationNotAllowedException("Guest already checked in. Cancellation not allowed");
+
+        if(currBooking.getBookingStatus().toString().equals("GUEST_CHECKED_OUT"))
+            throw new CancellationNotAllowedException("Booking already completed successfully and Guest checked out. Cancellation not allowed");
+
+        if(currBooking.getBookingStatus().toString().equals("CANCELLED"))
+            throw new CancellationNotAllowedException("This booking has already been cancelled. So Cancellation not allowed");
+
+
+        boolean isOutOfService = false;
+
+        Room currRoom = bookingRepository.getAvailableRoom(currBooking.getFromDate(), currBooking.getToDate(), currBooking.getRoomType());
+        if(currRoom == null) {
+            currRoom = bookingRepository.getAvailableRoomIncludingOOS(currBooking.getFromDate(), currBooking.getToDate(), currBooking.getRoomType());
+            isOutOfService = true;
+        }
+        if(currRoom == null)
+            throw new RoomNotAvailableBetweenGivenDates("Sorry no rooms available to change booking");
+
+        Booking newBooking = new Booking();
+        newBooking.setRoomType(currBooking.getRoomType());
+        newBooking.setFromDate(currBooking.getFromDate());
+        newBooking.setToDate(currBooking.getToDate());
+        newBooking.setCouponCode(currBooking.getCouponCode());
+
+        double offerPercent = 0.0;
+
+        if(newBooking.getCouponCode().length()>0) {
+            Coupon newCoupon = couponRepository.findByCouponCode(currBooking.getCouponCode());
+            offerPercent = newCoupon.getOfferPercentage();
+            newBooking.setCouponCode(newCoupon.getCouponCode());
+        }
+        Period period = Period.between(currBooking.getFromDate().toLocalDate(), currBooking.getToDate().toLocalDate());
+        double totalDays= period.getDays()+1;
+        double totalFare = currRoom.getFarePerDay()*totalDays;
+        double offerAmount = (totalFare * offerPercent) / 100;
+        newBooking.setTotalFare(totalFare-offerAmount);
+        newBooking.setBookingStatus(BookingStatus.CONFIRMED);
+
+        newBooking.setGuest(currGuest);
+        newBooking.setRoom(currRoom);
+
+        currRoom.getBookingList().addLast(newBooking);
+        currGuest.getBookings().addLast(newBooking);
+        currGuest.setCurrentlyActiveBooking(true);
+
+        //******* send mail to HSK, FO that booking made on OOS room*******
+        //*********send changing  mail to guest
+
+        TransactionRequest transactionRequest = new TransactionRequest();
+        transactionRequest.setFundType(FundType.FREE);
+        Transaction transaction = TransactionTransformer.transactionRequestToTransaction(transactionRequest);
+        transaction.setDepartment(Department.ROOM_DIVISION);
+        transaction.setGuest(newBooking.getGuest());
+        transaction.setRoom(currRoom);
+        transaction.setComments("ROOM CHANGE");
+
+        currBooking.setBookingStatus(BookingStatus.CANCELLED);
+
+        currGuest.getTransactionList().add(transaction);
+        newBooking.getRoom().getTransactionList().add(transaction);
+        guestRepository.save(currGuest);
+        roomRepository.save(currRoom);
+        newBooking.setTransaction(transaction);
+        Booking booking = bookingRepository.save(newBooking);
+        Booking savedBooking = bookingRepository.save(currBooking);
+        transaction.setBooking(savedBooking);
+        transactionRepository.save(transaction);
+        return BookingTransformer.bookingToBookingResponse(savedBooking);
+
     }
 
-    public BookingResponse changeBookingRoomWithUpgradingIfPossible(String bookingId) {
-    }
+
 
     public BookingResponse getBookingByBookingId(String bookingId) {
         Booking booking = bookingRepository.findByBookingId(bookingId);
         return BookingTransformer.bookingToBookingResponse(booking);
     }
+
+    public List<BookingResponse> getAllBookingByGuestEmail(String guestEmail) {
+        List<Booking> bookingList = bookingRepository.getAllBookingByGuestEmail(guestEmail);
+        List<BookingResponse> responseList = new ArrayList<>();
+        for(Booking booking:bookingList)
+            responseList.add(BookingTransformer.bookingToBookingResponse(booking));
+
+        return responseList;
+    }
+
+    public List<BookingResponse> getAllBookingBetweenDates(Date fromdate, Date toDate) {
+        List<Booking> bookingList = bookingRepository.getAllBookingBetweenDates(fromdate, toDate);
+        List<BookingResponse> responseList = new ArrayList<>();
+        for(Booking booking:bookingList)
+            responseList.add(BookingTransformer.bookingToBookingResponse(booking));
+
+        return responseList;
+    }
+
+    public List<BookingResponse> getAllBookingOccupiedOnGivenDate(Date date) {
+        List<Booking> bookingList = bookingRepository.getAllBookingOccupiedOnGivenDate(date);
+        List<BookingResponse> responseList = new ArrayList<>();
+        for(Booking booking:bookingList)
+            responseList.add(BookingTransformer.bookingToBookingResponse(booking));
+
+        return responseList;
+    }
+
+
+
+
 
     public List<BookingResponse> getAllUpcomingArrivalBooking() {
         List<Booking> bookingList = bookingRepository.getAllUpcomingArrivalBooking();
@@ -177,14 +350,19 @@ public class BookingService {
         return responseList;
     }
 
-    public List<BookingResponse> getAllBookingBetweenDates(Date fromdate, Date toDate) {
-        List<Booking> bookingList = bookingRepository.getAllBookingBetweenDates(fromdate, toDate);
+    public List<BookingResponse> getAllUpcomingArrivalStayMoreThanNDays(int n) {
+        List<Booking> bookingList = bookingRepository.getAllUpcomingArrivalStayMoreThanNDays(n);
         List<BookingResponse> responseList = new ArrayList<>();
         for(Booking booking:bookingList)
             responseList.add(BookingTransformer.bookingToBookingResponse(booking));
 
         return responseList;
     }
+
+
+
+
+
 
     public List<BookingResponse> getAllCheckedOutBookingBetweenDates(Date fromDate, Date toDate) {
         List<Booking> bookingList = bookingRepository.getAllCheckedOutBookingBetweenDates(fromDate, toDate);
@@ -204,6 +382,10 @@ public class BookingService {
         return responseList;
     }
 
+
+
+
+
     public List<BookingResponse> getAllCancelledBookingBetweenDates(Date fromDate, Date toDate) {
         List<Booking> bookingList = bookingRepository.getAllCancelledBookingBetweenDates(fromDate, toDate);
         List<BookingResponse> responseList = new ArrayList<>();
@@ -221,24 +403,6 @@ public class BookingService {
 
         return responseList;
     }
-    
 
 
-    public List<BookingResponse> getAllUpcomingArrivalStayMoreThanNDays(int n) {
-        List<Booking> bookingList = bookingRepository.getAllUpcomingArrivalStayMoreThanNDays(n);
-        List<BookingResponse> responseList = new ArrayList<>();
-        for(Booking booking:bookingList)
-            responseList.add(BookingTransformer.bookingToBookingResponse(booking));
-
-        return responseList;
-    }
-
-    public List<BookingResponse> getAllBookingOccupiedOnGivenDate(Date date) {
-        List<Booking> bookingList = bookingRepository.getAllBookingOccupiedOnGivenDate(date);
-        List<BookingResponse> responseList = new ArrayList<>();
-        for(Booking booking:bookingList)
-            responseList.add(BookingTransformer.bookingToBookingResponse(booking));
-
-        return responseList;
-    }
 }

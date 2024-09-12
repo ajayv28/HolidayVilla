@@ -22,13 +22,16 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
     public Booking findByBookingId(String bookingId);
 
+    @Query(value = "select * from booking where guest_id = (select id from guest where email = :guestEmail", nativeQuery=true)
+    public List<Booking> getAllBookingByGuestEmail(String guestEmail);
+
     @Query(value = "select * from booking where from_date > curdate()", nativeQuery=true)
     public List<Booking> getAllUpcomingArrivalBooking();
 
     @Query(value = "select * from booking where from_date > curdate() and room_id = (select id from room where room_no = :roomNo", nativeQuery=true)
     public List<Booking> getAllUpcomingArrivalBookingByRoomNo(String roomNo);
 
-    @Query(value = "select * from booking where from_date > curdate() and room_id = (select id from guest where email = :guestEmail", nativeQuery=true)
+    @Query(value = "select * from booking where from_date > curdate() and guest_id = (select id from guest where email = :guestEmail", nativeQuery=true)
     public List<Booking> getAllUpcomingArrivalBookingByGuestEmail(String guestEmail);
 
     @Query(value="select * from booking where from_date <= :toDate and to_date >= :fromDate", nativeQuery=true)
@@ -51,4 +54,6 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
     @Query(value="select * from booking where from_date <= :date and to_date >= :date", nativeQuery=true)
     public List<Booking> getAllBookingOccupiedOnGivenDate(Date date);
+
+
 }

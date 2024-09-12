@@ -1,5 +1,6 @@
 package com.ajay.HolidayVilla.model;
 
+import com.ajay.HolidayVilla.Enum.Department;
 import com.ajay.HolidayVilla.Enum.FundType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,6 +30,16 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     FundType fundType;
 
+    String period;
+
+    String comments;
+
+
+    //we will manually map below based on requirement in service layers wherever money transaction takes place
+
+    @Enumerated(EnumType.STRING)
+    Department department;
+
     @ManyToOne
     @JoinColumn
     Room room;
@@ -36,6 +47,10 @@ public class Transaction {
     @ManyToOne
     @JoinColumn
     Guest guest;
+
+    @ManyToOne
+    @JoinColumn
+    Staff staff;
 
     @OneToOne
     @JoinColumn

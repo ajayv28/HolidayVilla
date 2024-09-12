@@ -1,21 +1,15 @@
 package com.ajay.HolidayVilla.controller;
 
-import com.ajay.HolidayVilla.Enum.RoomStatus;
-import com.ajay.HolidayVilla.dto.request.MaintenanceRequest;
+import com.ajay.HolidayVilla.Enum.Department;
 import com.ajay.HolidayVilla.dto.request.StaffRequest;
-import com.ajay.HolidayVilla.dto.response.BookingResponse;
-import com.ajay.HolidayVilla.dto.response.MaintenanceResponse;
-import com.ajay.HolidayVilla.dto.response.RoomResponse;
 import com.ajay.HolidayVilla.dto.response.StaffResponse;
-import com.ajay.HolidayVilla.service.BookingService;
-import com.ajay.HolidayVilla.service.RoomService;
+import com.ajay.HolidayVilla.dto.response.TransactionResponse;
 import com.ajay.HolidayVilla.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -25,151 +19,90 @@ public class StaffController {
     @Autowired
     StaffService staffService;
 
-    @Autowired
-    BookingService bookingService;
 
-    @Autowired
-    RoomService roomService;
-
-
-    //    change booking to another room and notify guest ***************************
-//return excepotion if no room available
-    @GetMapping("/change-booking-room-ifPossible")
-    public ResponseEntity changeBookingRoomIfPossible(@RequestParam String bookingId){
-        BookingResponse bookingResponse = bookingService.changeBookingRoomIfPossible(bookingId);
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
+    @PostMapping("/onBoard")
+    public ResponseEntity onBoardStaff(@RequestBody StaffRequest staffRequest){
+        StaffResponse staffResponse = staffService.onBoardStaff(staffRequest);
+        return new ResponseEntity(staffResponse, HttpStatus.CREATED);
     }
 
-    @GetMapping("/change-booking-room-with-upgrading-ifPossible")
-    public ResponseEntity changeBookingRoomWithUpgradingIfPossible(@RequestParam String bookingId){
-        BookingResponse bookingResponse = bookingService.changeBookingRoomWithUpgradingIfPossible(bookingId);
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
+    @PutMapping("/offBoard")
+    public ResponseEntity offBoardStaff(@RequestParam String staffEmail){
+        StaffResponse staffResponse = staffService.offBoardStaff(staffEmail);
+        return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
-
-    @PutMapping("/cancel-booking-by-guestEmail")
-    public ResponseEntity cancelBookingByGuestEmail(@RequestParam String guestEmail){
-        BookingResponse bookingResponse = bookingService.cancelBooking(guestEmail);
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
+    @GetMapping("/get-staff-by-staffEmail")
+    public ResponseEntity getStaffByStaffEmail(@RequestParam String staffEmail){
+        StaffResponse staffResponse = staffService.getStaffByStaffEmail(staffEmail);
+        return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
-
-
-
-    @GetMapping("/get-all-inhouse-breakfast-booking")
-    @GetMapping("/get-all-inhouse-no-breakfast-booking")
-    @PutMapping("/check-in-with-bookingId")
-    @PutMapping("/check-out-with-bookingId")
-
-
-    @GetMapping("/get-all-upcoming-arrival-booking") //sort by room type
-    public ResponseEntity getAllUpcomingArrivalBooking(){
-        List<BookingResponse> bookingResponse = bookingService.getAllUpcomingArrivalBooking();
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
+    @PutMapping("/reset-password")
+    public ResponseEntity resetPassword(@RequestParam String staffEmail, @RequestParam String newPassword){
+        StaffResponse staffResponse = staffService.resetPassword(staffEmail, newPassword);
+        return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/get-all-upcoming-arrival-booking-by-roomNo")
-    public ResponseEntity getAllUpcomingArrivalBookingByRoomNo(@RequestParam String roomNo){
-        List<BookingResponse> bookingResponse = bookingService.getAllUpcomingArrivalBookingByRoomNo(roomNo);
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
+    @PutMapping("/change-role")
+    public ResponseEntity changeRole(@RequestParam String staffEmail, @RequestParam Department department){
+        StaffResponse staffResponse = staffService.changeRole(staffEmail, department.toString());
+        return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/get-all-upcoming-arrival-booking-by-guestEmail")
-    public ResponseEntity getAllUpcomingArrivalBookingByGuestEmail(@RequestParam String guestEmail){
-        List<BookingResponse> bookingResponse = bookingService.getAllUpcomingArrivalBookingByGuestEmail(guestEmail);
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
+    @PutMapping("/make-staff-manager-access")
+    public ResponseEntity makeStaffManagerAccess(@RequestParam String staffEmail){
+        StaffResponse staffResponse = staffService.makeStaffManagerAccess(staffEmail);
+        return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
+    @GetMapping("/all-current-staff")
+    public ResponseEntity getAllCurrentStaff(){
+        List<StaffResponse> staffResponse = staffService.getAllCurrentStaff();
+        return new ResponseEntity(staffResponse, HttpStatus.OK);
+    }
 
+    @GetMapping("/all-ex-staff")
+    public ResponseEntity getAllExStaff(){
+        List<StaffResponse> staffResponse = staffService.getAllExStaff();
+        return new ResponseEntity(staffResponse, HttpStatus.OK);
+    }
 
+    @GetMapping("/all-current-staff-by-department")
+    public ResponseEntity getAllCurrentStaffByDepartment(@RequestParam Department department){
+        List<StaffResponse> staffResponse = staffService.getAllCurrentStaffByDepartment(department.toString());
+        return new ResponseEntity(staffResponse, HttpStatus.OK);
+    }
 
-
-    @PutMapping("/cancel-booking-by-bookingId")
-    public ResponseEntity cancelBookingByBookingId(@RequestParam String bookingId){
-        BookingResponse bookingResponse = bookingService.cancelBookingByBookingId(bookingId);
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
+    @GetMapping("/all-ex-staff-by-department")
+    public ResponseEntity getAllExStaffByDepartment(@RequestParam Department department){
+        List<StaffResponse> staffResponse = staffService.getAllExStaffByDepartment(department.toString());
+        return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
 
 
 
-    @GetMapping("/get-booking-by-bookingId")
-    public ResponseEntity getBookingByBookingId(@RequestParam String bookingId){
-        BookingResponse bookingResponse = bookingService.getBookingByBookingId(bookingId);
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
+
+    @GetMapping("/get-staff-salary-by-staffEmail")
+    public ResponseEntity getStaffSalaryByStaffEmail(@RequestParam String staffEmail){
+        double staffResponse = staffService.getStaffSalaryByStaffEmail(staffEmail);
+        return new ResponseEntity(staffResponse, HttpStatus.OK);
+    }
+
+    @PutMapping("/change-staff-salary-by-staffEmail")
+    public ResponseEntity changeStaffSalaryByStaffEmail(@RequestParam String staffEmail, @RequestParam double newSalary){
+        StaffResponse staffResponse = staffService.changeStaffSalaryByStaffEmail(staffEmail, newSalary);
+        return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
 
-
-
-    @GetMapping("/get-all-booking-between-dates")
-    public ResponseEntity getAllBookingBetweenDates(@RequestParam Date fromdate,@RequestParam Date toDate){
-        List<BookingResponse> bookingResponse = bookingService.getAllBookingBetweenDates(fromdate,toDate);
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
+    @GetMapping("/create-transaction-for-payroll")
+    public ResponseEntity createTransactionForPayroll(){
+        List<TransactionResponse> response = staffService.createTransactionForPayroll();
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
 
-
-
-    @GetMapping("/get-all-checkedOut-booking-between-dates")
-    public ResponseEntity getAllCheckedOutBookingBetweenDates(@RequestParam Date fromDate, Date toDate){
-        List<BookingResponse> bookingResponse = bookingService.getAllCheckedOutBookingBetweenDates(fromDate, toDate);
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
-    }
-
-    @GetMapping("/get-all-checked_out-booking-by-guestEmail")
-    public ResponseEntity getAllCheckedOutBookingByGuestEmail(@RequestParam String guestEmail){
-        List<BookingResponse> bookingResponse = bookingService.getAllCheckedOutBookingByGuestEmail(guestEmail);
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
-    }
-
-    @GetMapping("/get-all-cancelled-booking-between-dates")
-    public ResponseEntity getAllCancelledBookingBetweenDates(@RequestParam Date fromDate, Date toDate){
-        List<BookingResponse> bookingResponse = bookingService.getAllCancelledBookingBetweenDates(fromDate, toDate);
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
-    }
-
-    @GetMapping("/get-all-cancelled-booking-by-guestEmail")
-    public ResponseEntity getAllCancelledBookingByGuestEmail(@RequestParam String guestEmail){
-        List<BookingResponse> bookingResponse = bookingService.getAllCancelledBookingByGuestEmail(guestEmail);
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
-    }
-
-
-    @GetMapping("/get-all-upcoming-arrival-stay-more-than-n-days")
-    public ResponseEntity getAllUpcomingArrivalStayMoreThanNDays(@RequestParam int n){
-        List<BookingResponse> bookingResponse = bookingService.getAllUpcomingArrivalStayMoreThanNDays(n);
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
-    }
-
-    @GetMapping("/get-all-booking-occupied-on-given-date")
-    public ResponseEntity getAllBookingOccupiedOnGivenDate(@RequestParam Date date){
-        List<BookingResponse> bookingResponse = bookingService.getAllBookingOccupiedOnGivenDate(date);
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
-    }
-
-
-
-
-    /////////// ROOM
-
-    @GetMapping("/get-all-today-inhouse-room")
-    public ResponseEntity getAllTodayInHouseRoom(){
-        List<RoomResponse> roomResponse = roomService.getAllTodayInHouseRoom();
-        return new ResponseEntity(roomResponse, HttpStatus.OK);
-    }
-
-    @GetMapping("/get-count-of-today-inhouse-room")
-    public ResponseEntity getCountOfTodayInHouseRoom(){
-        int bookingResponse = roomService.getCountOfTodayInHouseRoom();
-        return new ResponseEntity(bookingResponse, HttpStatus.OK);
-    }
-
-
-    @GetMapping("/get-all-room-by-room-status")  //use to string
-    public ResponseEntity getAllRoomByRoomStatus(@RequestParam RoomStatus roomStatus){
-        List<RoomResponse> roomResponse = roomService.getAllRoomByRoomStatus(roomStatus.toString());
-        return new ResponseEntity(roomResponse, HttpStatus.OK);
-    }
 
 }

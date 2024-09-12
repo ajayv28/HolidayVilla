@@ -1,10 +1,12 @@
 package com.ajay.HolidayVilla.dto.response;
 
+import com.ajay.HolidayVilla.Enum.Department;
 import com.ajay.HolidayVilla.Enum.FundType;
 import com.ajay.HolidayVilla.model.*;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.aspectj.lang.reflect.DeclareParents;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
@@ -22,6 +24,10 @@ public class TransactionResponse {
     Date transactionDateAndTime;
 
     FundType fundType;
+
+    String period;
+
+    Department department;
 
     Room room;
 

@@ -35,8 +35,6 @@ public class Booking {
     @CreationTimestamp
     java.util.Date bookingDate;
 
-    boolean breakfastIncluded;
-
     double totalFare;
 
     @Enumerated(EnumType.STRING)

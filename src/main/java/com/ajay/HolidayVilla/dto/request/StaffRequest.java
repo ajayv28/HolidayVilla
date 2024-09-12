@@ -29,6 +29,8 @@ public class StaffRequest {
 
     int age;
 
+    double salary;
+
     Gender gender;
 
     Department department;
