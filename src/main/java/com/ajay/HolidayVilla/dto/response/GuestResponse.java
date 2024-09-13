@@ -29,4 +29,5 @@ public class GuestResponse {
 
     Gender gender;
 
+    boolean currentlyActiveBooking;
 }

@@ -3,6 +3,7 @@ package com.ajay.HolidayVilla.dto.response;
 import com.ajay.HolidayVilla.Enum.Department;
 import com.ajay.HolidayVilla.Enum.FundType;
 import com.ajay.HolidayVilla.model.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -29,15 +30,23 @@ public class TransactionResponse {
 
     Department department;
 
-    Room room;
+    RoomResponse roomResponse;
 
-    Guest guest;
 
-    Booking booking;
+    StaffResponse staffResponse;
 
-    MaterialRequisition materialRequisition;
 
-    Material material;
+    GuestResponse guestResponse;
 
-    FoodOrder foodOrder;
+    @JsonBackReference
+    BookingResponse bookingResponse;
+
+    @JsonBackReference
+    MaterialRequisitionResponse materialRequisitionResponse;
+
+
+    MaterialResponse materialResponse;
+
+    @JsonBackReference
+    FoodOrderResponse foodOrderResponse;
 }

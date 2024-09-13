@@ -31,14 +31,15 @@ public class TransactionTransformer {
                 .transactionId(transaction.getTransactionId())
                 .transactionDateAndTime(transaction.getTransactionDateAndTime())
                 .fundType(transaction.getFundType())
-                .room(transaction.getRoom())
-                .guest(transaction.getGuest())
-                .booking(transaction.getBooking())
-                .material(transaction.getMaterial())
-                .materialRequisition(transaction.getMaterialRequisition())
-                .foodOrder(transaction.getFoodOrder())
+                .roomResponse(RoomTransformer.roomToRoomResponse(transaction.getRoom()))
+                .guestResponse(GuestTransformer.guestToGuestResponse(transaction.getGuest()))
+                .bookingResponse(BookingTransformer.bookingToBookingResponse(transaction.getBooking()))
+                .materialResponse(MaterialTransformer.materialToMaterialResponse(transaction.getMaterial()))
+                .materialRequisitionResponse(MaterialRequisitionTransformer.materialRequisitionToMaterialRequisitionResponse(transaction.getMaterialRequisition()))
+                .foodOrderResponse(FoodOrderTransformer.foodOrderToFoodOrderResponse(transaction.getFoodOrder()))
                 .period(transaction.getPeriod())
                 .department(transaction.getDepartment())
+                .staffResponse(StaffTransformer.staffToStaffResponse(transaction.getStaff()))
                 .build();
     }
 }

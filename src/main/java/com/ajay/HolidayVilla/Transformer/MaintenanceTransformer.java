@@ -19,8 +19,8 @@ public class MaintenanceTransformer {
     public static MaintenanceResponse maintenanceToMaintenanceResponse(Maintenance maintenance){
         return MaintenanceResponse.builder()
                 .dateOfMaintenance(maintenance.getDateOfMaintenance())
-                .staff(maintenance.getStaff())
-                .room(maintenance.getRoom())
+                .staffResponse(StaffTransformer.staffToStaffResponse(maintenance.getStaff()))
+                .roomResponse(RoomTransformer.roomToRoomResponse(maintenance.getRoom()))
                 .followups(maintenance.getFollowups())
                 .maintenanceId(maintenance.getMaintenanceId())
                 .build();

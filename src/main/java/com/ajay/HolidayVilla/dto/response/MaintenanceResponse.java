@@ -18,12 +18,12 @@ public class MaintenanceResponse {
 
     String maintenanceId;
 
-    Room room;
-
     Date dateOfMaintenance;
 
     String followups;
 
-    Staff staff;
+    RoomResponse roomResponse;
+
+    StaffResponse staffResponse;
 
 }

@@ -22,12 +22,14 @@ public class MaterialRequisitionTransformer {
 
     public static MaterialRequisitionResponse materialRequisitionToMaterialRequisitionResponse(MaterialRequisition materialRequisition){
         return MaterialRequisitionResponse.builder()
-                .requisitionMaterial(materialRequisition.getRequisitionMaterial())
+                .materialResponse(MaterialTransformer.materialToMaterialResponse(materialRequisition.getRequisitionMaterial()))
                 .dateOfRequisition(materialRequisition.getDateOfRequisition())
                 .requisitionId(materialRequisition.getRequisitionId())
                 .department(materialRequisition.getDepartment())
                 .expectingDeliveryDate(materialRequisition.getExpectingDeliveryDate())
                 .requisitionQuantity(materialRequisition.getRequisitionQuantity())
+                .staffResponse(StaffTransformer.staffToStaffResponse(materialRequisition.getRequisitionStaff()))
+                .transactionResponse(TransactionTransformer.transactionToTransactionResponse(materialRequisition.getTransaction()))
                 .build();
     }
 }

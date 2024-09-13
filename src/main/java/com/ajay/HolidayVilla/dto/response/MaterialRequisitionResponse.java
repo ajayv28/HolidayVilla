@@ -1,7 +1,9 @@
 package com.ajay.HolidayVilla.dto.response;
 
 import com.ajay.HolidayVilla.Enum.Department;
+import com.ajay.HolidayVilla.Enum.RequisitionStatus;
 import com.ajay.HolidayVilla.model.Material;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
@@ -26,6 +28,13 @@ public class MaterialRequisitionResponse {
 
     double requisitionQuantity;
 
-    Material requisitionMaterial;
+    RequisitionStatus requisitionStatus;
+
+    MaterialResponse materialResponse;
+
+    StaffResponse staffResponse;
+
+    @JsonManagedReference
+    TransactionResponse transactionResponse;
 
 }

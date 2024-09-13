@@ -19,10 +19,10 @@ public class FoodOrderTransformer {
         return FoodOrderResponse.builder()
                 .orderId(foodOrder.getOrderId())
                 .foodType(foodOrder.getFoodType())
-                .guest(foodOrder.getGuest())
+                .guestResponse(GuestTransformer.guestToGuestResponse(foodOrder.getGuest()))
                 .orderDateAndTime(foodOrder.getOrderDateAndTime())
-                .room(foodOrder.getRoom())
-                .transaction(foodOrder.getTransaction())
+                .roomResponse(RoomTransformer.roomToRoomResponse(foodOrder.getRoom()))
+                .transactionResponse(TransactionTransformer.transactionToTransactionResponse(foodOrder.getTransaction()))
                 .build();
     }
 }

@@ -4,6 +4,8 @@ import com.ajay.HolidayVilla.dto.request.GuestRequest;
 import com.ajay.HolidayVilla.dto.response.GuestResponse;
 import com.ajay.HolidayVilla.model.Guest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class GuestTransformer {
 
@@ -31,6 +33,7 @@ public class GuestTransformer {
                 .dob(guest.getDob())
                 .age(guest.getAge())
                 .gender(guest.getGender())
+                .currentlyActiveBooking(guest.isCurrentlyActiveBooking())
                 .build();
     }
 }

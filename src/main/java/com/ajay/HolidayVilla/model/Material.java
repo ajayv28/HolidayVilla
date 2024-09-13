@@ -28,7 +28,7 @@ public class Material {
 
     double price;
 
-    @OneToMany(mappedBy = "material")
+    @OneToMany(mappedBy = "requisitionMaterial")
     List<MaterialRequisition> materialRequisitionList;
 
     @OneToMany(mappedBy = "material")

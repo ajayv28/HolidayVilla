@@ -4,6 +4,7 @@ import com.ajay.HolidayVilla.Enum.FoodType;
 import com.ajay.HolidayVilla.model.Guest;
 import com.ajay.HolidayVilla.model.Room;
 import com.ajay.HolidayVilla.model.Transaction;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -25,10 +26,11 @@ public class FoodOrderResponse {
 
     FoodType foodType;
 
-    Room room;
+    RoomResponse roomResponse;
 
-    Guest guest;
+    GuestResponse guestResponse;
 
-    Transaction transaction;
+    @JsonManagedReference
+    TransactionResponse transactionResponse;
 
 }

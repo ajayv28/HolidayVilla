@@ -40,13 +40,11 @@ public class Room {
     @CreationTimestamp
     Date lastMaintenanceDone;
 
-    List<Maintenance> maintenanceHistory;
-
     @OneToMany(mappedBy = "room")
     List<Booking> bookingList;
 
     @OneToMany(mappedBy = "room")
-    List<Maintenance> maintenanceList;
+    List<Maintenance> maintenanceHistory;
 
     @OneToMany(mappedBy = "room")
     List<Transaction> transactionList;
