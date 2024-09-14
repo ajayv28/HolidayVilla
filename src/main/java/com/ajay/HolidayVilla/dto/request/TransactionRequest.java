@@ -18,4 +18,8 @@ public class TransactionRequest {
 
     FundType fundType;
 
+    double amount;
+
+    String comments;
+
 }

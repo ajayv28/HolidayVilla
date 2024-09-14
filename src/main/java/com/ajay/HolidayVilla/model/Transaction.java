@@ -22,6 +22,7 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
+    @Column(unique = true, nullable = false)
     String transactionId;
 
     @CreationTimestamp
@@ -34,6 +35,7 @@ public class Transaction {
 
     String comments;
 
+    double amount;
 
     //we will manually map below based on requirement in service layers wherever money transaction takes place
 

@@ -98,6 +98,7 @@ public class BookingService {
             transaction.setDepartment(Department.ROOM_DIVISION);
             transaction.setGuest(currGuest);
             transaction.setRoom(currRoom);
+            transaction.setAmount(totalFare-offerAmount);
             transaction.setComments("New Room Booking");
             transactionRepository.save(transaction);
 
@@ -145,12 +146,14 @@ public class BookingService {
         transaction.setDepartment(Department.ROOM_DIVISION);
         transaction.setGuest(currGuest);
         transaction.setRoom(booking.getRoom());
+        transaction.setAmount(booking.getTotalFare());
         transaction.setComments("Refund - Room Booking Cancellation");
 
         currGuest.getTransactionList().add(transaction);
         booking.getRoom().getTransactionList().add(transaction);
         guestRepository.save(currGuest);
         roomRepository.save(booking.getRoom());
+        transaction = transactionRepository.save(transaction);
         booking.setTransaction(transaction);
         //****send mail to guest
 
@@ -190,12 +193,14 @@ public class BookingService {
         transaction.setDepartment(Department.ROOM_DIVISION);
         transaction.setGuest(currGuest);
         transaction.setRoom(currBooking.getRoom());
+        transaction.setAmount(currBooking.getTotalFare());
         transaction.setComments("Refund - Room Booking Cancellation");
 
         currGuest.getTransactionList().add(transaction);
         currBooking.getRoom().getTransactionList().add(transaction);
         guestRepository.save(currGuest);
         roomRepository.save(currBooking.getRoom());
+        transaction = transactionRepository.save(transaction);
         currBooking.setTransaction(transaction);
         //****send mail to guest
 
@@ -237,15 +242,16 @@ public class BookingService {
         newBooking.setFromDate(currBooking.getFromDate());
         newBooking.setToDate(currBooking.getToDate());
         newBooking.setCouponCode(currBooking.getCouponCode());
+        newBooking.setBookingId(String.valueOf(UUID.randomUUID()));
 
         double offerPercent = 0.0;
 
         if(newBooking.getCouponCode().length()>0) {
-            Coupon newCoupon = couponRepository.findByCouponCode(currBooking.getCouponCode());
+            Coupon newCoupon = couponRepository.findByCouponCode(newBooking.getCouponCode());
             offerPercent = newCoupon.getOfferPercentage();
             newBooking.setCouponCode(newCoupon.getCouponCode());
         }
-        Period period = Period.between(currBooking.getFromDate().toLocalDate(), currBooking.getToDate().toLocalDate());
+        Period period = Period.between(newBooking.getFromDate().toLocalDate(), newBooking.getToDate().toLocalDate());
         double totalDays= period.getDays()+1;
         double totalFare = currRoom.getFarePerDay()*totalDays;
         double offerAmount = (totalFare * offerPercent) / 100;
@@ -269,16 +275,19 @@ public class BookingService {
         transaction.setGuest(newBooking.getGuest());
         transaction.setRoom(currRoom);
         transaction.setComments("ROOM CHANGE");
+        transaction.setAmount(0.0);
+        transactionRepository.save(transaction);
 
         currBooking.setBookingStatus(BookingStatus.CANCELLED);
+        bookingRepository.save(currBooking);
 
         currGuest.getTransactionList().add(transaction);
         newBooking.getRoom().getTransactionList().add(transaction);
         guestRepository.save(currGuest);
         roomRepository.save(currRoom);
         newBooking.setTransaction(transaction);
-        Booking booking = bookingRepository.save(newBooking);
-        Booking savedBooking = bookingRepository.save(currBooking);
+
+        Booking savedBooking = bookingRepository.save(newBooking);
         transaction.setBooking(savedBooking);
         transactionRepository.save(transaction);
         return BookingTransformer.bookingToBookingResponse(savedBooking);

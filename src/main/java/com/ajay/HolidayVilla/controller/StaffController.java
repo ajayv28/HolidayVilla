@@ -8,12 +8,15 @@ import com.ajay.HolidayVilla.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/staff")
+@RequestMapping("/api/staff")
 public class StaffController {
 
     @Autowired
@@ -21,9 +24,18 @@ public class StaffController {
 
 
     @PostMapping("/onBoard")
-    public ResponseEntity onBoardStaff(@RequestBody StaffRequest staffRequest){
-        StaffResponse staffResponse = staffService.onBoardStaff(staffRequest);
+    public ResponseEntity onBoardStaff(@RequestBody StaffRequest staffRequest, @AuthenticationPrincipal UserDetails userDetails){
+        String staffEmail = userDetails.getUsername();
+        StaffResponse staffResponse = staffService.onBoardStaff(staffRequest, staffEmail);
         return new ResponseEntity(staffResponse, HttpStatus.CREATED);
+    }
+
+    @PreAuthorize("hasRole('MANAGER')")
+    @PutMapping("/make-staff-as-manager")
+    public ResponseEntity makeStaffAsManager(@RequestParam String staffEmail, @AuthenticationPrincipal UserDetails userDetails){
+        String currStaffEmail = userDetails.getUsername();
+        StaffResponse staffResponse = staffService.makeStaffAsManager(staffEmail, currStaffEmail);
+        return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
     @PutMapping("/offBoard")

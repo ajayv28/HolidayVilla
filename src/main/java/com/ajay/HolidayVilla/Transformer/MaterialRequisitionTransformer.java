@@ -4,6 +4,9 @@ import com.ajay.HolidayVilla.Enum.RequisitionStatus;
 import com.ajay.HolidayVilla.dto.request.MaterialRequisitionRequest;
 import com.ajay.HolidayVilla.dto.response.MaterialRequisitionResponse;
 import com.ajay.HolidayVilla.model.MaterialRequisition;
+import com.ajay.HolidayVilla.repository.MaterialRepository;
+import com.ajay.HolidayVilla.repository.MaterialRequisitionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
 
@@ -11,7 +14,6 @@ public class MaterialRequisitionTransformer {
 
     public static MaterialRequisition materialRequisitionRequestToMaterialRequisition(MaterialRequisitionRequest materialRequisitionRequest){
         return MaterialRequisition.builder()
-                .requisitionMaterial(materialRequisitionRequest.getRequisitionMaterial())
                 .requisitionId(String.valueOf(UUID.randomUUID()))
                 .expectingDeliveryDate(materialRequisitionRequest.getExpectingDeliveryDate())
                 .requisitionQuantity(materialRequisitionRequest.getRequisitionQuantity())

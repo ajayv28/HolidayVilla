@@ -21,4 +21,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
 
     @Query(value = "select * from transaction where transaction_date_and_time >= :fromDate and transaction_date_and_time <= :toDate", nativeQuery = true)
     public List<Transaction> getTransactionsMadeBetweenDates(Date fromDate, Date toDate);
+
+    @Query(value = "select * from transaction where amount >= :fromAmount and amount <= :toAmount", nativeQuery = true)
+    public List<Transaction> getTransactionsMadeBetweenAmount(double fromAmount, double toAmount);
 }

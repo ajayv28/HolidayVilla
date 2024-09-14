@@ -22,7 +22,10 @@ public class FoodOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
+    @Column(unique = true, nullable = false)
     String orderId;
+
+    double amount;
 
     @CreationTimestamp
     Date orderDateAndTime;

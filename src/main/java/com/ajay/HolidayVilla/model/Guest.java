@@ -34,8 +34,6 @@ public class Guest {
 
     Date dob;
 
-    int age;
-
     @Enumerated(EnumType.STRING)
     Gender gender;
 

@@ -40,8 +40,6 @@ public class Staff {
 
     Date dob;
 
-    int age;
-
     @Enumerated(EnumType.STRING)
     Gender gender;
 
@@ -55,7 +53,7 @@ public class Staff {
     @OneToMany(mappedBy = "staff")
     List<Maintenance> maintenanceList;
 
-    @OneToMany(mappedBy = "staff")
+    @OneToMany(mappedBy = "requisitionStaff")
     List<MaterialRequisition> materialRequisitionList;
 
     @OneToMany(mappedBy = "staff")

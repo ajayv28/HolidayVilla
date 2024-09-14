@@ -15,7 +15,7 @@ import java.sql.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/maintenance")
+@RequestMapping("/api/maintenance")
 public class MaintenanceController {
 
     @Autowired

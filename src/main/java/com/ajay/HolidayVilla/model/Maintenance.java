@@ -19,7 +19,12 @@ public class Maintenance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
+    @Column(unique = true, nullable = false)
     String maintenanceId;
+
+    Date dateOfMaintenance;
+
+    String followups;
 
     @ManyToOne
     @JoinColumn
@@ -29,8 +34,5 @@ public class Maintenance {
     @JoinColumn
     Room room;
 
-    Date dateOfMaintenance;
-
-    String followups;
 
 }

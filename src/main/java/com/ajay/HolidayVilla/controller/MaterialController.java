@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/material")
+@RequestMapping("/api/material")
 public class MaterialController {
 
     @Autowired

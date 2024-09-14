@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface GuestRepository extends JpaRepository<Guest, Integer> {
 
     public Guest findByEmail(String guestEmail);
+
+    public Guest findByPhoneNumber(long phoneNumber);
 }

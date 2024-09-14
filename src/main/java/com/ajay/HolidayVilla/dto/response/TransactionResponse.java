@@ -26,7 +26,11 @@ public class TransactionResponse {
 
     FundType fundType;
 
+    double amount;
+
     String period;
+
+    String comments;
 
     Department department;
 

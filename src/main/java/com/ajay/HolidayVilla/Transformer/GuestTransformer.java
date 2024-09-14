@@ -18,7 +18,6 @@ public class GuestTransformer {
                 .password(passwordEncoder.encode(guestRequest.getPassword()))
                 .name(guestRequest.getName())
                 .dob(guestRequest.getDob())
-                .age(guestRequest.getAge())
                 .gender(guestRequest.getGender())
                 .currentlyActiveBooking(false)
                 .role("ROLE_GUEST")
@@ -31,7 +30,6 @@ public class GuestTransformer {
                 .phoneNumber(guest.getPhoneNumber())
                 .name(guest.getName())
                 .dob(guest.getDob())
-                .age(guest.getAge())
                 .gender(guest.getGender())
                 .currentlyActiveBooking(guest.isCurrentlyActiveBooking())
                 .build();

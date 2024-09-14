@@ -9,12 +9,13 @@ import com.ajay.HolidayVilla.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/room")
+@RequestMapping("/api/room")
 public class RoomController {
 
     @Autowired
@@ -23,6 +24,7 @@ public class RoomController {
     @Autowired
     BookingService bookingService;
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping("/add")
     public ResponseEntity addRoom(@RequestBody RoomRequest roomRequest){
         RoomResponse roomResponse = roomService.addRoom(roomRequest);

@@ -12,6 +12,8 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
 
     public Staff findByEmail(String email);
 
+    public Staff findByPhoneNumber(long phoneNumber);
+
     @Query(value = "select * from staff where employment_status = true", nativeQuery = true)
     public List<Staff> getAllCurrentStaff();
 

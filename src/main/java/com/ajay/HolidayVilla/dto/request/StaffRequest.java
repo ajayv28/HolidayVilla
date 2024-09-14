@@ -27,8 +27,6 @@ public class StaffRequest {
 
     Date dob;
 
-    int age;
-
     double salary;
 
     Gender gender;

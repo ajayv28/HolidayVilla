@@ -46,6 +46,7 @@ public class MaterialRequisitionService {
         MaterialRequisition materialRequisition = MaterialRequisitionTransformer.materialRequisitionRequestToMaterialRequisition(materialRequisitionRequest);
 
         materialRequisition.setRequisitionStaff(staff);
+        materialRequisition.setRequisitionMaterial(materialRepository.findByMaterialName(materialRequisitionRequest.getRequisitionMaterial()));
         MaterialRequisition savedMaterialRequisition = materialRequisitionRepository.save(materialRequisition);
 
         staff.getMaterialRequisitionList().add(savedMaterialRequisition);
@@ -75,6 +76,7 @@ public class MaterialRequisitionService {
         transaction.setDepartment(materialRequisition.getDepartment());
         transaction.setMaterial(materialRequisition.getRequisitionMaterial());
         transaction.setMaterialRequisition(materialRequisition);
+        transaction.setAmount(materialRequisition.getRequisitionQuantity()*materialRequisition.getRequisitionMaterial().getPrice());
         transaction.setComments("MATERIAL PURCHASE");
         Transaction savedTransaction = transactionRepository.save(transaction);
 

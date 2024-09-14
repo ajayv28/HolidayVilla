@@ -12,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RoomRequest {
 
-    String roomNO;
+    String roomNo;
 
     RoomType roomType;
 

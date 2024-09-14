@@ -35,7 +35,7 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     public List<Booking> getAllUpcomingArrivalBookingByGuestEmail(String guestEmail);
 
     @Query(value="select * from booking where from_date <= :toDate and to_date >= :fromDate", nativeQuery=true)
-    public List<Booking> getAllBookingBetweenDates(Date fromdate, Date toDate);
+    public List<Booking> getAllBookingBetweenDates(Date fromDate, Date toDate);
 
     @Query(value="select * from booking where booking_status = 'GUEST_CHECKED_OUT' and from_date <= :toDate and to_date >= :fromDate", nativeQuery=true)
     public List<Booking> getAllCheckedOutBookingBetweenDates(Date fromDate, Date toDate);

@@ -18,7 +18,7 @@ import java.sql.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/material-requisition")
+@RequestMapping("/api/material-requisition")
 public class MaterialRequisitionController {
 
     @Autowired

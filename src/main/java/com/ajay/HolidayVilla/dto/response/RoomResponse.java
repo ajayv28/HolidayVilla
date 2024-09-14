@@ -13,7 +13,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class RoomResponse {
 
-    String roomNO;
+    String roomNo;
 
     RoomType roomType;
 

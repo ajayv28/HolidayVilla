@@ -27,7 +27,5 @@ public class StaffResponse {
 
     Date dob;
 
-    int age;
-
     Gender gender;
 }

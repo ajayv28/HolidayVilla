@@ -16,7 +16,7 @@ import java.sql.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/transaction")
+@RequestMapping("/api/transaction")
 public class TransactionController {
 
     @Autowired
@@ -55,4 +55,9 @@ public class TransactionController {
     }
 
 
+    @GetMapping("/get-transactions-made-between-amounts")
+    public ResponseEntity getTransactionsMadeBetweenAmount(@RequestParam double fromAmount, @RequestParam double toAmount){
+        List<TransactionResponse> transactionResponseList = transactionService.getTransactionsMadeBetweenAmount(fromAmount, toAmount);
+        return new ResponseEntity(transactionResponseList, HttpStatus.OK);
+    }
 }

@@ -25,8 +25,6 @@ public class GuestResponse {
 
     Date dob;
 
-    int age;
-
     Gender gender;
 
     boolean currentlyActiveBooking;

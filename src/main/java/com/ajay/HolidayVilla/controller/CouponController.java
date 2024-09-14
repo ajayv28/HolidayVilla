@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/coupon")
+@RequestMapping("/api/coupon")
 public class CouponController {
 
     @Autowired

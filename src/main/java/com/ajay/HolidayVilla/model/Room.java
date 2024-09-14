@@ -25,7 +25,7 @@ public class Room {
     int id;
 
     @Column(unique = true, nullable = false)
-    String roomNO;
+    String roomNo;
 
     @Enumerated(EnumType.STRING)
     RoomType roomType;

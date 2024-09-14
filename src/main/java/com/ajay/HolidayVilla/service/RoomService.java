@@ -5,6 +5,7 @@ import com.ajay.HolidayVilla.Enum.RoomStatus;
 import com.ajay.HolidayVilla.Transformer.RoomTransformer;
 import com.ajay.HolidayVilla.dto.request.RoomRequest;
 import com.ajay.HolidayVilla.dto.response.RoomResponse;
+import com.ajay.HolidayVilla.exception.AlreadyRegisteredException;
 import com.ajay.HolidayVilla.model.Booking;
 import com.ajay.HolidayVilla.model.Guest;
 import com.ajay.HolidayVilla.model.Room;
@@ -36,6 +37,8 @@ public class RoomService {
 
 
     public RoomResponse addRoom(RoomRequest roomRequest) {
+        if(roomRepository.findByRoomNo(roomRequest.getRoomNo()) != null)
+            throw new AlreadyRegisteredException("ROOM NUMBER is already existing in the current facility. Kindly consider another unique number");
         Room savedRoom = roomRepository.save(RoomTransformer.roomRequestToRoom(roomRequest));
         return RoomTransformer.roomToRoomResponse(savedRoom);
     }
@@ -47,11 +50,9 @@ public class RoomService {
         Room room = booking.getRoom();
 
         booking.setBookingStatus(BookingStatus.GUEST_IN_HOUSE);
-        guest.setCurrentlyActiveBooking(false);
         room.setRoomStatus(RoomStatus.OCCUPIED);
 
         bookingRepository.save(booking);
-        guestRepository.save(guest);
         return RoomTransformer.roomToRoomResponse(roomRepository.save(room));
     }
 
@@ -61,11 +62,13 @@ public class RoomService {
         Room room = booking.getRoom();
 
         booking.setBookingStatus(BookingStatus.GUEST_CHECKED_OUT);
+        guest.setCurrentlyActiveBooking(false);
         room.setRoomStatus(RoomStatus.VACANT);
 
         //*************notify hk to clean
 
         bookingRepository.save(booking);
+        guestRepository.save(guest);
         return RoomTransformer.roomToRoomResponse(roomRepository.save(room));
     }
 

@@ -42,17 +42,27 @@ public class FoodOrderService {
     public FoodOrderResponse orderFood(FoodOrderRequest foodOrderRequest, String guestEmail) {
         Guest guest = guestRepository.findByEmail(guestEmail);
         FoodOrder foodOrder = FoodOrderTransformer.foodOrderRequestToFoodOrder(foodOrderRequest);
-        foodOrderRepository.save(foodOrder);
+        FoodOrder savedFoodOrder = foodOrderRepository.save(foodOrder);
         if(foodOrderRequest.getRoomNo().length()>0) {
             Room room = roomRepository.findByRoomNo(foodOrderRequest.getRoomNo());
-            foodOrder.setRoom(room);
-            room.getFoodOrderList().add(foodOrder);
+            savedFoodOrder.setRoom(room);
+            room.getFoodOrderList().add(savedFoodOrder);
             roomRepository.save(room);
         }
-        foodOrder.setGuest(guest);
-        guest.getFoodOrderList().add(foodOrder);
+        savedFoodOrder.setGuest(guest);
+        guest.getFoodOrderList().add(savedFoodOrder);
 
         guestRepository.save(guest);
+
+        double currAmount = 0.0;
+        if (savedFoodOrder.getFoodType().toString() == "BREAKFAST")
+            currAmount = 500.0;
+        else if(savedFoodOrder.getFoodType().toString() == "LUNCH")
+            currAmount = 1500;
+        else if(savedFoodOrder.getFoodType().toString() == "DINNER")
+            currAmount = 1000.0;
+
+        savedFoodOrder.setAmount(currAmount);
 
         TransactionRequest transactionRequest = new TransactionRequest();
         transactionRequest.setFundType(FundType.CREDIT);
@@ -60,12 +70,13 @@ public class FoodOrderService {
         transaction.setDepartment(Department.KITCHEN_FOOD);
         transaction.setGuest(guest);
         transaction.setComments("FOOD ORDER");
-
-        FoodOrder savedFoodOrder = foodOrderRepository.save(foodOrder);
         transaction.setFoodOrder(savedFoodOrder);
-        transactionRepository.save(transaction);
+        transaction.setAmount(currAmount);
+        transaction = transactionRepository.save(transaction);
 
         guest.getTransactionList().add(transaction);
+        guestRepository.save(guest);
+
         savedFoodOrder.setTransaction(transaction);
         savedFoodOrder = foodOrderRepository.save(savedFoodOrder);
         //send mail to KITCHEN
@@ -77,6 +88,7 @@ public class FoodOrderService {
         FoodOrderResponse foodOrderResponse = orderFood(foodOrderRequest,guestEmail);
         FoodOrder foodOrder = foodOrderRepository.findByOrderId(foodOrderResponse.getOrderId());
         foodOrder.getTransaction().setFundType(FundType.FREE);
+        foodOrder.getTransaction().setAmount(0.0);
         foodOrder.getTransaction().setComments("COMPENSATION FOOD ORDER");
         transactionRepository.save(foodOrder.getTransaction());
 

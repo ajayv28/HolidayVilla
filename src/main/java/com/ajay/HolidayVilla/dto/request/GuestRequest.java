@@ -27,8 +27,6 @@ public class GuestRequest {
 
     Date dob;
 
-    int age;
-
     Gender gender;
 
 }

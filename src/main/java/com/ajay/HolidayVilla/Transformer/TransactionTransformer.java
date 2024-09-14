@@ -23,6 +23,8 @@ public class TransactionTransformer {
                 .fundType(transactionRequest.getFundType())
                 .transactionId(String.valueOf(UUID.randomUUID()))
                 .period(period)
+                .comments(transactionRequest.getComments())
+                .amount(transactionRequest.getAmount())
                 .build();
     }
 
@@ -40,6 +42,8 @@ public class TransactionTransformer {
                 .period(transaction.getPeriod())
                 .department(transaction.getDepartment())
                 .staffResponse(StaffTransformer.staffToStaffResponse(transaction.getStaff()))
+                .comments(transaction.getComments())
+                .amount(transaction.getAmount())
                 .build();
     }
 }

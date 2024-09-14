@@ -21,6 +21,6 @@ public class MaterialRequisitionRequest {
 
     double requisitionQuantity;
 
-    Material requisitionMaterial;
+    String requisitionMaterial;
 
 }

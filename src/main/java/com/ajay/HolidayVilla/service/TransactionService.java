@@ -63,4 +63,14 @@ public class TransactionService {
             transactionResponseList.add(TransactionTransformer.transactionToTransactionResponse(transaction));
         return transactionResponseList;
     }
+
+    public List<TransactionResponse> getTransactionsMadeBetweenAmount(double fromAmount, double toAmount) {
+        List<Transaction> transactionList = transactionRepository.getTransactionsMadeBetweenAmount(fromAmount, toAmount);
+        List<TransactionResponse> transactionResponseList = new ArrayList<>();
+
+        for(Transaction transaction : transactionList)
+            transactionResponseList.add(TransactionTransformer.transactionToTransactionResponse(transaction));
+        return transactionResponseList;
+    }
 }
+

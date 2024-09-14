@@ -1,9 +1,6 @@
 package com.ajay.HolidayVilla.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -20,6 +17,7 @@ public class Coupon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
+    @Column(unique = true, nullable = false)
     String couponCode;
 
     int quantityRemaining;
