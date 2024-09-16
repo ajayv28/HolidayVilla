@@ -31,7 +31,7 @@ public class MaterialRequisitionTransformer {
                 .expectingDeliveryDate(materialRequisition.getExpectingDeliveryDate())
                 .requisitionQuantity(materialRequisition.getRequisitionQuantity())
                 .staffResponse(StaffTransformer.staffToStaffResponse(materialRequisition.getRequisitionStaff()))
-                .transactionResponse(TransactionTransformer.transactionToTransactionResponse(materialRequisition.getTransaction()))
+                .transactionId(materialRequisition.getTransaction().getTransactionId())
                 .build();
     }
 }

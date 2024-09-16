@@ -2,12 +2,15 @@ package com.ajay.HolidayVilla.model;
 
 import com.ajay.HolidayVilla.Enum.BookingStatus;
 import com.ajay.HolidayVilla.Enum.RoomType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -50,6 +53,7 @@ public class Booking {
     @JoinColumn
     Guest guest;
 
-    @OneToOne
-    Transaction transaction;
+
+    @OneToMany(mappedBy = "booking")
+    List<Transaction> transaction;
 }

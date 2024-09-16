@@ -2,12 +2,14 @@ package com.ajay.HolidayVilla.model;
 
 import com.ajay.HolidayVilla.Enum.Department;
 import com.ajay.HolidayVilla.Enum.FundType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -54,8 +56,9 @@ public class Transaction {
     @JoinColumn
     Staff staff;
 
-    @OneToOne
-    @JoinColumn
+
+    @ManyToOne
+    @JoinColumn(unique = false)
     Booking booking;
 
     @OneToOne

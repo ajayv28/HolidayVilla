@@ -34,7 +34,7 @@ public class MaterialRequisitionResponse {
 
     StaffResponse staffResponse;
 
-    @JsonManagedReference
-    TransactionResponse transactionResponse;
+    String transactionId;
+
 
 }

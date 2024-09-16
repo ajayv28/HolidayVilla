@@ -30,7 +30,7 @@ public class FoodOrderResponse {
 
     GuestResponse guestResponse;
 
-    @JsonManagedReference
-    TransactionResponse transactionResponse;
+    String transactionId;
+
 
 }

@@ -6,6 +6,7 @@ import com.ajay.HolidayVilla.dto.request.GuestRequest;
 import com.ajay.HolidayVilla.dto.response.BookingResponse;
 import com.ajay.HolidayVilla.dto.response.FoodOrderResponse;
 import com.ajay.HolidayVilla.dto.response.GuestResponse;
+import com.ajay.HolidayVilla.model.Room;
 import com.ajay.HolidayVilla.service.BookingService;
 import com.ajay.HolidayVilla.service.FoodOrderService;
 import com.ajay.HolidayVilla.service.GuestService;
@@ -33,6 +34,7 @@ public class GuestController {
     FoodOrderService foodOrderService;
 
 
+    //**TESTED**
     @PostMapping("/register")
     @PreAuthorize("permitAll()")
     public ResponseEntity registerGuest(@RequestBody GuestRequest guestRequest){
@@ -42,6 +44,7 @@ public class GuestController {
     }
 
 
+    //**TESTED**
     @PostMapping("/create-booking")
     public ResponseEntity createBooking(@RequestBody BookingRequest bookingRequest, @AuthenticationPrincipal UserDetails userDetails){
         String guestEmail = userDetails.getUsername();

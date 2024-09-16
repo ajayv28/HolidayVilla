@@ -5,6 +5,7 @@ import com.ajay.HolidayVilla.Enum.RoomType;
 import com.ajay.HolidayVilla.model.Guest;
 import com.ajay.HolidayVilla.model.Room;
 import com.ajay.HolidayVilla.model.Transaction;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -40,7 +41,6 @@ public class BookingResponse {
 
     GuestResponse guestResponse;
 
-    @JsonManagedReference
-    TransactionResponse transactionResponse;
+    String transactionId;
 
 }

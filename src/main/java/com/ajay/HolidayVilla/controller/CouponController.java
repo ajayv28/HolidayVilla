@@ -15,6 +15,7 @@ public class CouponController {
     @Autowired
     CouponService couponService;
 
+    //**TESTED**
     @PostMapping("/register")
     public ResponseEntity registerCoupon(@RequestBody CouponRequest couponRequest){
         CouponResponse couponResponse = couponService.registerCoupon(couponRequest);

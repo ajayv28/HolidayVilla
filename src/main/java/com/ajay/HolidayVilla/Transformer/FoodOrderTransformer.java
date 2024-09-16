@@ -22,7 +22,7 @@ public class FoodOrderTransformer {
                 .guestResponse(GuestTransformer.guestToGuestResponse(foodOrder.getGuest()))
                 .orderDateAndTime(foodOrder.getOrderDateAndTime())
                 .roomResponse(RoomTransformer.roomToRoomResponse(foodOrder.getRoom()))
-                .transactionResponse(TransactionTransformer.transactionToTransactionResponse(foodOrder.getTransaction()))
+                .transactionId(foodOrder.getTransaction().getTransactionId())
                 .build();
     }
 }

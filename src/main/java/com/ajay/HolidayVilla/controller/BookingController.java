@@ -19,16 +19,14 @@ public class BookingController {
     BookingService bookingService;
 
 
-
-
-
+    //**TESTED**
     @PutMapping("/change-booking-room-ifPossible")
     public ResponseEntity changeBookingRoomIfPossible(@RequestParam String bookingId){
         BookingResponse bookingResponse = bookingService.changeBookingRoomIfPossible(bookingId);
         return new ResponseEntity(bookingResponse, HttpStatus.OK);
     }
 
-
+    //**TESTED**
     @PutMapping("/cancel-booking-by-bookingId")
     public ResponseEntity cancelBookingByBookingId(@RequestParam String bookingId){
         BookingResponse bookingResponse = bookingService.cancelBookingByBookingId(bookingId);

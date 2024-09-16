@@ -23,6 +23,7 @@ public class StaffController {
     StaffService staffService;
 
 
+    //**TESTED**
     @PostMapping("/onBoard")
     public ResponseEntity onBoardStaff(@RequestBody StaffRequest staffRequest, @AuthenticationPrincipal UserDetails userDetails){
         String staffEmail = userDetails.getUsername();

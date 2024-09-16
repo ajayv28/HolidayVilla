@@ -22,6 +22,7 @@ public class StaffTransformer {
                 .employmentStatus(true)
                 .role("ROLE_" + staffRequest.getDepartment().toString())
                 .salary(staffRequest.getSalary())
+                .department(staffRequest.getDepartment())
                 .build();
     }
 

@@ -24,12 +24,14 @@ public class RoomController {
     @Autowired
     BookingService bookingService;
 
+    //**TESTED**
     @PreAuthorize("hasRole('MANAGER')")
     @PostMapping("/add")
     public ResponseEntity addRoom(@RequestBody RoomRequest roomRequest){
         RoomResponse roomResponse = roomService.addRoom(roomRequest);
         return new ResponseEntity(roomResponse, HttpStatus.CREATED);
     }
+
 
     @PutMapping("/check-in-with-bookingId")
     public ResponseEntity checkInWithBookingId(@RequestParam String bookingId){
@@ -43,6 +45,14 @@ public class RoomController {
         return new ResponseEntity(roomResponse, HttpStatus.OK);
     }
 
+    @PutMapping("/early-check-out-with-bookingId")
+    public ResponseEntity earlyCheckOutWithBookingId(@RequestParam String bookingId){
+        RoomResponse roomResponse = roomService.earlyCheckOutWithBookingId(bookingId);
+        return new ResponseEntity(roomResponse, HttpStatus.OK);
+    }
+
+
+    //**TESTED**
     @PutMapping("/change-room-status-by-roomNo")
     public ResponseEntity changeRoomStatusByRoomNo(@RequestParam String roomNo, @RequestParam RoomStatus roomStatus ){
         RoomResponse roomResponse = roomService.changeRoomStatusByRoomNo(roomNo, roomStatus);

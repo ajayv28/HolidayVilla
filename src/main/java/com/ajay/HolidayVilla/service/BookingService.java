@@ -20,6 +20,7 @@ import java.sql.ClientInfoStatus;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -46,12 +47,13 @@ public class BookingService {
     public BookingResponse createBooking(BookingRequest bookingRequest, String guestEmail) {
 
         Guest currGuest = guestRepository.findByEmail(guestEmail);
-        if(currGuest.isCurrentlyActiveBooking()==true)
+        if (currGuest.isCurrentlyActiveBooking() == true)
             throw new AlreadyBookingOngoingException("Already an booking is schedules with this user. Only one booking possible");
 
         boolean isOutOfService = false;
 
         Room currRoom = bookingRepository.getAvailableRoom(bookingRequest.getFromDate(), bookingRequest.getToDate(), bookingRequest.getRoomType());
+
         if(currRoom == null) {
             currRoom = bookingRepository.getAvailableRoomIncludingOOS(bookingRequest.getFromDate(), bookingRequest.getToDate(), bookingRequest.getRoomType());
             isOutOfService = true;
@@ -63,7 +65,7 @@ public class BookingService {
 
         double offerPercent = 0.0;
 
-        if(bookingRequest.getCouponCode().length()>0) {
+        if(bookingRequest.getCouponCode()!= null && bookingRequest.getCouponCode().length()>0) {
             Coupon coupon = couponRepository.findByCouponCode(bookingRequest.getCouponCode());
             if (coupon == null)
                 throw new CouponNotExistException("Sorry, no coupon exist with given Coupon Code");
@@ -75,8 +77,9 @@ public class BookingService {
             couponRepository.save(coupon);
             booking.setCouponCode(coupon.getCouponCode());
         }
-            Period period = Period.between(booking.getFromDate().toLocalDate(), booking.getToDate().toLocalDate());
-            double totalDays= period.getDays()+1;
+
+            double totalDays = ChronoUnit.DAYS.between(booking.getFromDate().toLocalDate(), booking.getToDate().toLocalDate()) + 1;
+
             double totalFare = currRoom.getFarePerDay()*totalDays;
             double offerAmount = (totalFare * offerPercent) / 100;
             booking.setTotalFare(totalFare-offerAmount);
@@ -106,13 +109,142 @@ public class BookingService {
             currRoom.getTransactionList().add(transaction);
             roomRepository.save(currRoom);
             guestRepository.save(currGuest);
-            booking.setTransaction(transaction);
+            booking.getTransaction().add(transaction);
             Booking savedBooking = bookingRepository.save(booking);
             transaction.setBooking(savedBooking);
             transactionRepository.save(transaction);
             return BookingTransformer.bookingToBookingResponse(savedBooking);
 
     }
+
+
+
+
+    public BookingResponse changeBookingRoomIfPossible(String bookingId) {
+        Booking currBooking = bookingRepository.findByBookingId(bookingId);
+        Guest currGuest = currBooking.getGuest();
+
+        if(currBooking.getBookingStatus().toString().equals("GUEST_IN_HOUSE"))
+            throw new CancellationNotAllowedException("Guest already checked in. Cancellation not allowed");
+
+        if(currBooking.getBookingStatus().toString().equals("GUEST_CHECKED_OUT"))
+            throw new CancellationNotAllowedException("Booking already completed successfully and Guest checked out. Cancellation not allowed");
+
+        if(currBooking.getBookingStatus().toString().equals("CANCELLED"))
+            throw new CancellationNotAllowedException("This booking has already been cancelled. So Cancellation not allowed");
+
+
+        boolean isOutOfService = false;
+
+        Room currRoom = bookingRepository.getAvailableRoom(currBooking.getFromDate(), currBooking.getToDate(), currBooking.getRoomType());
+        if(currRoom == null) {
+            currRoom = bookingRepository.getAvailableRoomIncludingOOS(currBooking.getFromDate(), currBooking.getToDate(), currBooking.getRoomType());
+            isOutOfService = true;
+        }
+        if(currRoom == null)
+            throw new RoomNotAvailableBetweenGivenDates("Sorry no rooms available to change booking");
+
+        Booking newBooking = new Booking();
+        newBooking.setRoomType(currBooking.getRoomType());
+        newBooking.setFromDate(currBooking.getFromDate());
+        newBooking.setToDate(currBooking.getToDate());
+        newBooking.setCouponCode(currBooking.getCouponCode());
+        newBooking.setBookingId(String.valueOf(UUID.randomUUID()));
+
+        double offerPercent = 0.0;
+
+        if(newBooking.getCouponCode()!=null && newBooking.getCouponCode().length()>0) {
+            Coupon newCoupon = couponRepository.findByCouponCode(newBooking.getCouponCode());
+            offerPercent = newCoupon.getOfferPercentage();
+            newBooking.setCouponCode(newCoupon.getCouponCode());
+        }
+        double totalDays = ChronoUnit.DAYS.between(newBooking.getFromDate().toLocalDate(), newBooking.getToDate().toLocalDate()) + 1;
+
+        double totalFare = currRoom.getFarePerDay()*totalDays;
+        double offerAmount = (totalFare * offerPercent) / 100;
+        newBooking.setTotalFare(totalFare-offerAmount);
+        newBooking.setBookingStatus(BookingStatus.CONFIRMED);
+
+        newBooking.setGuest(currGuest);
+        newBooking.setRoom(currRoom);
+
+        currRoom.getBookingList().addLast(newBooking);
+        currGuest.getBookings().addLast(newBooking);
+        currGuest.setCurrentlyActiveBooking(true);
+
+        //******* send mail to HSK, FO that booking made on OOS room*******
+        //*********send changing  mail to guest
+
+        TransactionRequest transactionRequest = new TransactionRequest();
+        transactionRequest.setFundType(FundType.FREE);
+        Transaction transaction = TransactionTransformer.transactionRequestToTransaction(transactionRequest);
+        transaction.setDepartment(Department.ROOM_DIVISION);
+        transaction.setGuest(newBooking.getGuest());
+        transaction.setRoom(currRoom);
+        transaction.setComments("ROOM CHANGE. Booking ID - " + bookingId );
+        transaction.setAmount(0.0);
+        transactionRepository.save(transaction);
+
+        currBooking.setBookingStatus(BookingStatus.CANCELLED);
+        bookingRepository.save(currBooking);
+
+        currGuest.getTransactionList().add(transaction);
+        newBooking.getRoom().getTransactionList().add(transaction);
+        guestRepository.save(currGuest);
+        roomRepository.save(currRoom);
+        newBooking.getTransaction().add(transaction);
+
+        Booking savedBooking = bookingRepository.save(newBooking);
+        transaction.setBooking(savedBooking);
+        transactionRepository.save(transaction);
+        return BookingTransformer.bookingToBookingResponse(savedBooking);
+
+    }
+
+
+
+    public BookingResponse cancelBookingByBookingId(String bookingId) {
+        Booking currBooking = bookingRepository.findByBookingId(bookingId);
+        Guest currGuest = currBooking.getGuest();
+
+        if(currBooking.getBookingStatus().toString().equals("GUEST_IN_HOUSE"))
+            throw new CancellationNotAllowedException("Guest already checked in. Cancellation not allowed");
+
+        if(currBooking.getBookingStatus().toString().equals("GUEST_CHECKED_OUT"))
+            throw new CancellationNotAllowedException("Booking already completed successfully and Guest checked out. Cancellation not allowed");
+
+        if(currBooking.getBookingStatus().toString().equals("CANCELLED"))
+            throw new CancellationNotAllowedException("This booking has already been cancelled. So Cancellation not allowed");
+
+
+        currBooking.setBookingStatus(BookingStatus.CANCELLED);
+        currGuest.setCurrentlyActiveBooking(false);
+
+        guestRepository.save(currGuest);
+
+        TransactionRequest transactionRequest = new TransactionRequest();
+        transactionRequest.setFundType(FundType.DEBIT);
+        Transaction transaction = TransactionTransformer.transactionRequestToTransaction(transactionRequest);
+        transaction.setDepartment(Department.ROOM_DIVISION);
+        transaction.setGuest(currGuest);
+        transaction.setRoom(currBooking.getRoom());
+        transaction.setAmount(currBooking.getTotalFare());
+        transaction.setComments("Refund - Room Booking Cancellation");
+        transactionRepository.save(transaction);
+
+        currGuest.getTransactionList().add(transaction);
+        currBooking.getRoom().getTransactionList().add(transaction);
+        guestRepository.save(currGuest);
+        roomRepository.save(currBooking.getRoom());
+        currBooking.getTransaction().add(transaction);
+        //****send mail to guest
+
+        Booking savedBooking = bookingRepository.save(currBooking);
+        transaction.setBooking(savedBooking);
+        transactionRepository.save(transaction);
+        return BookingTransformer.bookingToBookingResponse(savedBooking);
+    }
+
 
 
 
@@ -154,144 +286,13 @@ public class BookingService {
         guestRepository.save(currGuest);
         roomRepository.save(booking.getRoom());
         transaction = transactionRepository.save(transaction);
-        booking.setTransaction(transaction);
+        booking.getTransaction().add(transaction);
         //****send mail to guest
 
         Booking savedBooking = bookingRepository.save(booking);
         transaction.setBooking(savedBooking);
         transactionRepository.save(transaction);
         return BookingTransformer.bookingToBookingResponse(savedBooking);
-    }
-
-
-
-
-
-
-    public BookingResponse cancelBookingByBookingId(String bookingId) {
-        Booking currBooking = bookingRepository.findByBookingId(bookingId);
-        Guest currGuest = currBooking.getGuest();
-
-        if(currBooking.getBookingStatus().toString().equals("GUEST_IN_HOUSE"))
-            throw new CancellationNotAllowedException("Guest already checked in. Cancellation not allowed");
-
-        if(currBooking.getBookingStatus().toString().equals("GUEST_CHECKED_OUT"))
-            throw new CancellationNotAllowedException("Booking already completed successfully and Guest checked out. Cancellation not allowed");
-
-        if(currBooking.getBookingStatus().toString().equals("CANCELLED"))
-            throw new CancellationNotAllowedException("This booking has already been cancelled. So Cancellation not allowed");
-
-
-        currBooking.setBookingStatus(BookingStatus.CANCELLED);
-        currGuest.setCurrentlyActiveBooking(false);
-
-        guestRepository.save(currGuest);
-
-        TransactionRequest transactionRequest = new TransactionRequest();
-        transactionRequest.setFundType(FundType.DEBIT);
-        Transaction transaction = TransactionTransformer.transactionRequestToTransaction(transactionRequest);
-        transaction.setDepartment(Department.ROOM_DIVISION);
-        transaction.setGuest(currGuest);
-        transaction.setRoom(currBooking.getRoom());
-        transaction.setAmount(currBooking.getTotalFare());
-        transaction.setComments("Refund - Room Booking Cancellation");
-
-        currGuest.getTransactionList().add(transaction);
-        currBooking.getRoom().getTransactionList().add(transaction);
-        guestRepository.save(currGuest);
-        roomRepository.save(currBooking.getRoom());
-        transaction = transactionRepository.save(transaction);
-        currBooking.setTransaction(transaction);
-        //****send mail to guest
-
-        Booking savedBooking = bookingRepository.save(currBooking);
-        transaction.setBooking(savedBooking);
-        transactionRepository.save(transaction);
-        return BookingTransformer.bookingToBookingResponse(savedBooking);
-    }
-
-
-
-
-    public BookingResponse changeBookingRoomIfPossible(String bookingId) {
-        Booking currBooking = bookingRepository.findByBookingId(bookingId);
-        Guest currGuest = currBooking.getGuest();
-
-        if(currBooking.getBookingStatus().toString().equals("GUEST_IN_HOUSE"))
-            throw new CancellationNotAllowedException("Guest already checked in. Cancellation not allowed");
-
-        if(currBooking.getBookingStatus().toString().equals("GUEST_CHECKED_OUT"))
-            throw new CancellationNotAllowedException("Booking already completed successfully and Guest checked out. Cancellation not allowed");
-
-        if(currBooking.getBookingStatus().toString().equals("CANCELLED"))
-            throw new CancellationNotAllowedException("This booking has already been cancelled. So Cancellation not allowed");
-
-
-        boolean isOutOfService = false;
-
-        Room currRoom = bookingRepository.getAvailableRoom(currBooking.getFromDate(), currBooking.getToDate(), currBooking.getRoomType());
-        if(currRoom == null) {
-            currRoom = bookingRepository.getAvailableRoomIncludingOOS(currBooking.getFromDate(), currBooking.getToDate(), currBooking.getRoomType());
-            isOutOfService = true;
-        }
-        if(currRoom == null)
-            throw new RoomNotAvailableBetweenGivenDates("Sorry no rooms available to change booking");
-
-        Booking newBooking = new Booking();
-        newBooking.setRoomType(currBooking.getRoomType());
-        newBooking.setFromDate(currBooking.getFromDate());
-        newBooking.setToDate(currBooking.getToDate());
-        newBooking.setCouponCode(currBooking.getCouponCode());
-        newBooking.setBookingId(String.valueOf(UUID.randomUUID()));
-
-        double offerPercent = 0.0;
-
-        if(newBooking.getCouponCode().length()>0) {
-            Coupon newCoupon = couponRepository.findByCouponCode(newBooking.getCouponCode());
-            offerPercent = newCoupon.getOfferPercentage();
-            newBooking.setCouponCode(newCoupon.getCouponCode());
-        }
-        Period period = Period.between(newBooking.getFromDate().toLocalDate(), newBooking.getToDate().toLocalDate());
-        double totalDays= period.getDays()+1;
-        double totalFare = currRoom.getFarePerDay()*totalDays;
-        double offerAmount = (totalFare * offerPercent) / 100;
-        newBooking.setTotalFare(totalFare-offerAmount);
-        newBooking.setBookingStatus(BookingStatus.CONFIRMED);
-
-        newBooking.setGuest(currGuest);
-        newBooking.setRoom(currRoom);
-
-        currRoom.getBookingList().addLast(newBooking);
-        currGuest.getBookings().addLast(newBooking);
-        currGuest.setCurrentlyActiveBooking(true);
-
-        //******* send mail to HSK, FO that booking made on OOS room*******
-        //*********send changing  mail to guest
-
-        TransactionRequest transactionRequest = new TransactionRequest();
-        transactionRequest.setFundType(FundType.FREE);
-        Transaction transaction = TransactionTransformer.transactionRequestToTransaction(transactionRequest);
-        transaction.setDepartment(Department.ROOM_DIVISION);
-        transaction.setGuest(newBooking.getGuest());
-        transaction.setRoom(currRoom);
-        transaction.setComments("ROOM CHANGE");
-        transaction.setAmount(0.0);
-        transactionRepository.save(transaction);
-
-        currBooking.setBookingStatus(BookingStatus.CANCELLED);
-        bookingRepository.save(currBooking);
-
-        currGuest.getTransactionList().add(transaction);
-        newBooking.getRoom().getTransactionList().add(transaction);
-        guestRepository.save(currGuest);
-        roomRepository.save(currRoom);
-        newBooking.setTransaction(transaction);
-
-        Booking savedBooking = bookingRepository.save(newBooking);
-        transaction.setBooking(savedBooking);
-        transactionRepository.save(transaction);
-        return BookingTransformer.bookingToBookingResponse(savedBooking);
-
     }
 
 

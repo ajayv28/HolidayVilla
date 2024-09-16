@@ -29,7 +29,7 @@ public class BookingTransformer {
                 .couponCode(booking.getCouponCode())
                 .guestResponse(GuestTransformer.guestToGuestResponse(booking.getGuest()))
                 .roomResponse(RoomTransformer.roomToRoomResponse(booking.getRoom()))
-                .transactionResponse(TransactionTransformer.transactionToTransactionResponse(booking.getTransaction()))
+                .transactionId(booking.getTransaction().getLast().getTransactionId())
                 .bookingStatus(booking.getBookingStatus())
                 .build();
     }

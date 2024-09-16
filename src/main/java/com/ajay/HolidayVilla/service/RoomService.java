@@ -72,6 +72,23 @@ public class RoomService {
         return RoomTransformer.roomToRoomResponse(roomRepository.save(room));
     }
 
+    public RoomResponse earlyCheckOutWithBookingId(String bookingId) {
+        Booking booking = bookingRepository.findByBookingId(bookingId);
+        Guest guest = booking.getGuest();
+        Room room = booking.getRoom();
+
+        booking.setToDate(Date.valueOf(LocalDate.now()));
+        booking.setBookingStatus(BookingStatus.GUEST_CHECKED_OUT);
+        guest.setCurrentlyActiveBooking(false);
+        room.setRoomStatus(RoomStatus.VACANT);
+
+        //*************notify hk to clean
+
+        bookingRepository.save(booking);
+        guestRepository.save(guest);
+        return RoomTransformer.roomToRoomResponse(roomRepository.save(room));
+    }
+
 
     public RoomResponse changeRoomStatusByRoomNo(String roomNo, RoomStatus roomStatus) {
         Room room = roomRepository.findByRoomNo(roomNo);
@@ -102,6 +119,7 @@ public class RoomService {
 
         return responseList;
     }
+
 
 
 }

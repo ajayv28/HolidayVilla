@@ -42,15 +42,15 @@ public class TransactionResponse {
 
     GuestResponse guestResponse;
 
-    @JsonBackReference
+
     BookingResponse bookingResponse;
 
-    @JsonBackReference
+
     MaterialRequisitionResponse materialRequisitionResponse;
 
 
     MaterialResponse materialResponse;
 
-    @JsonBackReference
+
     FoodOrderResponse foodOrderResponse;
 }

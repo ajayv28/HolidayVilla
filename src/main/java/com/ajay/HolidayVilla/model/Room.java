@@ -18,13 +18,14 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "room")
 public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, name = "room_no")
     String roomNo;
 
     @Enumerated(EnumType.STRING)
