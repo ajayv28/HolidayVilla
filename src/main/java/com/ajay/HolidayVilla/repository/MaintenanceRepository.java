@@ -16,10 +16,12 @@ public interface MaintenanceRepository extends JpaRepository<Maintenance, Intege
     
     public Maintenance findByMaintenanceId(String maintenanceId);
 
-    @Query(value="select * from room where room_status in ('OUT_OF_SERVICE','OUT_OF_ORDER','VACANT') and (last_maintenance_done + INTERVAL 30 DAY) > :today", nativeQuery=true)
-    public List<Room> allVacantRoomsDueForMaintenance(Date today);
+    //@Query(value="select * from room where room_status in ('OUT_OF_SERVICE','OUT_OF_ORDER','VACANT') and (last_maintenance_done + INTERVAL 30 DAY) > :today", nativeQuery=true)
+    @Query("SELECT r FROM Room r WHERE r.roomStatus IN ('OUT_OF_SERVICE', 'OUT_OF_ORDER', 'VACANT') AND r.lastMaintenanceDone < :date")
+    public List<Room> allVacantRoomsDueForMaintenance(java.util.Date date);
 
-    @Query(value="select * from room where id in(select distinct room_id from maintenance where LENGTH(followups) > 0)", nativeQuery=true)
+    //@Query(value="select * from room where id in(select distinct room_id from maintenance where LENGTH(followups) > 0)", nativeQuery=true)
+    @Query("SELECT r FROM Room r WHERE r.id IN (SELECT DISTINCT m.room.id FROM Maintenance m WHERE LENGTH(m.followups) > 0)")
     public List<Room> allRoomsWithFollowups();
 
     @Query(value="select * from maintenance where room_id =(select id from room where room_no =:roomNo) and LENGTH(followups) > 0", nativeQuery=true)

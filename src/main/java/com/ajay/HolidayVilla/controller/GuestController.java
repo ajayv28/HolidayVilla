@@ -52,6 +52,7 @@ public class GuestController {
         return new ResponseEntity(bookingResponse, HttpStatus.CREATED);
     }
 
+    //**TESTED**
     @PutMapping("/cancel-last-booking")
     public ResponseEntity cancelLastBooking(@AuthenticationPrincipal UserDetails userDetails){
         String guestEmail = userDetails.getUsername();
@@ -60,6 +61,7 @@ public class GuestController {
     }
 
 
+    //**TESTED**
     @PostMapping("/order-food")
     public ResponseEntity orderFood(@RequestBody FoodOrderRequest foodOrderRequest, @AuthenticationPrincipal UserDetails userDetails){
         String guestEmail = userDetails.getUsername();
@@ -67,6 +69,7 @@ public class GuestController {
         return new ResponseEntity(foodOrderResponse, HttpStatus.CREATED);
     }
 
+    //**TESTED**
     @GetMapping("/get-all-my-food-order")
     public ResponseEntity getAllFoodOrderByGuestEmail(@AuthenticationPrincipal UserDetails userDetails){
         String guestEmail = userDetails.getUsername();
@@ -75,7 +78,7 @@ public class GuestController {
     }
 
 
-
+    //**TESTED**
     @GetMapping("/get-all-my-booking")
     public ResponseEntity getAllMyBooking(@AuthenticationPrincipal UserDetails userDetails){
         String guestEmail = userDetails.getUsername();
@@ -83,6 +86,7 @@ public class GuestController {
         return new ResponseEntity(bookingResponse, HttpStatus.OK);
     }
 
+    //**TESTED**
     @GetMapping("/get-all-my-checked_out-booking")
     public ResponseEntity getAllMyCheckedOutBooking(@AuthenticationPrincipal UserDetails userDetails){
         String guestEmail = userDetails.getUsername();
@@ -90,6 +94,7 @@ public class GuestController {
         return new ResponseEntity(bookingResponse, HttpStatus.OK);
     }
 
+    //**TESTED**
     @GetMapping("/get-all-my-cancelled-booking")
     public ResponseEntity getAllMyCancelledBookingGuestEmail(@AuthenticationPrincipal UserDetails userDetails){
         String guestEmail = userDetails.getUsername();

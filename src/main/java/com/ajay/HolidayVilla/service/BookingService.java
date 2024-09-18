@@ -250,6 +250,9 @@ public class BookingService {
 
     public BookingResponse cancelLastBooking(String guestEmail) {
         Guest currGuest = guestRepository.findByEmail(guestEmail);
+        if(currGuest == null)
+            throw new UserNotExistException("Sorry no guest exist with given email id");
+
         if(currGuest.isCurrentlyActiveBooking()==false)
             throw new NoOngoingBookingException("Sorry, there is no upcoming booking found for you");
 

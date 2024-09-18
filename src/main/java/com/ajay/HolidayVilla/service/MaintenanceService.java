@@ -5,6 +5,7 @@ import com.ajay.HolidayVilla.Transformer.RoomTransformer;
 import com.ajay.HolidayVilla.dto.request.MaintenanceRequest;
 import com.ajay.HolidayVilla.dto.response.MaintenanceResponse;
 import com.ajay.HolidayVilla.dto.response.RoomResponse;
+import com.ajay.HolidayVilla.exception.UserNotExistException;
 import com.ajay.HolidayVilla.model.Maintenance;
 import com.ajay.HolidayVilla.model.Room;
 import com.ajay.HolidayVilla.model.Staff;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -35,11 +37,16 @@ public class MaintenanceService {
         Maintenance maintenance = MaintenanceTransformer.maintenanceRequestToMaintenance(maintenanceRequest);
         Staff staff = staffRepository.findByEmail(staffEmail);
         Room room = roomRepository.findByRoomNo(maintenanceRequest.getRoomNo());
+        if(room==null)
+            throw new UserNotExistException("Sorry no room exist with given number");
         maintenance.setRoom(room);
         maintenance.setStaff(staff);
+        //maintenance.setDateOfMaintenance(Date.valueOf(LocalDate.now()));
+
+        java.util.Date currentDate = new java.util.Date();
 
         room.getMaintenanceHistory().add(maintenance);
-        room.setLastMaintenanceDone(maintenance.getDateOfMaintenance());
+        room.setLastMaintenanceDone(currentDate);
         staff.getMaintenanceList().add(maintenance);
 
         staffRepository.save(staff);
@@ -56,8 +63,15 @@ public class MaintenanceService {
     }
 
     public List<RoomResponse> allVacantRoomsDueForMaintenance() {
-        Date today = Date.valueOf(LocalDate.now());
-        List<Room> roomList = maintenanceRepository.allVacantRoomsDueForMaintenance(today);
+        java.util.Date currentDate = new java.util.Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+
+        calendar.add(Calendar.DAY_OF_MONTH, -30);
+
+        java.util.Date newDate = calendar.getTime();
+
+        List<Room> roomList = maintenanceRepository.allVacantRoomsDueForMaintenance(newDate);
         List<RoomResponse> roomResponseList = new ArrayList<>();
         for(Room room: roomList)
             roomResponseList.add(RoomTransformer.roomToRoomResponse(room));

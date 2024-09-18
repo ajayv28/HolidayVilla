@@ -17,8 +17,6 @@ public class MaintenanceRequest {
 
     String roomNo;
 
-    Date dateOfMaintenance;
-
     String followups;
 
 }

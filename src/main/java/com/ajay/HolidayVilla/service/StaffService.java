@@ -10,6 +10,7 @@ import com.ajay.HolidayVilla.dto.response.StaffResponse;
 import com.ajay.HolidayVilla.dto.response.TransactionResponse;
 import com.ajay.HolidayVilla.exception.AlreadyRegisteredException;
 import com.ajay.HolidayVilla.exception.NoAccessForThisRequestException;
+import com.ajay.HolidayVilla.exception.UserNotExistException;
 import com.ajay.HolidayVilla.model.Staff;
 import com.ajay.HolidayVilla.model.Transaction;
 import com.ajay.HolidayVilla.repository.StaffRepository;
@@ -50,6 +51,8 @@ public class StaffService {
 
     public StaffResponse makeStaffAsManager(String staffEmail, String currStaffEmail) {
         Staff currStaff = staffRepository.findByEmail(currStaffEmail);
+        if(staffRepository.findByEmail(staffEmail) == null)
+            throw new UserNotExistException("Sorry no staff exist with given email id");
         if(!currStaff.getRole().equals("ROLE_MANAGER")){
             throw new NoAccessForThisRequestException("You do not have the access to make given staff as manager. Kindly ask a Manager to execute this request");
         }
@@ -61,6 +64,8 @@ public class StaffService {
 
     public StaffResponse offBoardStaff(String staffEmail) {
         Staff currStaff = staffRepository.findByEmail(staffEmail);
+        if(currStaff == null)
+            throw new UserNotExistException("Sorry no staff exist with given email id");
         currStaff.setRole("ROLE_EX_EMPLOYEE");
         currStaff.setEmploymentStatus(false);
         return StaffTransformer.staffToStaffResponse(staffRepository.save(currStaff));
@@ -68,26 +73,28 @@ public class StaffService {
 
     public StaffResponse getStaffByStaffEmail(String staffEmail) {
         Staff currStaff = staffRepository.findByEmail(staffEmail);
+        if(currStaff == null)
+            throw new UserNotExistException("Sorry no staff exist with given email id");
         return StaffTransformer.staffToStaffResponse(staffRepository.save(currStaff));
     }
 
     public StaffResponse resetPassword(String staffEmail, String newPassword) {
         Staff currStaff = staffRepository.findByEmail(staffEmail);
+        if(currStaff == null)
+            throw new UserNotExistException("Sorry no staff exist with given email id");
         currStaff.setPassword(passwordEncoder.encode(newPassword));
         return StaffTransformer.staffToStaffResponse(staffRepository.save(currStaff));
     }
 
-    public StaffResponse changeRole(String staffEmail, String newRole) {
+    public StaffResponse changeRole(String staffEmail, Department department) {
         Staff currStaff = staffRepository.findByEmail(staffEmail);
-        currStaff.setRole("ROLE_" + newRole);
+        if(currStaff == null)
+            throw new UserNotExistException("Sorry no staff exist with given email id");
+        currStaff.setRole("ROLE_" + department.toString());
+        currStaff.setDepartment(department);
         return StaffTransformer.staffToStaffResponse(staffRepository.save(currStaff));
     }
 
-    public StaffResponse makeStaffManagerAccess(String staffEmail) {
-        Staff currStaff = staffRepository.findByEmail(staffEmail);
-        currStaff.setRole("ROLE_MANAGER");
-        return StaffTransformer.staffToStaffResponse(staffRepository.save(currStaff));
-    }
 
     public List<StaffResponse> getAllCurrentStaff() {
         List<Staff> staffList = staffRepository.getAllCurrentStaff();
@@ -130,6 +137,8 @@ public class StaffService {
     }
 
     public double getStaffSalaryByStaffEmail(String staffEmail) {
+        if(staffRepository.findByEmail(staffEmail) == null)
+            throw new UserNotExistException("Sorry no staff exist with given email id");
         double salary = staffRepository.getStaffSalaryByStaffEmail(staffEmail);
         return salary;
     }
@@ -138,6 +147,8 @@ public class StaffService {
 
 
     public StaffResponse changeStaffSalaryByStaffEmail(String staffEmail, double newSalary) {
+        if(staffRepository.findByEmail(staffEmail) == null)
+            throw new UserNotExistException("Sorry no staff exist with given email id");
         Staff staff = staffRepository.findByEmail(staffEmail);
         staff.setSalary(newSalary);
         return StaffTransformer.staffToStaffResponse(staffRepository.save(staff));

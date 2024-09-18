@@ -22,12 +22,14 @@ public class CouponController {
         return new ResponseEntity(couponResponse, HttpStatus.CREATED);
     }
 
+    //**TESTED**
     @DeleteMapping("/cancel")
     public ResponseEntity cancelCoupon(@RequestParam String couponCode){
         String response = couponService.cancelCoupon(couponCode);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
+    //**TESTED**
     @PutMapping("/changeQuantity")
     public ResponseEntity changeQuantity(@RequestParam String couponCode, @RequestParam int newQuantity){
         CouponResponse couponResponse = couponService.changeQuantity(couponCode, newQuantity);

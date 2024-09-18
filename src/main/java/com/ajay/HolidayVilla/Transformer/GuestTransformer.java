@@ -20,6 +20,7 @@ public class GuestTransformer {
                 .dob(guestRequest.getDob())
                 .gender(guestRequest.getGender())
                 .currentlyActiveBooking(false)
+                .currentlyInHouse(false)
                 .role("ROLE_GUEST")
                 .build();
     }

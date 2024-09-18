@@ -31,6 +31,7 @@ public class StaffController {
         return new ResponseEntity(staffResponse, HttpStatus.CREATED);
     }
 
+    //**TESTED**
     @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/make-staff-as-manager")
     public ResponseEntity makeStaffAsManager(@RequestParam String staffEmail, @AuthenticationPrincipal UserDetails userDetails){
@@ -39,54 +40,56 @@ public class StaffController {
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
+    //**TESTED**
     @PutMapping("/offBoard")
     public ResponseEntity offBoardStaff(@RequestParam String staffEmail){
         StaffResponse staffResponse = staffService.offBoardStaff(staffEmail);
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
+    //**TESTED**
     @GetMapping("/get-staff-by-staffEmail")
     public ResponseEntity getStaffByStaffEmail(@RequestParam String staffEmail){
         StaffResponse staffResponse = staffService.getStaffByStaffEmail(staffEmail);
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
+    //**TESTED**
     @PutMapping("/reset-password")
     public ResponseEntity resetPassword(@RequestParam String staffEmail, @RequestParam String newPassword){
         StaffResponse staffResponse = staffService.resetPassword(staffEmail, newPassword);
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
-    @PutMapping("/change-role")
-    public ResponseEntity changeRole(@RequestParam String staffEmail, @RequestParam Department department){
-        StaffResponse staffResponse = staffService.changeRole(staffEmail, department.toString());
+    //**TESTED**
+    @PutMapping("/change-department")
+    public ResponseEntity changeDepartment(@RequestParam String staffEmail, @RequestParam Department department){
+        StaffResponse staffResponse = staffService.changeRole(staffEmail, department);
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
-    @PutMapping("/make-staff-manager-access")
-    public ResponseEntity makeStaffManagerAccess(@RequestParam String staffEmail){
-        StaffResponse staffResponse = staffService.makeStaffManagerAccess(staffEmail);
-        return new ResponseEntity(staffResponse, HttpStatus.OK);
-    }
-
+    //**TESTED**
     @GetMapping("/all-current-staff")
     public ResponseEntity getAllCurrentStaff(){
         List<StaffResponse> staffResponse = staffService.getAllCurrentStaff();
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
+    //**TESTED**
     @GetMapping("/all-ex-staff")
     public ResponseEntity getAllExStaff(){
         List<StaffResponse> staffResponse = staffService.getAllExStaff();
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
+    //**TESTED**
     @GetMapping("/all-current-staff-by-department")
     public ResponseEntity getAllCurrentStaffByDepartment(@RequestParam Department department){
         List<StaffResponse> staffResponse = staffService.getAllCurrentStaffByDepartment(department.toString());
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
+    //**TESTED**
     @GetMapping("/all-ex-staff-by-department")
     public ResponseEntity getAllExStaffByDepartment(@RequestParam Department department){
         List<StaffResponse> staffResponse = staffService.getAllExStaffByDepartment(department.toString());
@@ -96,13 +99,14 @@ public class StaffController {
 
 
 
-
+    //**TESTED**
     @GetMapping("/get-staff-salary-by-staffEmail")
     public ResponseEntity getStaffSalaryByStaffEmail(@RequestParam String staffEmail){
         double staffResponse = staffService.getStaffSalaryByStaffEmail(staffEmail);
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
+    //**TESTED**
     @PutMapping("/change-staff-salary-by-staffEmail")
     public ResponseEntity changeStaffSalaryByStaffEmail(@RequestParam String staffEmail, @RequestParam double newSalary){
         StaffResponse staffResponse = staffService.changeStaffSalaryByStaffEmail(staffEmail, newSalary);

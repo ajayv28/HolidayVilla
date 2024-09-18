@@ -3,6 +3,7 @@ package com.ajay.HolidayVilla.model;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
@@ -22,6 +23,7 @@ public class Maintenance {
     @Column(unique = true, nullable = false)
     String maintenanceId;
 
+    @CreationTimestamp
     Date dateOfMaintenance;
 
     String followups;

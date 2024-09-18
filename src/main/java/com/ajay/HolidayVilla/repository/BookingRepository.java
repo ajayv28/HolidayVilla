@@ -27,13 +27,13 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     @Query(value = "select * from booking where guest_id = (select id from guest where email = :guestEmail)", nativeQuery=true)
     public List<Booking> getAllBookingByGuestEmail(String guestEmail);
 
-    @Query(value = "select * from booking where from_date > curdate()", nativeQuery=true)
+    @Query(value = "select * from booking where from_date > curdate() and booking_status <> 'CANCELLED'", nativeQuery=true)
     public List<Booking> getAllUpcomingArrivalBooking();
 
-    @Query(value = "select * from booking where from_date > curdate() and room_id = (select id from room where room_no = :roomNo)", nativeQuery=true)
+    @Query(value = "select * from booking where from_date > curdate() and booking_status <> 'CANCELLED' and room_id = (select id from room where room_no = :roomNo)", nativeQuery=true)
     public List<Booking> getAllUpcomingArrivalBookingByRoomNo(String roomNo);
 
-    @Query(value = "select * from booking where from_date > curdate() and guest_id = (select id from guest where email = :guestEmail)", nativeQuery=true)
+    @Query(value = "select * from booking where from_date > curdate() and booking_status <> 'CANCELLED' and guest_id = (select id from guest where email = :guestEmail)", nativeQuery=true)
     public List<Booking> getAllUpcomingArrivalBookingByGuestEmail(String guestEmail);
 
     @Query(value="select * from booking where from_date <= :toDate and to_date >= :fromDate", nativeQuery=true)
@@ -51,10 +51,10 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     @Query(value="select * from booking where guest_id =(select id from guest where email = :guestEmail) and (booking_status = 'CANCELLED')", nativeQuery=true)
     public List<Booking> getAllCancelledBookingByGuestEmail(String guestEmail);
 
-    @Query(value="select * from booking where from_date > curdate() and datediff(to_date, from_date) >= :n", nativeQuery=true)
+    @Query(value="select * from booking where from_date > curdate() and booking_status <> 'CANCELLED' and datediff(to_date, from_date) >= :n", nativeQuery=true)
     public List<Booking> getAllUpcomingArrivalStayMoreThanNDays(int n);
 
-    @Query(value="select * from booking where from_date <= :date and to_date >= :date", nativeQuery=true)
+    @Query(value="select * from booking where booking_status <> 'CANCELLED' and from_date <= :date and to_date >= :date", nativeQuery=true)
     public List<Booking> getAllBookingOccupiedOnGivenDate(Date date);
 
 

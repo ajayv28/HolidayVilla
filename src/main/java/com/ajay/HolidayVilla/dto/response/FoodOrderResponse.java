@@ -26,7 +26,7 @@ public class FoodOrderResponse {
 
     FoodType foodType;
 
-    RoomResponse roomResponse;
+    String roomNo;
 
     GuestResponse guestResponse;
 

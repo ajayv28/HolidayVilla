@@ -43,7 +43,7 @@ public class FoodOrderService {
         Guest guest = guestRepository.findByEmail(guestEmail);
         FoodOrder foodOrder = FoodOrderTransformer.foodOrderRequestToFoodOrder(foodOrderRequest);
         FoodOrder savedFoodOrder = foodOrderRepository.save(foodOrder);
-        if(foodOrderRequest.getRoomNo().length()>0) {
+        if(foodOrderRequest.getRoomNo()!=null && foodOrderRequest.getRoomNo().length()>0) {
             Room room = roomRepository.findByRoomNo(foodOrderRequest.getRoomNo());
             savedFoodOrder.setRoom(room);
             room.getFoodOrderList().add(savedFoodOrder);
@@ -72,6 +72,7 @@ public class FoodOrderService {
         transaction.setComments("FOOD ORDER");
         transaction.setFoodOrder(savedFoodOrder);
         transaction.setAmount(currAmount);
+        transaction.setRoom(savedFoodOrder.getRoom());
         transaction = transactionRepository.save(transaction);
 
         guest.getTransactionList().add(transaction);
@@ -111,7 +112,8 @@ public class FoodOrderService {
         return foodOrderResponseList;
     }
 
-    public List<FoodOrderResponse> getAllFoodOrderByOrderDate(Date date) {
+    public List<FoodOrderResponse> getAllFoodOrderByOrderDate(java.sql.Date date) {
+//        java.util.Date date = new java.util.Date(date1.getTime());
         List<FoodOrder> foodOrderList = foodOrderRepository.getAllFoodOrderByOrderDate(date);
         List<FoodOrderResponse> foodOrderResponseList = new ArrayList<>();
 

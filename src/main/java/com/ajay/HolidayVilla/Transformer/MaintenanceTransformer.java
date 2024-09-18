@@ -10,7 +10,6 @@ public class MaintenanceTransformer {
 
     public static Maintenance maintenanceRequestToMaintenance(MaintenanceRequest maintenanceRequest){
         return Maintenance.builder()
-                .dateOfMaintenance(maintenanceRequest.getDateOfMaintenance())
                 .followups(maintenanceRequest.getFollowups())
                 .maintenanceId(String.valueOf(UUID.randomUUID()))
                 .build();

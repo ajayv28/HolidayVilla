@@ -21,7 +21,7 @@ public class MaintenanceController {
     @Autowired
     MaintenanceService maintenanceService;
 
-
+    //**TESTED**
     @PostMapping("/post-maintenance-job")
     public ResponseEntity postMaintenanceJob(@RequestBody MaintenanceRequest maintenanceRequest, @AuthenticationPrincipal UserDetails userDetails){
         String staffEmail = userDetails.getUsername();
@@ -29,6 +29,7 @@ public class MaintenanceController {
         return new ResponseEntity(maintenanceResponse, HttpStatus.CREATED);
     }
 
+    //**TESTED**
     @PutMapping("/update-followups-by-maintenanceId")
     public ResponseEntity updateFollowupsByMaintenanceId(@RequestParam String maintenanceId, @RequestParam String newFollowup){
         MaintenanceResponse maintenanceResponse = maintenanceService.updateFollowupsByMaintenanceId(maintenanceId, newFollowup);
@@ -37,7 +38,7 @@ public class MaintenanceController {
 
 
 
-
+    //**TESTED**
     @GetMapping("/all-vacant-rooms-due-for-maintenance") //30 days
     public ResponseEntity allVacantRoomsDueForMaintenance(){
         List<RoomResponse> roomResponseList = maintenanceService.allVacantRoomsDueForMaintenance();
@@ -47,25 +48,28 @@ public class MaintenanceController {
 
 
 
-
+    //**TESTED**
     @GetMapping("/all-rooms-with-followups")
     public ResponseEntity allRoomsWithFollowups(){
         List<RoomResponse> roomResponseList = maintenanceService.allRoomsWithFollowups();
         return new ResponseEntity(roomResponseList, HttpStatus.OK);
     }
 
+    //**TESTED**
     @GetMapping("/all-maintenance-with-followups-by-roomNo")
     public ResponseEntity allMaintenanceWithFollowupsByRoomNo(@RequestParam String roomNo){
         List<MaintenanceResponse> maintenanceResponseList = maintenanceService.allMaintenanceWithFollowupsByRoomNo(roomNo);
         return new ResponseEntity(maintenanceResponseList, HttpStatus.OK);
     }
 
+    //**TESTED**
     @GetMapping("/all-maintenance-between-dates")
     public ResponseEntity allMaintenanceBetweenDates(@RequestParam Date fromDate, @RequestParam Date toDate){
         List<MaintenanceResponse> maintenanceResponseList = maintenanceService.allMaintenanceBetweenDates(fromDate, toDate);
         return new ResponseEntity(maintenanceResponseList, HttpStatus.OK);
     }
 
+    //**TESTED**
     @GetMapping("/all-maintenance-by-logged-in-staff-between-dates")
     public ResponseEntity allMaintenanceByLoggedInStaffBetweenDates(@RequestParam Date fromDate, @RequestParam Date toDate, @AuthenticationPrincipal UserDetails userDetails){
         String staffEmail = userDetails.getUsername();
@@ -73,6 +77,7 @@ public class MaintenanceController {
         return new ResponseEntity(maintenanceResponseList, HttpStatus.OK);
     }
 
+    //**TESTED**
     @GetMapping("/all-maintenance-by-staffEmail-between-dates")
     public ResponseEntity allMaintenanceByStaffEmailBetweenDates(@RequestParam Date fromDate, @RequestParam Date toDate, @RequestParam String staffEmail){
         List<MaintenanceResponse> maintenanceResponseList = maintenanceService.allMaintenanceByStaffBetweenDates(fromDate, toDate, staffEmail);

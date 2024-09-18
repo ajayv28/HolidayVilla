@@ -21,7 +21,7 @@ public class FoodOrderTransformer {
                 .foodType(foodOrder.getFoodType())
                 .guestResponse(GuestTransformer.guestToGuestResponse(foodOrder.getGuest()))
                 .orderDateAndTime(foodOrder.getOrderDateAndTime())
-                .roomResponse(RoomTransformer.roomToRoomResponse(foodOrder.getRoom()))
+                .roomNo((foodOrder.getRoom() == null ? null :foodOrder.getRoom().getRoomNo()))
                 .transactionId(foodOrder.getTransaction().getTransactionId())
                 .build();
     }

@@ -17,7 +17,7 @@ public interface FoodOrderRepository extends JpaRepository<FoodOrder, Integer> {
     @Query(value = "select * from food_order where food_type = :foodType", nativeQuery = true)
     public List<FoodOrder> getAllFoodOrderByFoodType(String foodType);
 
-    @Query(value = "select * from food_order where order_date_and_time = :date", nativeQuery = true)
+    @Query(value = "select * from food_order where DATE(order_date_and_time) = DATE(:date)", nativeQuery = true)
     public List<FoodOrder> getAllFoodOrderByOrderDate(Date date);
 
     @Query(value = "select * from food_order where room_id = (select id from room where room_no = :roomNo)", nativeQuery = true)

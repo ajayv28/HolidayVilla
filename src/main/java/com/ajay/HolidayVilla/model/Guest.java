@@ -39,6 +39,8 @@ public class Guest {
 
     boolean currentlyActiveBooking;
 
+    boolean currentlyInHouse;
+
     String role;
 
     @CreationTimestamp
