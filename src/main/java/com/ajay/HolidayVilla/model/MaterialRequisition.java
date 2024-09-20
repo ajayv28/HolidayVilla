@@ -35,6 +35,7 @@ public class MaterialRequisition {
 
     double requisitionQuantity;
 
+    @Enumerated(EnumType.STRING)
     RequisitionStatus requisitionStatus;
 
     @ManyToOne

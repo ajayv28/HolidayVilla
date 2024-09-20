@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/material/**")
                 .hasAnyRole("PURCHASE","MANAGER")
                 .requestMatchers("/api/material-requisition/**")
-                .hasAnyRole("MANAGER","MAINTENANCE","PURCHASE","ROOM_DIVISION","KITCHEN_FOOD","FINANCE","HR","SALES","SECURITY")
+                .hasAnyRole("PURCHASE","MANAGER")
                 .requestMatchers("/api/room/**")
                 .hasAnyRole("ROOM_DIVISION","MANAGER")
                 .requestMatchers("/api/staff/**")

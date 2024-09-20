@@ -58,7 +58,7 @@ public class Transaction {
 
 
     @ManyToOne
-    @JoinColumn(unique = false)
+    @JoinColumn
     Booking booking;
 
     @OneToOne

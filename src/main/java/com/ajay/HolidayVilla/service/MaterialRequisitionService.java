@@ -9,7 +9,9 @@ import com.ajay.HolidayVilla.Transformer.TransactionTransformer;
 import com.ajay.HolidayVilla.dto.request.MaterialRequisitionRequest;
 import com.ajay.HolidayVilla.dto.request.TransactionRequest;
 import com.ajay.HolidayVilla.dto.response.MaterialRequisitionResponse;
+import com.ajay.HolidayVilla.exception.InvalidInputException;
 import com.ajay.HolidayVilla.exception.NoAccessForThisRequestException;
+import com.ajay.HolidayVilla.model.Material;
 import com.ajay.HolidayVilla.model.MaterialRequisition;
 import com.ajay.HolidayVilla.model.Staff;
 import com.ajay.HolidayVilla.model.Transaction;
@@ -46,20 +48,36 @@ public class MaterialRequisitionService {
         MaterialRequisition materialRequisition = MaterialRequisitionTransformer.materialRequisitionRequestToMaterialRequisition(materialRequisitionRequest);
 
         materialRequisition.setRequisitionStaff(staff);
-        materialRequisition.setRequisitionMaterial(materialRepository.findByMaterialName(materialRequisitionRequest.getRequisitionMaterial()));
+        Material material = materialRepository.findByMaterialName(materialRequisitionRequest.getRequisitionMaterial().toUpperCase());
+        if(material == null)
+            throw new InvalidInputException("No material exist with given name. Pls approach to purchase dept to create given material in our database");
+        materialRequisition.setRequisitionMaterial(material);
+
         MaterialRequisition savedMaterialRequisition = materialRequisitionRepository.save(materialRequisition);
 
         staff.getMaterialRequisitionList().add(savedMaterialRequisition);
         staffRepository.save(staff);
+        material.getMaterialRequisitionList().add(savedMaterialRequisition);
+        materialRepository.save(material);
 
         return MaterialRequisitionTransformer.materialRequisitionToMaterialRequisitionResponse(savedMaterialRequisition);
     }
 
     public MaterialRequisitionResponse cancelRequisition(String requisitionId, String staffEmail) {
         MaterialRequisition materialRequisition = materialRequisitionRepository.findByRequisitionId(requisitionId);
+        if (materialRequisition == null)
+            throw new InvalidInputException("Sorry given requisition id does not exist");
         Staff staff = staffRepository.findByEmail(staffEmail);
-        if((materialRequisition.getRequisitionStaff() != staff) && !(staff.getRole().equals("ROLE_MANAGER")))
+        if ((materialRequisition.getRequisitionStaff() != staff) && !(staff.getRole().equals("ROLE_MANAGER")))
             throw new NoAccessForThisRequestException("You do not have access to proceed with this request");
+        if (materialRequisition.getRequisitionStatus().toString().equals("MATERIAL_RECEIVED"))
+            throw new InvalidInputException("Material already received");
+        if (materialRequisition.getRequisitionStatus().toString().equals("CANCELLED"))
+            throw new InvalidInputException("Requisition already cancelled");
+
+        if (materialRequisition.getRequisitionStatus().toString().equals("PROCESSED")){
+        //SEND MAIL TO CANCEL
+    }
 
         materialRequisition.setRequisitionStatus(RequisitionStatus.CANCELLED);
         MaterialRequisition savedMaterialRequisition = materialRequisitionRepository.save(materialRequisition);
@@ -92,6 +110,12 @@ public class MaterialRequisitionService {
 
     public MaterialRequisitionResponse processRequisitionByRequisitionId(String requisitionId) {
         MaterialRequisition materialRequisition = materialRequisitionRepository.findByRequisitionId(requisitionId);
+        if(materialRequisition.getRequisitionStatus().toString().equals("PROCESSED"))
+            throw new InvalidInputException("Requisition already processed");
+        if(materialRequisition.getRequisitionStatus().toString().equals("MATERIAL_RECEIVED"))
+            throw new InvalidInputException("Material already received");
+        if(materialRequisition.getRequisitionStatus().toString().equals("CANCELLED"))
+            throw new InvalidInputException("Requisition already cancelled");
         //send mail *******************
         materialRequisition.setRequisitionStatus(RequisitionStatus.PROCESSED);
         MaterialRequisition savedMaterialRequisition = materialRequisitionRepository.save(materialRequisition);
@@ -118,6 +142,10 @@ public class MaterialRequisitionService {
 
     public MaterialRequisitionResponse changeExpectedDeliveryDate(String requisitionId, Date newDate) {
         MaterialRequisition materialRequisition = materialRequisitionRepository.findByRequisitionId(requisitionId);
+        if(materialRequisition.getRequisitionStatus().toString().equals("MATERIAL_RECEIVED"))
+            throw new InvalidInputException("Material already received");
+        if(materialRequisition.getRequisitionStatus().toString().equals("CANCELLED"))
+            throw new InvalidInputException("Requisition already cancelled");
         Date oldDate = materialRequisition.getExpectingDeliveryDate();
         materialRequisition.setExpectingDeliveryDate(newDate);
         MaterialRequisition savedMaterialRequisition = materialRequisitionRepository.save(materialRequisition);
@@ -127,6 +155,10 @@ public class MaterialRequisitionService {
 
     public MaterialRequisitionResponse changeRequisitionQuantity(String requisitionId, double newQuantity) {
         MaterialRequisition materialRequisition = materialRequisitionRepository.findByRequisitionId(requisitionId);
+        if(materialRequisition.getRequisitionStatus().toString().equals("MATERIAL_RECEIVED"))
+            throw new InvalidInputException("Material already received");
+        if(materialRequisition.getRequisitionStatus().toString().equals("CANCELLED"))
+            throw new InvalidInputException("Requisition already cancelled");
         double oldQuantity = materialRequisition.getRequisitionQuantity();
         materialRequisition.setRequisitionQuantity(newQuantity);
         MaterialRequisition savedMaterialRequisition = materialRequisitionRepository.save(materialRequisition);
@@ -211,7 +243,7 @@ public class MaterialRequisitionService {
 
 
     public List<MaterialRequisitionResponse> getAllMaterialRequisitionByMaterialName(String materialName) {
-        List<MaterialRequisition> materialRequisitionList = materialRequisitionRepository.getAllMaterialRequisitionByMaterialName(materialName);
+        List<MaterialRequisition> materialRequisitionList = materialRequisitionRepository.getAllMaterialRequisitionByMaterialName(materialName.toUpperCase());
         List<MaterialRequisitionResponse> responses = new ArrayList<>();
         for(MaterialRequisition curr : materialRequisitionList)
             responses.add(MaterialRequisitionTransformer.materialRequisitionToMaterialRequisitionResponse(curr));

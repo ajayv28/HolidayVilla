@@ -22,7 +22,7 @@ public class TransactionController {
     @Autowired
     TransactionService transactionService;
 
-
+    //**TESTED**
     @PostMapping("/create")
     public ResponseEntity newTransaction(@RequestBody TransactionRequest transactionRequest, @AuthenticationPrincipal UserDetails userDetails){
         String staffEmail = userDetails.getUsername();
@@ -30,18 +30,21 @@ public class TransactionController {
         return new ResponseEntity(transactionResponse, HttpStatus.CREATED);
     }
 
+    //**TESTED**
     @GetMapping("/get-transaction-by-transactionId")
     public ResponseEntity getTransactionsByTransactionId(@RequestParam String transactionId){
         TransactionResponse transactionResponse = transactionService.getTransactionsByTransactionId(transactionId);
         return new ResponseEntity(transactionResponse, HttpStatus.OK);
     }
 
+    //**TESTED**
     @GetMapping("/get-transactions-by-type-and-period")
     public ResponseEntity getTransactionsByTypeAndPeriod(@RequestParam String period, @RequestParam FundType fundType){
         List<TransactionResponse> transactionResponseList = transactionService.getTransactionsByTypeAndPeriod(period, fundType.toString());
         return new ResponseEntity(transactionResponseList, HttpStatus.OK);
     }
 
+    //**TESTED**
     @GetMapping("/get-transactions-by-department-and-period")
     public ResponseEntity getTransactionsByDepartmentAndPeriod(@RequestParam String period, @RequestParam Department department){
         List<TransactionResponse> transactionResponseList = transactionService.getTransactionsByDepartmentAndPeriod(period, department.toString());
