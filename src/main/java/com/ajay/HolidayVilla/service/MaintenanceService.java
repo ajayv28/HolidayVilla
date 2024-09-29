@@ -58,7 +58,7 @@ public class MaintenanceService {
 
     public MaintenanceResponse updateFollowupsByMaintenanceId(String maintenanceId, String newFollowup) {
         Maintenance maintenance = maintenanceRepository.findByMaintenanceId(maintenanceId);
-        maintenance.setFollowups(newFollowup);
+        maintenance.setFollowups(newFollowup.length()==0 ? null : newFollowup);
         return MaintenanceTransformer.maintenanceToMaintenanceResponse(maintenanceRepository.save(maintenance));
     }
 

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HolidayVilla - Booking Management Page</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    
+    <div class="loginlogout">
+        <button id="logoutButton">Logout</button>
+    </div>
+        
+    <div id="booking-posting-popup" class="posting-popup">
+        <div class="posting-popup-content">
+            <span class="posting-close" id="booking-posting-closePopup">&times</span>
+            <h3 id="booking-posting-responseHeading"></h3>
+             <p id="booking-posting-responseMessage"></p>
+        </div>
+    </div>
+        
+    <div id="booking-getter-popup" class="getter-popup">
+        <div class="getter-popup-content">
+            <span class="getter-close" id="booking-getter-closePopup">&times</span>
+            <h3 id="booking-getter-responseHeading"></h3>
+            <table id="booking-getter-responseTable" class="getter-responseTable"></table>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+    <h2>Booking Management</h2><br>
+    <div class="flex-container-center">
+        <div class="registerForm">
+            <h3>Change booking room - if possible</h3> 
+            <form id="formChangeBookingRoomIfPossible">
+                <label for="changeBookingRoomBookingId">Booking ID:</label> 
+                <input type="text" id="changeBookingRoomBookingId" name="bookingId" required><br>
+                <button type="submit">Check possibility</button> 
+            </form> 
+        </div>  
+        <div class="registerForm">
+            <h3>Cancel booking</h3> 
+            <form id="formCancelBookingByBookingId">
+                <label for="cancelBookingByBookingId">Booking ID:</label> 
+                <input type="text" id="cancelBookingByBookingId" name="bookingId" required><br>
+                <button type="submit">Cancel booking</button> 
+            </form> 
+        </div> 
+        <div class="registerForm">
+            <h3>Cancel last booking of guest</h3> 
+            <form id="formCancelLastBookingByGuestEmail">
+                <label for="cancelLastBookingByGuestEmail">Guest Email:</label> 
+                <input type="email" id="cancelLastBookingByGuestEmail" name="bookingId" required><br>
+                <button type="submit">Cancel booking</button> 
+            </form> 
+        </div> 
+    </div>  
+    </div>
+
+    <div class="container-noflex">    
+    <h2>Most preferred options</h2><br>
+    <div class="flex-container-center">
+        <div class="registerForm">
+            <h4>Display details of particular booking</h4> 
+            <form id="formGetBookingByBookingId">
+                <label for="getBookingByBookingId">Booking ID:</label> 
+                <input type="text" id="getBookingByBookingId" name="bookingId" required><br>
+                <button type="submit">Display</button> 
+            </form> 
+        </div>  
+        <div class="registerForm">
+            <h4>Display all related bookings of</h4> 
+            <form id="formGetAllBookingByBookingId">
+                <label for="getAllBookingByGuestEmail">Guest Email ID:</label> 
+                <input type="email" id="getAllBookingByGuestEmail" name="guestEmail" required><br>
+                <button type="submit">Display</button> 
+            </form> 
+        </div> 
+        <div class="registerForm">
+            <h4>Display all bookings between</h4> 
+            <form id="formGetAllBookingBetweenDates">
+                <label for="getAllBookingBetweenDatesFrom">Check In Date:</label> 
+                <input type="date" id="getAllBookingBetweenDatesFrom" name="fromDate" required><br><br>
+                <label for="getAllBookingBetweenDatesTo">Check Out Date:</label> 
+                <input type="date" id="getAllBookingBetweenDatesTo" name="toDate" required><br>
+                <button type="submit">Display</button> 
+            </form> 
+        </div> 
+        <div class="registerForm">
+            <h4>Display all bookings occupied on</h4> 
+            <form id="formGetAllBookingOccupiedOnGivenDate">
+                <label for="getAllBookingOccupiedOnGivenDate">Date:</label> 
+                <input type="date" id="getAllBookingOccupiedOnGivenDate" name="date" required><br>
+                <button type="submit">Display</button> 
+            </form> 
+        </div> 
+    </div> 
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Upcoming Arrivals</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Display all arrival bookings</h4> 
+                <form id="formGetAllUpcomingArrivalBooking">
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>  
+            <div class="registerForm">
+                <h4>Display all arrival bookings of</h4> 
+                <form id="formGetAllUpcomingArrivalBookingByRoomNo">
+                    <label for="getAllUpcomingArrivalBookingByRoomNo">Room Number:</label> 
+                    <input type="text" id="getAllUpcomingArrivalBookingByRoomNo" name="roomNo" required><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div> 
+            <div class="registerForm">
+                <h4>Display all arrival bookings of</h4> 
+                <form id="formGetAllUpcomingArrivalBookingByGuestEmail">
+                    <label for="getAllUpcomingArrivalBookingByGuestEmail">Guest Email:</label> 
+                    <input type="email" id="getAllUpcomingArrivalBookingByGuestEmail" name="guestEmail" required><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div> 
+            <div class="registerForm">
+                <h4>Display all arrival bookings staying</h4> 
+                <form id="formGetAllUpcomingArrivalStayMoreThanNDays">
+                    <label for="getAllUpcomingArrivalStayMoreThanNDays">More than below number of days:</label> 
+                    <input type="number" id="getAllUpcomingArrivalStayMoreThanNDays" name="n" required><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div> 
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Checked Out Bookings</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Display all checked-out bookings between</h4> 
+                <form id="formGetAllCheckedOutBookingBetweenDates">
+                    <label for="getAllCheckedOutBookingBetweenDatesFrom">Check In Date:</label> 
+                    <input type="date" id="getAllCheckedOutBookingBetweenDatesFrom" name="fromDate" required><br><br>
+                    <label for="getAllCheckedOutBookingBetweenDatesTo">Check In Date:</label> 
+                    <input type="date" id="getAllCheckedOutBookingBetweenDatesTo" name="toDate" required><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>  
+            <div class="registerForm">
+                <h4>Display all checked-out bookings by</h4> 
+                <form id="formGetAllCheckedOutBookingByGuestEmail">
+                    <label for="getAllCheckedOutBookingByGuestEmail">Guest Email ID:</label> 
+                    <input type="email" id="getAllCheckedOutBookingByGuestEmail" name="guestEmail" required><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div> 
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Cancelled Bookings</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Display all checked-out bookings between</h4> 
+                <form id="formGetAllCancelledBookingBetweenDates">
+                    <label for="getAllCancelledBookingBetweenDatesFrom">Check In Date:</label> 
+                    <input type="date" id="getAllCancelledBookingBetweenDatesFrom" name="fromDate" required><br><br>
+                    <label for="getAllCancelledBookingBetweenDatesTo">Check In Date:</label> 
+                    <input type="date" id="getAllCancelledBookingBetweenDatesTo" name="toDate" required><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>  
+            <div class="registerForm">
+                <h4>Display all checked-out bookings by</h4> 
+                <form id="formGetAllCancelledBookingByGuestEmail">
+                    <label for="getAllCancelledBookingByGuestEmail">Guest Email ID:</label> 
+                    <input type="email" id="getAllCancelledBookingByGuestEmail" name="guestEmail" required><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div> 
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

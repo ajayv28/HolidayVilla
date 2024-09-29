@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -52,7 +53,6 @@ public class Booking {
     @ManyToOne
     @JoinColumn
     Guest guest;
-
 
     @OneToMany(mappedBy = "booking")
     List<Transaction> transaction;

@@ -63,6 +63,7 @@ public class BookingService {
 
         Booking booking = BookingTransformer.bookingRequestToBooking(bookingRequest);
 
+
         double offerPercent = 0.0;
 
         if(bookingRequest.getCouponCode()!= null && bookingRequest.getCouponCode().length()>0) {
@@ -114,6 +115,7 @@ public class BookingService {
             transaction.setBooking(savedBooking);
             transactionRepository.save(transaction);
             return BookingTransformer.bookingToBookingResponse(savedBooking);
+
 
     }
 

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HolidayVilla - Welcome to Guest Page</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="loginlogout">
+<button id="logoutButton">Logout</button>
+</div>
+
+<div id="guest-posting-popup" class="posting-popup">
+    <div class="posting-popup-content">
+        <span class="posting-close" id="guest-posting-closePopup">&times</span>
+        <h3 id="guest-posting-responseHeading"></h3>
+        <p id="guest-posting-responseMessage"></p>
+    </div>
+</div>
+
+<div id="guest-getter-popup" class="getter-popup">
+    <div class="getter-popup-content">
+        <span class="getter-close" id="guest-getter-closePopup">&times</span>
+        <h3 id="guest-getter-responseHeading"></h3>
+        <table id="guest-getter-responseTable" class="getter-responseTable"></table>
+    </div>
+</div>
+
+<div class="flex-container-center">
+    <div class="registerForm">
+        <h1>Book my room</h1> 
+        <form id="bookingRegisterForm">
+            <label for="bookingRegisterFromDate">Check-In Date:</label> 
+            <input type="date" id="bookingRegisterFromDate" name="fromDate" required><br><br>
+            <label for="bookingRegisterToDate">Check-Out Date:</label> 
+            <input type="date" id="bookingRegisterToDate" name="toDate" required><br><br>
+            <label for="bookingRegisterCouponCode">Enter Coupon Code (if any):</label> 
+            <input type="text" id="bookingRegisterCouponCode" name="couponCode"><br><br>
+            <label>Room Type</label> 
+            <select name="roomType" id="bookingRegisterRoomType" required>
+                <option value="KING">KING ROOM</option>
+                <option value="SUITE">SUITE ROOM</option>
+            </select><br><br>
+            <button type="submit">Book my room</button> 
+        </form> 
+    </div>
+
+    <div class="registerForm">
+        <h1>Order Food</h1> 
+        <form id="foodRegisterForm">
+            <label>What would you like to order ?</label> 
+            <select name="foodType" id="foodRegisterFoodType" required>
+                <option value="BREAKFAST">Breakfast</option>
+                <option value="LUNCH">Lunch</option>
+                <option value="DINNER">Dinner</option>
+            </select><br><br>
+            <label for="foodRegisterRoomNumber">Enter your room number (if any):</label> 
+            <input type="text" id="foodRegisterRoomNumber" name="roomNo" maxlength="3"><br><br>
+            
+            <button type="submit">Order my food</button> 
+        </form> 
+    </div>
+</div>
+
+<div class="container-flex">
+    <h1>Explore more about your bookings</h1>
+    <button id="guestCancelLastBooking">Cancel my last booking</button> 
+    <button id="guestGetAllBooking">Get all my room bookings</button> 
+    <button id="guestCheckedOutBooking">Get all my checked out room bookings</button> 
+    <button id="guestCancelledBooking">Get all my cancelled room bookings</button> 
+    <br><br>
+</div>
+
+<div  class="container-noflex">
+    <h1>Explore more about your food orders</h1>
+    <button id="guestFoodOrder">Get all my food orders</button> 
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>

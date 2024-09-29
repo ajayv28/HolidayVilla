@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HolidayVilla - Maintenance Management Page</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    
+    <div class="loginlogout">
+        <button id="logoutButton">Logout</button>
+    </div>
+        
+    <div id="maintenance-posting-popup" class="posting-popup">
+        <div class="posting-popup-content">
+            <span class="posting-close" id="maintenance-posting-closePopup">&times</span>
+            <h3 id="maintenance-posting-responseHeading"></h3>
+             <p id="maintenance-posting-responseMessage"></p>
+        </div>
+    </div>
+        
+    <div id="maintenance-getter-popup" class="getter-popup">
+        <div class="getter-popup-content">
+            <span class="getter-close" id="maintenance
+            -getter-closePopup">&times</span>
+            <h3 id="maintenance-getter-responseHeading"></h3>
+            <table id="maintenance-getter-responseTable" class="getter-responseTable"></table>
+        </div>
+    </div>
+
+
+    <div class="container-noflex">
+        <h2>Maintenance Management</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Post New Maintenance Job</h4> 
+                <form id="formPostMaintenanceJob">
+                    <label for="postMaintenanceJobRoomNo">Room No:</label> 
+                    <input type="text" id="postMaintenanceJobRoomNo" name="maintenanceId" required><br><br>
+                    <label for="postMaintenanceJobFollowup">Enter FollowUp Message:</label> 
+                    <input type="text" id="postMaintenanceJobFollowup" name="maintenanceId" required><br><br>
+                    <button type="submit">Post</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Update FollowUps</h4> 
+                <form id="formUpdateFollowupsByMaintenanceId">
+                    <label for="updateFollowupsByMaintenanceIdMaintenanceId">Maintenance ID:</label> 
+                    <input type="text" id="updateFollowupsByMaintenanceIdMaintenanceId" name="maintenanceId" required><br><br>
+                    <label for="updateFollowupsByMaintenanceNewFollowup">Enter new FollowUp Message:</label> 
+                    <input type="text" id="updateFollowupsByMaintenanceNewFollowup" name="maintenanceId" required><br><br>
+                    <button type="submit">Update</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="container-noflex">
+        <h2>Maintenance Management</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>All Vacant Rooms due for Maintenance</h4> 
+                <form id="formAllVacantRoomsDueForMaintenance">
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>     
+            <div class="registerForm">
+                <h4>All Guest Rooms with FollowUps</h4> 
+                <form id="formAllRoomsWithFollowups">
+                    <button type="submit">Display</button> 
+                </form> 
+            </div> 
+            <div class="registerForm">
+                <h4>All Guest Rooms with FollowUps</h4> 
+                <form id="formAllMaintenanceWithFollowupsByRoomNo">
+                    <label for="allMaintenanceWithFollowupsByRoomNo">Room Number:</label> 
+                    <input type="text" id="allMaintenanceWithFollowupsByRoomNo" name="roomNo" required><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Maintenance Management</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>All maintenance conducted between</h4> 
+                <form id="formAllMaintenanceBetweenDates">
+                    <label for="allMaintenanceBetweenDatesFrom">From Date:</label> 
+                    <input type="date" id="allMaintenanceBetweenDatesFrom" name="fromDate" required><br><br>
+                    <label for="allMaintenanceBetweenDatesTo">To Date:</label> 
+                    <input type="date" id="allMaintenanceBetweenDatesTo" name="toDate" required><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div> 
+            <div class="registerForm">
+                <h4>All maintenance conducted by you between</h4> 
+                <form id="formAllMaintenanceByLoggedInStaffBetweenDates">
+                    <label for="allMaintenanceByLoggedInStaffBetweenDatesFrom">From Date:</label> 
+                    <input type="date" id="allMaintenanceBetweenDatesFrom" name="fromDate" required><br><br>
+                    <label for="allMaintenanceBetweenDatesTo">To Date:</label> 
+                    <input type="date" id="allMaintenanceByLoggedInStaffBetweenDatesTo" name="toDate" required><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div> 
+            <div class="registerForm">
+                <h4>All maintenance conducted by below staff between</h4> 
+                <form id="formAllMaintenanceByStaffEmailBetweenDates">
+                    <label for="allMaintenanceByStaffEmailBetweenDatesEmail">Staff Email:</label> 
+                    <input type="email" id="allMaintenanceByStaffEmailBetweenDatesEmail" name="staffEmail" required><br><br>
+                    <label for="allMaintenanceByStaffEmailBetweenDatesFrom">From Date:</label> 
+                    <input type="date" id="allMaintenanceByStaffEmailBetweenDatesFrom" name="fromDate" required><br><br>
+                    <label for="allMaintenanceByStaffEmailBetweenDatesTo">To Date:</label> 
+                    <input type="date" id="allMaintenanceByStaffEmailBetweenDatesTo" name="toDate" required><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div> 
+        </div>
+    </div>
+
+
+    <script src="js/script.js"></script>
+</body>
+</html>

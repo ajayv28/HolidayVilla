@@ -19,7 +19,7 @@ public class BookingController {
     BookingService bookingService;
 
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @PutMapping("/change-booking-room-ifPossible")
     public ResponseEntity changeBookingRoomIfPossible(@RequestParam String bookingId){
         BookingResponse bookingResponse = bookingService.changeBookingRoomIfPossible(bookingId);

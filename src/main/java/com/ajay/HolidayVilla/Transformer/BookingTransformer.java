@@ -4,6 +4,7 @@ import com.ajay.HolidayVilla.dto.request.BookingRequest;
 import com.ajay.HolidayVilla.dto.response.BookingResponse;
 import com.ajay.HolidayVilla.model.Booking;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class BookingTransformer {
@@ -16,6 +17,7 @@ public class BookingTransformer {
                 .toDate(bookingRequest.getToDate())
                 .bookingId(String.valueOf(UUID.randomUUID()))
                 .couponCode(bookingRequest.getCouponCode())
+                .transaction(new ArrayList<>())
                 .build();
     }
 

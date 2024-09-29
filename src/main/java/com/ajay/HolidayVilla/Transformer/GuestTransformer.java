@@ -13,10 +13,10 @@ public class GuestTransformer {
 
     public static Guest guestRequestToGuest(GuestRequest guestRequest){
         return Guest.builder()
-                .email(guestRequest.getEmail())
+                .email(guestRequest.getEmail().toLowerCase())
                 .phoneNumber(guestRequest.getPhoneNumber())
                 .password(passwordEncoder.encode(guestRequest.getPassword()))
-                .name(guestRequest.getName())
+                .name(guestRequest.getName().toUpperCase())
                 .dob(guestRequest.getDob())
                 .gender(guestRequest.getGender())
                 .currentlyActiveBooking(false)

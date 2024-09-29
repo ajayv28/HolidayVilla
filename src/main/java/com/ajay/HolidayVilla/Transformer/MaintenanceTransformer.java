@@ -20,7 +20,7 @@ public class MaintenanceTransformer {
                 .dateOfMaintenance(maintenance.getDateOfMaintenance())
                 .staffResponse(StaffTransformer.staffToStaffResponse(maintenance.getStaff()))
                 .roomResponse(RoomTransformer.roomToRoomResponse(maintenance.getRoom()))
-                .followups(maintenance.getFollowups())
+                .followups((maintenance.getFollowups().length()==0) ? null : maintenance.getFollowups())
                 .maintenanceId(maintenance.getMaintenanceId())
                 .build();
     }

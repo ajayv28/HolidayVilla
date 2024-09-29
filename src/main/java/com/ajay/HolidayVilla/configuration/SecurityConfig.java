@@ -46,7 +46,15 @@ public class SecurityConfig {
                 .anyRequest()
                 .authenticated()
                 .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll()
+                .and()
                 .httpBasic();
+                //.defaultSuccessUrl("/guest.html", true);
 
         return httpSecurity.build();
     }

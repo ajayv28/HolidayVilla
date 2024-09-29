@@ -13,11 +13,11 @@ public class StaffTransformer {
 
     public static Staff staffRequestToStaff(StaffRequest staffRequest){
         return Staff.builder()
-                .email(staffRequest.getEmail())
+                .email(staffRequest.getEmail().toLowerCase())
                 .phoneNumber(staffRequest.getPhoneNumber())
                 .gender(staffRequest.getGender())
                 .password(passwordEncoder.encode(staffRequest.getPassword()))
-                .name(staffRequest.getName())
+                .name(staffRequest.getName().toUpperCase())
                 .dob(staffRequest.getDob())
                 .employmentStatus(true)
                 .role("ROLE_" + staffRequest.getDepartment().toString())
