@@ -15,7 +15,7 @@ public class CouponController {
     @Autowired
     CouponService couponService;
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @PostMapping("/register")
     public ResponseEntity registerCoupon(@RequestBody CouponRequest couponRequest){
         CouponResponse couponResponse = couponService.registerCoupon(couponRequest);
@@ -29,7 +29,7 @@ public class CouponController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @PutMapping("/changeQuantity")
     public ResponseEntity changeQuantity(@RequestParam String couponCode, @RequestParam int newQuantity){
         CouponResponse couponResponse = couponService.changeQuantity(couponCode, newQuantity);

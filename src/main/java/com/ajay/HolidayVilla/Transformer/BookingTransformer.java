@@ -16,7 +16,7 @@ public class BookingTransformer {
                 .fromDate(bookingRequest.getFromDate())
                 .toDate(bookingRequest.getToDate())
                 .bookingId(String.valueOf(UUID.randomUUID()))
-                .couponCode(bookingRequest.getCouponCode())
+                .couponCode(bookingRequest.getCouponCode().length()==0 ? null : bookingRequest.getCouponCode())
                 .transaction(new ArrayList<>())
                 .build();
     }

@@ -15,28 +15,28 @@ public class MaterialController {
     @Autowired
     MaterialService materialService;
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @PostMapping("/addMaterial")
     public ResponseEntity addMaterial(@RequestBody MaterialRequest materialRequest){
         MaterialResponse materialResponse = materialService.addMaterial(materialRequest);
         return new ResponseEntity<>(materialResponse, HttpStatus.CREATED);
     }
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @PutMapping("edit-supplier-email")
     public ResponseEntity editSupplierEmail(@RequestParam String materialName, @RequestParam String newEmail){
         MaterialResponse materialResponse = materialService.editSupplierEmail(materialName.toUpperCase(), newEmail.toLowerCase());
         return new ResponseEntity(materialResponse, HttpStatus.OK);
     }
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @PutMapping("edit-supplier-name")
     public ResponseEntity editSupplierName(@RequestParam String materialName, @RequestParam String newName){
         MaterialResponse materialResponse = materialService.editSupplierName(materialName.toUpperCase(), newName.toUpperCase());
         return new ResponseEntity(materialResponse, HttpStatus.OK);
     }
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @PutMapping("edit-price")
     public ResponseEntity editPrice(@RequestParam String materialName, @RequestParam double newPrice){
         MaterialResponse materialResponse = materialService.editPrice(materialName.toUpperCase(), newPrice);

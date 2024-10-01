@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HolidayVilla - Material Requisition Management Page</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="loginlogout">
+        <button id="logoutButton">Logout</button>
+    </div>
+        
+    <div id="materialRequisition-posting-popup" class="posting-popup">
+        <div class="posting-popup-content">
+            <span class="posting-close" id="materialRequisition-posting-closePopup">&times</span>
+            <h3 id="materialRequisition-posting-responseHeading"></h3>
+             <p id="materialRequisition-posting-responseMessage"></p>
+        </div>
+    </div>
+        
+    <div id="materialRequisition-getter-popup" class="getter-popup">
+        <div class="getter-popup-content">
+            <span class="getter-close" id="materialRequisition-getter-closePopup">&times</span>
+            <h3 id="materialRequisition-getter-responseHeading"></h3>
+            <table id="materialRequisition-getter-responseTable" class="getter-responseTable"></table>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Material Requisition Management</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Display Material Requisition Details</h4> 
+                <form id="formGetMaterialRequisitionByRequisitionId">
+                    <label for="getMaterialRequisitionByRequisitionId">Requisition ID:</label> 
+                    <input type="text" id="getMaterialRequisitionByRequisitionId" name="requisitionId" required><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Mark requisition as received</h4> 
+                <form id="formMarkReceivedByRequisitionId">
+                    <label for="markReceivedByRequisitionId">Requisition ID:</label> 
+                    <input type="text" id="markReceivedByRequisitionId" name="requisitionId" required><br><br>
+                    <button type="submit">Mark received</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Process requisition</h4> 
+                <form id="formProcessRequisitionByRequisitionId">
+                    <label for="processRequisitionByRequisitionId">Requisition ID:</label> 
+                    <input type="text" id="processRequisitionByRequisitionId" name="requisitionId" required><br><br>
+                    <button type="submit">Proceed to order</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Material Requisition Management</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Followup on all Elapsed Requistion</h4> 
+                <form id="formFollowUpOnAllElapsedRequisition">
+                    <button type="submit">Send Followup Mail</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Change delivery date</h4> 
+                <form id="formChangeExpectedDeliveryDate">
+                    <label for="changeExpectedDeliveryDateRequisitionId">Requisition ID:</label> 
+                    <input type="text" id="changeExpectedDeliveryDateRequisitionId" name="requisitionId" required><br><br>
+                    <label for="changeExpectedDeliveryDateNewDate">Expected Date:</label> 
+                    <input type="date" id="changeExpectedDeliveryDateNewDate" name="newDate" required><br>
+                    <button type="submit">Update</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Change order quantity</h4> 
+                <form id="formChangeRequisitionQuantity">
+                    <label for="changeRequisitionQuantityRequisitionId">Requisition ID:</label> 
+                    <input type="text" id="changeRequisitionQuantityRequisitionId" name="requisitionId" required><br><br>
+                    <label for="changeRequisitionQuantityNewQuantity">Quantity to update:</label> 
+                    <input type="number" step="0.01" id="changeRequisitionQuantityNewQuantity" name="newQuantity" required><br>
+                    <button type="submit">Update</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>In-Progress Material Requisition Management</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Display All In-Progress Material Requisition Details</h4> 
+                <form id="formGetAllInProgressMaterialRequisition">
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Display All In-Progress Material Requisition Details by Department</h4> 
+                <form id="formGetAllInProgressMaterialRequisitionByDepartment">
+                    <label for="getAllInProgressMaterialRequisitionByDepartment">Department Name:</label> 
+                    <select name="department" id="getAllInProgressMaterialRequisitionByDepartment" required>
+                        <option value="ROOM_DIVISION">Room Division</option>
+                        <option value="KITCHEN_FOOD">Kitchen, Food and Beverage</option>
+                        <option value="HR">Human Resource</option>
+                        <option value="MAINTENANCE">Maintenance</option>
+                        <option value="FINANCE">Finance</option>
+                        <option value="PURCHASE">Purchase</option>
+                        <option value="SALES">Sales</option>
+                        <option value="SECURITY">Security</option>
+                    </select><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Non-Processed Material Requisition Management</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Display All Non Processed Material Requisition Details</h4> 
+                <form id="formGetAllNotProcessedMaterialRequisition">
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Display All Non Processed Material Requisition Details by Department</h4> 
+                <form id="formGetAllNotProcessedMaterialRequisitionByDepartment">
+                    <label for="getAllNotProcessedMaterialRequisitionByDepartment">Department Name:</label> 
+                    <select name="department" id="getAllNotProcessedMaterialRequisitionByDepartment" required>
+                        <option value="ROOM_DIVISION">Room Division</option>
+                        <option value="KITCHEN_FOOD">Kitchen, Food and Beverage</option>
+                        <option value="HR">Human Resource</option>
+                        <option value="MAINTENANCE">Maintenance</option>
+                        <option value="FINANCE">Finance</option>
+                        <option value="PURCHASE">Purchase</option>
+                        <option value="SALES">Sales</option>
+                        <option value="SECURITY">Security</option>
+                    </select><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Cancelled Material Requisition Management</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Display All Cancelled Material Requisition Details</h4> 
+                <form id="formGetAllCancelledMaterialRequisition">
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Display All Cancelled Material Requisition Details by Department</h4> 
+                <form id="formGetAllCancelledMaterialRequisitionByDepartment">
+                    <label for="getAllCancelledMaterialRequisitionByDepartment">Department Name:</label> 
+                    <select name="department" id="getAllCancelledMaterialRequisitionByDepartment" required>
+                        <option value="ROOM_DIVISION">Room Division</option>
+                        <option value="KITCHEN_FOOD">Kitchen, Food and Beverage</option>
+                        <option value="HR">Human Resource</option>
+                        <option value="MAINTENANCE">Maintenance</option>
+                        <option value="FINANCE">Finance</option>
+                        <option value="PURCHASE">Purchase</option>
+                        <option value="SALES">Sales</option>
+                        <option value="SECURITY">Security</option>
+                    </select><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Material Requisition Management by Date</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Display All Material Requisition Details by Delivery Date</h4> 
+                <form id="formGetAllMaterialRequisitionByDeliveryDate">
+                    <label for="getAllMaterialRequisitionByDeliveryDate">Delivery Date:</label> 
+                    <input type="date" id="getAllMaterialRequisitionByDeliveryDate" name="date" required><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Display All Material Requisition Details by Delivery Date Between</h4> 
+                <form id="formGetAllMaterialRequisitionBetweenDeliveryDate">
+                    <label for="getAllMaterialRequisitionBetweenDeliveryDateFrom">From Date:</label> 
+                    <input type="date" id="getAllMaterialRequisitionBetweenDeliveryDateFrom" name="fromDate" required><br><br>
+                    <label for="getAllMaterialRequisitionBetweenDeliveryDateTo">To Date:</label> 
+                    <input type="date" id="getAllMaterialRequisitionBetweenDeliveryDateTo" name="toDate" required><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Material Requisition Management Filter</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Display All Material Requisition Details by Material Name</h4> 
+                <form id="formGetAllMaterialRequisitionByMaterialName">
+                    <label for="getAllMaterialRequisitionByMaterialName">Material Name:</label> 
+                    <input type="text" id="getAllMaterialRequisitionByMaterialName" name="materialName" required><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Display All Material Requisition Details by Staff</h4> 
+                <form id="formGetAllMaterialRequisitionByStaffEmail">
+                    <label for="getAllMaterialRequisitionByStaffEmail">Staff Email:</label> 
+                    <input type="email" id="getAllMaterialRequisitionByStaffEmail" name="staffEmail" required><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Display All Material Requisition Details by Department</h4> 
+                <form id="formGetAllReceivedMaterialRequisitionByDepartment">
+                    <label for="getAllReceivedMaterialRequisitionByDepartment">Department:</label> 
+                    <select name="department" id="getAllReceivedMaterialRequisitionByDepartment" required>
+                        <option value="ROOM_DIVISION">Room Division</option>
+                        <option value="KITCHEN_FOOD">Kitchen, Food and Beverage</option>
+                        <option value="HR">Human Resource</option>
+                        <option value="MAINTENANCE">Maintenance</option>
+                        <option value="FINANCE">Finance</option>
+                        <option value="PURCHASE">Purchase</option>
+                        <option value="SALES">Sales</option>
+                        <option value="SECURITY">Security</option>
+                    </select><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

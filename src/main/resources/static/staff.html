@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HolidayVilla - Human Resource Management Page</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    
+    <div class="loginlogout">
+        <button id="logoutButton">Logout</button>
+    </div>
+        
+    <div id="staff-posting-popup" class="posting-popup">
+        <div class="posting-popup-content">
+            <span class="posting-close" id="staff-posting-closePopup">&times</span>
+            <h3 id="staff-posting-responseHeading"></h3>
+             <p id="staff-posting-responseMessage"></p>
+        </div>
+    </div>
+        
+    <div id="staff-getter-popup" class="getter-popup">
+        <div class="getter-popup-content">
+            <span class="getter-close" id="staff-getter-closePopup">&times</span>
+            <h3 id="staff-getter-responseHeading"></h3>
+            <table id="staff-getter-responseTable" class="getter-responseTable"></table>
+        </div>
+    </div>
+
+    <div class="flex-container-center">
+        <div class="container-noflex">    
+        <h2>HR Management - ONBOARDING</h2><br>
+        <div class="flex-container-center">
+        <div class="registerForm">
+            <h3>Onboard New Staff</h3> 
+            <form id="staffRegisterForm">
+                    <label for="staffRegisterEmail">Email Id:</label> 
+                    <input type="email" id="staffRegisterEmail" name="email" required><br><br>
+                    <label for="staffRegisterPhoneNumber">Enter Phone Number:</label> 
+                    <input type="tel" id="staffRegisterPhoneNumber" name="phoneNumber" maxlength="10" required><br><br>
+                    <label for="staffRegisterPassworrd">Enter Password:</label> 
+                    <input type="password" id="staffRegisterPassworrd" name="password" required><br><br>
+                    <label for="staffRegisterName">Enter Staff name:</label> 
+                    <input type="text" id="staffRegisterName" name="name" required><br><br>
+                    <label for="staffRegisterDob">Enter Date of birth:</label> 
+                    <input type="date" id="staffRegisterDob" name="dob" required><br><br>
+                    <label for="staffRegisterSalary">Enter Salary:</label> 
+                    <input type="number" step="0.01" id="staffRegisterSalary" name="salary" required><br><br>
+                    <label>Gender   :</label>
+                    <input type="radio" id="guestRegisterMale" name="gender" value="MALE"> 
+                    <label for="guestRegisterMale">Male</label> 
+                    <input type="radio" id="guestRegisterFemale" name="gender" value="FEMALE">
+                    <label for="guestRegisterFemale">Female</label>
+                    <input type="radio" id="guestRegisterOthers" name="gender" value="OTHERS">
+                    <label for="guestRegisterOthers">Others</label><br><br>
+                    <label for="staffRegisterDepartment">Department:</label> 
+                        <select name="department" id="staffRegisterDepartment" required>
+                            <option value="ROOM_DIVISION">Room Division</option>
+                            <option value="KITCHEN_FOOD">Kitchen, Food and Beverage</option>
+                            <option value="HR">Human Resource</option>
+                            <option value="MAINTENANCE">Maintenance</option>
+                            <option value="FINANCE">Finance</option>
+                            <option value="PURCHASE">Purchase</option>
+                            <option value="SALES">Sales</option>
+                            <option value="SECURITY">Security</option>
+                        </select><br><br>
+                    <button type="submit">On Board</button> 
+            </form> 
+        </div>
+        </div>
+        </div>
+
+        <div class="container-noflex">    
+        <h2>HR Management - OFFBOARDING</h2><br>
+        <div class="flex-container-center">
+        <div class="registerForm">
+            <h4>Offboard Staff</h4> 
+            <form id="formOffBoardStaff">
+                <label for="offBoardStaff">Staff Email ID:</label> 
+                <input type="email" id="offBoardStaff" name="staffEmail" required><br><br>
+                <button type="submit">Off Board</button> 
+            </form> 
+        </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>HR Management</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Display Staff Details</h4> 
+                <form id="formGetStaffByStaffEmail">
+                    <label for="getStaffByStaffEmail">Staff Email ID:</label> 
+                    <input type="email" id="getStaffByStaffEmail" name="staffEmail" required><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Reset Password</h4> 
+                <form id="formResetPassword">
+                    <label for="resetPasswordEmail">Staff Email ID:</label> 
+                    <input type="email" id="resetPasswordEmail" name="staffEmail" required><br><br>
+                    <label for="resetPasswordPassword">New Password:</label> 
+                    <input type="text" id="resetPasswordPassword" name="newPassword" required><br><br>
+                    <button type="submit">Reset</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Change Department</h4> 
+                <form id="formChangeDepartment">
+                    <label for="changeDepartmentStaffEmail">Staff Email ID:</label> 
+                    <input type="email" id="changeDepartmentStaffEmail" name="staffEmail" required><br><br>
+                    <label for="changeDepartmentDepartment">Department Name:</label> 
+                    <select name="department" id="changeDepartmentDepartment" required>
+                        <option value="ROOM_DIVISION">Room Division</option>
+                        <option value="KITCHEN_FOOD">Kitchen, Food and Beverage</option>
+                        <option value="HR">Human Resource</option>
+                        <option value="MAINTENANCE">Maintenance</option>
+                        <option value="FINANCE">Finance</option>
+                        <option value="PURCHASE">Purchase</option>
+                        <option value="SALES">Sales</option>
+                        <option value="SECURITY">Security</option>
+                    </select><br><br>
+                    <button type="submit">Change Department</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>HR Management</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Display All Current Staff</h4> 
+                <form id="getAllCurrentStaff">
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Display All Ex Staff</h4> 
+                <form id="getAllExStaff">
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Display All Current Staff by Department</h4> 
+                <form id="formGetAllCurrentStaffByDepartment">
+                    <label for="getAllCurrentStaffByDepartment">Department Name:</label> 
+                    <select name="department" id="getAllCurrentStaffByDepartment" required>
+                        <option value="ROOM_DIVISION">Room Division</option>
+                        <option value="KITCHEN_FOOD">Kitchen, Food and Beverage</option>
+                        <option value="HR">Human Resource</option>
+                        <option value="MAINTENANCE">Maintenance</option>
+                        <option value="FINANCE">Finance</option>
+                        <option value="PURCHASE">Purchase</option>
+                        <option value="SALES">Sales</option>
+                        <option value="SECURITY">Security</option>
+                    </select><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Display All Ex Staff by Department</h4> 
+                <form id="formGetAllExStaffByDepartment">
+                    <label for="getAllExStaffByDepartment">Department Name:</label> 
+                    <select name="department" id="getAllExStaffByDepartment" required>
+                        <option value="ROOM_DIVISION">Room Division</option>
+                        <option value="KITCHEN_FOOD">Kitchen, Food and Beverage</option>
+                        <option value="HR">Human Resource</option>
+                        <option value="MAINTENANCE">Maintenance</option>
+                        <option value="FINANCE">Finance</option>
+                        <option value="PURCHASE">Purchase</option>
+                        <option value="SALES">Sales</option>
+                        <option value="SECURITY">Security</option>
+                    </select><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>HR Management</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Display Staff Salary</h4> 
+                <form id="formGetStaffSalaryByStaffEmail">
+                    <label for="getStaffSalaryByStaffEmail">Staff Email ID:</label> 
+                    <input type="email" id="getStaffSalaryByStaffEmail" name="staffEmail" required><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Change Staff Salary</h4> 
+                <form id="formChangeStaffSalaryByStaffEmail">
+                    <label for="changeStaffSalaryByStaffEmailStaffEmail">Staff Email ID:</label> 
+                    <input type="email" id="changeStaffSalaryByStaffEmailStaffEmail" name="staffEmail" required><br><br>
+                    <label for="changeStaffSalaryByStaffEmailNewSalary">New Salary:</label> 
+                    <input type="number" step="0.01" id="changeStaffSalaryByStaffEmailNewSalary" name="newSalary" required><br><br>
+                    <button type="submit">Change</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>HR Payroll Management</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Create Transaction for Current Payroll</h4> 
+                <form id="createTransactionForPayroll">
+                    <button type="submit">Create Transaction</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

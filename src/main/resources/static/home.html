@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - HolidayVilla Welcomes You | Your partner in vacation</title>
+    <title>Home - HolidayVilla Welcomes You | Your partner in vacation stay</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -21,10 +21,12 @@
                 <label for="guestRegisterDob">Enter Date of birth:</label> 
                 <input type="date" id="guestRegisterDob" name="dob" required><br><br>
                 <label>Gender   :</label>
-                <input type="radio" id="guestRegisterMale" name="gender"> 
+                <input type="radio" id="guestRegisterMale" name="gender" value="MALE"> 
                 <label for="guestRegisterMale">Male</label> 
-                <input type="radio" id="guestRegisterFemale" name="gender">
-                <label for="guestRegisterFemale">Female</label><br><br>
+                <input type="radio" id="guestRegisterFemale" name="gender" value="FEMALE">
+                <label for="guestRegisterFemale">Female</label>
+                <input type="radio" id="guestRegisterOthers" name="gender" value="OTHERS">
+                <label for="guestRegisterOthers">Others</label><br><br>
                 <button type="submit">Submit</button> 
          </form> 
     </div>

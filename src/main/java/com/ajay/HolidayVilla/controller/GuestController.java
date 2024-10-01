@@ -57,7 +57,7 @@ public class GuestController {
     public ResponseEntity cancelLastBooking(@AuthenticationPrincipal UserDetails userDetails){
         String guestEmail = userDetails.getUsername();
         BookingResponse bookingResponse = bookingService.cancelLastBooking(guestEmail);
-        return new ResponseEntity(bookingResponse, HttpStatus.CREATED);
+        return new ResponseEntity(bookingResponse, HttpStatus.OK);
     }
 
 

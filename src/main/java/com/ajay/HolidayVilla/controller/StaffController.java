@@ -23,7 +23,7 @@ public class StaffController {
     StaffService staffService;
 
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @PostMapping("/onBoard")
     public ResponseEntity onBoardStaff(@RequestBody StaffRequest staffRequest, @AuthenticationPrincipal UserDetails userDetails){
         String staffEmail = userDetails.getUsername();
@@ -40,56 +40,56 @@ public class StaffController {
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @PutMapping("/offBoard")
     public ResponseEntity offBoardStaff(@RequestParam String staffEmail){
         StaffResponse staffResponse = staffService.offBoardStaff(staffEmail);
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @GetMapping("/get-staff-by-staffEmail")
     public ResponseEntity getStaffByStaffEmail(@RequestParam String staffEmail){
         StaffResponse staffResponse = staffService.getStaffByStaffEmail(staffEmail);
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @PutMapping("/reset-password")
     public ResponseEntity resetPassword(@RequestParam String staffEmail, @RequestParam String newPassword){
         StaffResponse staffResponse = staffService.resetPassword(staffEmail, newPassword);
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @PutMapping("/change-department")
     public ResponseEntity changeDepartment(@RequestParam String staffEmail, @RequestParam Department department){
         StaffResponse staffResponse = staffService.changeRole(staffEmail, department);
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @GetMapping("/all-current-staff")
     public ResponseEntity getAllCurrentStaff(){
         List<StaffResponse> staffResponse = staffService.getAllCurrentStaff();
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @GetMapping("/all-ex-staff")
     public ResponseEntity getAllExStaff(){
         List<StaffResponse> staffResponse = staffService.getAllExStaff();
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @GetMapping("/all-current-staff-by-department")
     public ResponseEntity getAllCurrentStaffByDepartment(@RequestParam Department department){
         List<StaffResponse> staffResponse = staffService.getAllCurrentStaffByDepartment(department.toString());
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @GetMapping("/all-ex-staff-by-department")
     public ResponseEntity getAllExStaffByDepartment(@RequestParam Department department){
         List<StaffResponse> staffResponse = staffService.getAllExStaffByDepartment(department.toString());
@@ -99,21 +99,21 @@ public class StaffController {
 
 
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @GetMapping("/get-staff-salary-by-staffEmail")
     public ResponseEntity getStaffSalaryByStaffEmail(@RequestParam String staffEmail){
         double staffResponse = staffService.getStaffSalaryByStaffEmail(staffEmail);
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @PutMapping("/change-staff-salary-by-staffEmail")
     public ResponseEntity changeStaffSalaryByStaffEmail(@RequestParam String staffEmail, @RequestParam double newSalary){
         StaffResponse staffResponse = staffService.changeStaffSalaryByStaffEmail(staffEmail, newSalary);
         return new ResponseEntity(staffResponse, HttpStatus.OK);
     }
 
-
+    //**TESTED* *FRONTEND ADDED**
     @GetMapping("/create-transaction-for-payroll")
     public ResponseEntity createTransactionForPayroll(){
         List<TransactionResponse> response = staffService.createTransactionForPayroll();

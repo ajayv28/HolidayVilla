@@ -38,10 +38,10 @@
                 </form> 
             </div>  
             <div class="registerForm">
-                <h4>Food order by Order ID</h4> 
+                <h4>Food Order Details by Order ID</h4> 
                 <form id="formGetFoodOrderByOrderId">
                     <label for="getFoodOrderByOrderId">Order ID:</label> 
-                    <input type="text" id="getFoodOrderByOrderId" name="orderId" required><br>
+                    <input type="text" id="getFoodOrderByOrderId" name="orderId" required><br><br>
                     <button type="submit">Display</button> 
                 </form> 
             </div> 
@@ -49,7 +49,11 @@
                 <h4>All food orders by food type</h4> 
                 <form id="formGetAllFoodOrderByFoodType">
                     <label for="getAllFoodOrderByFoodType">Food Type:</label> 
-                    <input type="text" id="getAllFoodOrderByFoodType" name="foodType" required><br>
+                    <select name="foodType" id="getAllFoodOrderByFoodType" required>
+                        <option value="BREAKFAST">Breakfast</option>
+                        <option value="LUNCH">Lunch</option>
+                        <option value="DINNER">Dinner</option>
+                    </select><br><br>
                     <button type="submit">Display</button> 
                 </form> 
             </div>
@@ -57,7 +61,7 @@
                 <h4>All food orders by order date</h4> 
                 <form id="formGetAllFoodOrderByOrderDate">
                     <label for="getAllFoodOrderByOrderDate">Order Date:</label> 
-                    <input type="date" id="getAllFoodOrderByOrderDate" name="date" required><br>
+                    <input type="date" id="getAllFoodOrderByOrderDate" name="date" required><br><br>
                     <button type="submit">Display</button> 
                 </form> 
             </div> 
@@ -65,7 +69,7 @@
                 <h4>All food orders by room number</h4> 
                 <form id="formGetAllFoodOrderByRoomNo">
                     <label for="getAllFoodOrderByRoomNo">Room Number:</label> 
-                    <input type="text" id="getAllFoodOrderByRoomNo" name="roomNo" required><br>
+                    <input type="text" id="getAllFoodOrderByRoomNo" name="roomNo" required maxlength="3"><br><br>
                     <button type="submit">Display</button> 
                 </form> 
             </div> 
@@ -73,7 +77,7 @@
                 <h4>All food orders by Guest Email</h4> 
                 <form id="formGetAllFoodOrderByGuestEmail">
                     <label for="getAllFoodOrderByGuestEmail">Guest Email:</label> 
-                    <input type="email" id="getAllFoodOrderByGuestEmail" name="guestEmail" required><br>
+                    <input type="email" id="getAllFoodOrderByGuestEmail" name="guestEmail" required><br><br>
                     <button type="submit">Display</button> 
                 </form> 
             </div> 

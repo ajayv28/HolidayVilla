@@ -38,7 +38,7 @@
             <input type="date" id="bookingRegisterToDate" name="toDate" required><br><br>
             <label for="bookingRegisterCouponCode">Enter Coupon Code (if any):</label> 
             <input type="text" id="bookingRegisterCouponCode" name="couponCode"><br><br>
-            <label>Room Type</label> 
+            <label for="bookingRegisterRoomType">Room Type</label> 
             <select name="roomType" id="bookingRegisterRoomType" required>
                 <option value="KING">KING ROOM</option>
                 <option value="SUITE">SUITE ROOM</option>
@@ -50,7 +50,7 @@
     <div class="registerForm">
         <h1>Order Food</h1> 
         <form id="foodRegisterForm">
-            <label>What would you like to order ?</label> 
+            <label id="foodRegisterFoodType">What would you like to order ?</label> 
             <select name="foodType" id="foodRegisterFoodType" required>
                 <option value="BREAKFAST">Breakfast</option>
                 <option value="LUNCH">Lunch</option>
@@ -58,7 +58,6 @@
             </select><br><br>
             <label for="foodRegisterRoomNumber">Enter your room number (if any):</label> 
             <input type="text" id="foodRegisterRoomNumber" name="roomNo" maxlength="3"><br><br>
-            
             <button type="submit">Order my food</button> 
         </form> 
     </div>

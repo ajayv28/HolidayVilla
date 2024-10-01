@@ -22,7 +22,7 @@ public class TransactionController {
     @Autowired
     TransactionService transactionService;
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @PostMapping("/create")
     public ResponseEntity newTransaction(@RequestBody TransactionRequest transactionRequest, @AuthenticationPrincipal UserDetails userDetails){
         String staffEmail = userDetails.getUsername();
@@ -30,34 +30,35 @@ public class TransactionController {
         return new ResponseEntity(transactionResponse, HttpStatus.CREATED);
     }
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @GetMapping("/get-transaction-by-transactionId")
     public ResponseEntity getTransactionsByTransactionId(@RequestParam String transactionId){
         TransactionResponse transactionResponse = transactionService.getTransactionsByTransactionId(transactionId);
         return new ResponseEntity(transactionResponse, HttpStatus.OK);
     }
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @GetMapping("/get-transactions-by-type-and-period")
     public ResponseEntity getTransactionsByTypeAndPeriod(@RequestParam String period, @RequestParam FundType fundType){
         List<TransactionResponse> transactionResponseList = transactionService.getTransactionsByTypeAndPeriod(period, fundType.toString());
         return new ResponseEntity(transactionResponseList, HttpStatus.OK);
     }
 
-    //**TESTED**
+    //**TESTED* *FRONTEND ADDED**
     @GetMapping("/get-transactions-by-department-and-period")
     public ResponseEntity getTransactionsByDepartmentAndPeriod(@RequestParam String period, @RequestParam Department department){
         List<TransactionResponse> transactionResponseList = transactionService.getTransactionsByDepartmentAndPeriod(period, department.toString());
         return new ResponseEntity(transactionResponseList, HttpStatus.OK);
     }
 
+    //**TESTED* *FRONTEND ADDED**
     @GetMapping("/get-transactions-made-between-dates")
     public ResponseEntity getTransactionsMadeBetweenDates(@RequestParam Date fromDate, @RequestParam Date toDate){
         List<TransactionResponse> transactionResponseList = transactionService.getTransactionsMadeBetweenDates(fromDate, toDate);
         return new ResponseEntity(transactionResponseList, HttpStatus.OK);
     }
 
-
+    //**TESTED* *FRONTEND ADDED**
     @GetMapping("/get-transactions-made-between-amounts")
     public ResponseEntity getTransactionsMadeBetweenAmount(@RequestParam double fromAmount, @RequestParam double toAmount){
         List<TransactionResponse> transactionResponseList = transactionService.getTransactionsMadeBetweenAmount(fromAmount, toAmount);

@@ -37,9 +37,9 @@
                 <h4>Post New Maintenance Job</h4> 
                 <form id="formPostMaintenanceJob">
                     <label for="postMaintenanceJobRoomNo">Room No:</label> 
-                    <input type="text" id="postMaintenanceJobRoomNo" name="maintenanceId" required><br><br>
+                    <input type="text" id="postMaintenanceJobRoomNo" name="roomNo" maxlength="3" required><br><br>
                     <label for="postMaintenanceJobFollowup">Enter FollowUp Message:</label> 
-                    <input type="text" id="postMaintenanceJobFollowup" name="maintenanceId" required><br><br>
+                    <input type="text" id="postMaintenanceJobFollowup" name="followups"><br><br>
                     <button type="submit">Post</button> 
                 </form> 
             </div>
@@ -48,8 +48,8 @@
                 <form id="formUpdateFollowupsByMaintenanceId">
                     <label for="updateFollowupsByMaintenanceIdMaintenanceId">Maintenance ID:</label> 
                     <input type="text" id="updateFollowupsByMaintenanceIdMaintenanceId" name="maintenanceId" required><br><br>
-                    <label for="updateFollowupsByMaintenanceNewFollowup">Enter new FollowUp Message:</label> 
-                    <input type="text" id="updateFollowupsByMaintenanceNewFollowup" name="maintenanceId" required><br><br>
+                    <label for="updateFollowupsByMaintenanceIdNewFollowup">Enter new FollowUp Message:</label> 
+                    <input type="text" id="updateFollowupsByMaintenanceIdNewFollowup" name="newFollowup" required><br><br>
                     <button type="submit">Update</button> 
                 </form> 
             </div>
@@ -76,7 +76,7 @@
                 <h4>All Guest Rooms with FollowUps</h4> 
                 <form id="formAllMaintenanceWithFollowupsByRoomNo">
                     <label for="allMaintenanceWithFollowupsByRoomNo">Room Number:</label> 
-                    <input type="text" id="allMaintenanceWithFollowupsByRoomNo" name="roomNo" required><br><br>
+                    <input type="text" id="allMaintenanceWithFollowupsByRoomNo" name="roomNo" required maxlength="3"><br><br>
                     <button type="submit">Display</button> 
                 </form> 
             </div>

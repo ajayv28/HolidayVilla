@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HolidayVilla - Material Management Page</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    
+    <div class="loginlogout">
+        <button id="logoutButton">Logout</button>
+    </div>
+        
+    <div id="material-posting-popup" class="posting-popup">
+        <div class="posting-popup-content">
+            <span class="posting-close" id="material-posting-closePopup">&times</span>
+            <h3 id="material-posting-responseHeading"></h3>
+             <p id="material-posting-responseMessage"></p>
+        </div>
+    </div>
+        
+    <div id="material-getter-popup" class="getter-popup">
+        <div class="getter-popup-content">
+            <span class="getter-close" id="material-getter-closePopup">&times</span>
+            <h3 id="material-getter-responseHeading"></h3>
+            <table id="material-getter-responseTable" class="getter-responseTable"></table>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Material Management</h2><br>
+        <div class="registerForm">
+            <h4>Add new material to database</h4> 
+            <form id="formAddMaterial"> 
+                    <label for="addMaterialMaterialName">Material Name:</label> 
+                    <input type="text" id="addMaterialMaterialName" name="materialName" required><br><br>
+                    <label for="addMaterialSupplierName">Supplier Name:</label> 
+                    <input type="text" id="addMaterialSupplierName" name="supplierName" required><br><br>
+                    <label for="addMaterialSupplierEmail">Supplier Email:</label> 
+                    <input type="email" id="addMaterialSupplierEmail" name="supplierEmail" required><br><br>
+                    <label for="addMaterialPrice">Price:</label> 
+                    <input type="number" step="0.01" id="addMaterialPrice" name="price" required><br><br>
+                    <button type="submit">Add material</button> 
+            </form> 
+        </div> 
+    </div> 
+
+    <div class="container-noflex">    
+        <h2>Material Management</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Edit supplier email</h4> 
+                <form id="formEditSupplierEmail">
+                    <label for="editSupplierEmailMaterialName">Material Name:</label> 
+                    <input type="text" id="editSupplierEmailMaterialName" name="materialName" required><br><br>
+                    <label for="editSupplierEmailNewEmail">New Email:</label> 
+                    <input type="email" id="editSupplierEmailNewEmail" name="newEmail" required><br>
+                    <button type="submit">Update</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Edit supplier name</h4> 
+                <form id="formEditSupplierName">
+                    <label for="editSupplierNameMaterialName">Material Name:</label> 
+                    <input type="text" id="editSupplierNameMaterialName" name="materialName" required><br><br>
+                    <label for="editSupplierEmailNewName">New Name:</label> 
+                    <input type="text" id="editSupplierEmailNewName" name="newName" required><br>
+                    <button type="submit">Update</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Edit price</h4> 
+                <form id="formEditPrice">
+                    <label for="editPriceMaterialName">Material Name:</label> 
+                    <input type="text" id="editPriceMaterialName" name="materialName" required><br><br>
+                    <label for="editPriceNewPrice">New Price:</label> 
+                    <input type="number" step="0.01" id="editPriceNewPrice" name="newPrice" required><br>
+                    <button type="submit">Update</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

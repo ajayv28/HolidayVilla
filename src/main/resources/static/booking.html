@@ -35,7 +35,7 @@
             <h3>Change booking room - if possible</h3> 
             <form id="formChangeBookingRoomIfPossible">
                 <label for="changeBookingRoomBookingId">Booking ID:</label> 
-                <input type="text" id="changeBookingRoomBookingId" name="bookingId" required><br>
+                <input type="text" id="changeBookingRoomBookingId" name="bookingId" required><br><br>
                 <button type="submit">Check possibility</button> 
             </form> 
         </div>  
@@ -43,7 +43,7 @@
             <h3>Cancel booking</h3> 
             <form id="formCancelBookingByBookingId">
                 <label for="cancelBookingByBookingId">Booking ID:</label> 
-                <input type="text" id="cancelBookingByBookingId" name="bookingId" required><br>
+                <input type="text" id="cancelBookingByBookingId" name="bookingId" required><br><br>
                 <button type="submit">Cancel booking</button> 
             </form> 
         </div> 
@@ -51,7 +51,7 @@
             <h3>Cancel last booking of guest</h3> 
             <form id="formCancelLastBookingByGuestEmail">
                 <label for="cancelLastBookingByGuestEmail">Guest Email:</label> 
-                <input type="email" id="cancelLastBookingByGuestEmail" name="bookingId" required><br>
+                <input type="email" id="cancelLastBookingByGuestEmail" name="guestEmail" required><br><br>
                 <button type="submit">Cancel booking</button> 
             </form> 
         </div> 
@@ -65,7 +65,7 @@
             <h4>Display details of particular booking</h4> 
             <form id="formGetBookingByBookingId">
                 <label for="getBookingByBookingId">Booking ID:</label> 
-                <input type="text" id="getBookingByBookingId" name="bookingId" required><br>
+                <input type="text" id="getBookingByBookingId" name="bookingId" required><br><br>
                 <button type="submit">Display</button> 
             </form> 
         </div>  
@@ -73,7 +73,7 @@
             <h4>Display all related bookings of</h4> 
             <form id="formGetAllBookingByBookingId">
                 <label for="getAllBookingByGuestEmail">Guest Email ID:</label> 
-                <input type="email" id="getAllBookingByGuestEmail" name="guestEmail" required><br>
+                <input type="email" id="getAllBookingByGuestEmail" name="guestEmail" required><br><br>
                 <button type="submit">Display</button> 
             </form> 
         </div> 
@@ -83,7 +83,7 @@
                 <label for="getAllBookingBetweenDatesFrom">Check In Date:</label> 
                 <input type="date" id="getAllBookingBetweenDatesFrom" name="fromDate" required><br><br>
                 <label for="getAllBookingBetweenDatesTo">Check Out Date:</label> 
-                <input type="date" id="getAllBookingBetweenDatesTo" name="toDate" required><br>
+                <input type="date" id="getAllBookingBetweenDatesTo" name="toDate" required><br><br>
                 <button type="submit">Display</button> 
             </form> 
         </div> 
@@ -91,7 +91,7 @@
             <h4>Display all bookings occupied on</h4> 
             <form id="formGetAllBookingOccupiedOnGivenDate">
                 <label for="getAllBookingOccupiedOnGivenDate">Date:</label> 
-                <input type="date" id="getAllBookingOccupiedOnGivenDate" name="date" required><br>
+                <input type="date" id="getAllBookingOccupiedOnGivenDate" name="date" required><br><br>
                 <button type="submit">Display</button> 
             </form> 
         </div> 
@@ -111,7 +111,7 @@
                 <h4>Display all arrival bookings of</h4> 
                 <form id="formGetAllUpcomingArrivalBookingByRoomNo">
                     <label for="getAllUpcomingArrivalBookingByRoomNo">Room Number:</label> 
-                    <input type="text" id="getAllUpcomingArrivalBookingByRoomNo" name="roomNo" required><br>
+                    <input type="text" id="getAllUpcomingArrivalBookingByRoomNo" name="roomNo" maxlength="3" required><br><br>
                     <button type="submit">Display</button> 
                 </form> 
             </div> 
@@ -119,7 +119,7 @@
                 <h4>Display all arrival bookings of</h4> 
                 <form id="formGetAllUpcomingArrivalBookingByGuestEmail">
                     <label for="getAllUpcomingArrivalBookingByGuestEmail">Guest Email:</label> 
-                    <input type="email" id="getAllUpcomingArrivalBookingByGuestEmail" name="guestEmail" required><br>
+                    <input type="email" id="getAllUpcomingArrivalBookingByGuestEmail" name="guestEmail" required><br><br>
                     <button type="submit">Display</button> 
                 </form> 
             </div> 
@@ -127,7 +127,7 @@
                 <h4>Display all arrival bookings staying</h4> 
                 <form id="formGetAllUpcomingArrivalStayMoreThanNDays">
                     <label for="getAllUpcomingArrivalStayMoreThanNDays">More than below number of days:</label> 
-                    <input type="number" id="getAllUpcomingArrivalStayMoreThanNDays" name="n" required><br>
+                    <input type="number" id="getAllUpcomingArrivalStayMoreThanNDays" name="n" required><br><br>
                     <button type="submit">Display</button> 
                 </form> 
             </div> 
@@ -143,7 +143,7 @@
                     <label for="getAllCheckedOutBookingBetweenDatesFrom">Check In Date:</label> 
                     <input type="date" id="getAllCheckedOutBookingBetweenDatesFrom" name="fromDate" required><br><br>
                     <label for="getAllCheckedOutBookingBetweenDatesTo">Check In Date:</label> 
-                    <input type="date" id="getAllCheckedOutBookingBetweenDatesTo" name="toDate" required><br>
+                    <input type="date" id="getAllCheckedOutBookingBetweenDatesTo" name="toDate" required><br><br>
                     <button type="submit">Display</button> 
                 </form> 
             </div>  
@@ -151,7 +151,7 @@
                 <h4>Display all checked-out bookings by</h4> 
                 <form id="formGetAllCheckedOutBookingByGuestEmail">
                     <label for="getAllCheckedOutBookingByGuestEmail">Guest Email ID:</label> 
-                    <input type="email" id="getAllCheckedOutBookingByGuestEmail" name="guestEmail" required><br>
+                    <input type="email" id="getAllCheckedOutBookingByGuestEmail" name="guestEmail" required><br><br>
                     <button type="submit">Display</button> 
                 </form> 
             </div> 
@@ -167,7 +167,7 @@
                     <label for="getAllCancelledBookingBetweenDatesFrom">Check In Date:</label> 
                     <input type="date" id="getAllCancelledBookingBetweenDatesFrom" name="fromDate" required><br><br>
                     <label for="getAllCancelledBookingBetweenDatesTo">Check In Date:</label> 
-                    <input type="date" id="getAllCancelledBookingBetweenDatesTo" name="toDate" required><br>
+                    <input type="date" id="getAllCancelledBookingBetweenDatesTo" name="toDate" required><br><br>
                     <button type="submit">Display</button> 
                 </form> 
             </div>  
@@ -175,7 +175,7 @@
                 <h4>Display all checked-out bookings by</h4> 
                 <form id="formGetAllCancelledBookingByGuestEmail">
                     <label for="getAllCancelledBookingByGuestEmail">Guest Email ID:</label> 
-                    <input type="email" id="getAllCancelledBookingByGuestEmail" name="guestEmail" required><br>
+                    <input type="email" id="getAllCancelledBookingByGuestEmail" name="guestEmail" required><br><br>
                     <button type="submit">Display</button> 
                 </form> 
             </div> 

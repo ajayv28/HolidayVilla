@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HolidayVilla - Transaction Management Page</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <div class="loginlogout">
+        <button id="logoutButton">Logout</button>
+    </div>
+        
+    <div id="transaction-posting-popup" class="posting-popup">
+        <div class="posting-popup-content">
+            <span class="posting-close" id="transaction-posting-closePopup">&times</span>
+            <h3 id="transaction-posting-responseHeading"></h3>
+             <p id="transaction-posting-responseMessage"></p>
+        </div>
+    </div>
+        
+    <div id="transaction-getter-popup" class="getter-popup">
+        <div class="getter-popup-content">
+            <span class="getter-close" id="transaction-getter-closePopup">&times</span>
+            <h3 id="transaction-getter-responseHeading"></h3>
+            <table id="transaction-getter-responseTable" class="getter-responseTable"></table>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Transaction Management - Create Transaction</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Create Transaction</h4> 
+                <form id="formNewTransaction">
+                    <label for="newTransactionFundType">Fund Type:</label> 
+                    <select name="fundType" id="newTransactionFundType" required>
+                        <option value="DEBIT">DEBIT</option>
+                        <option value="CREDIT">CREDIT</option>
+                        <option value="FREE">FREE</option>
+                    </select><br><br>
+                    <label for="newTransactionAmount">Amount:</label> 
+                    <input type="number" step="0.01" id="newTransactionAmount" name="amount" required><br><br>
+                    <label for="newTransactionComments">Comments:</label> 
+                    <input type="text" id="newTransactionComments" name="comments" required><br><br>
+
+                    <button type="submit">Create</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Transaction Management</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Display Transaction Details</h4> 
+                <form id="formGetTransactionsByTransactionId">
+                    <label for="getTransactionsByTransactionId">Transaction ID:</label> 
+                    <input type="text" id="getTransactionsByTransactionId" name="transactionId" required><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Display Transaction Details</h4> 
+                <form id="formGetTransactionsByTypeAndPeriod">
+                    <label for="getTransactionsByTypeAndPeriodPeriod">Period:</label> 
+                    <input type="text" id="getTransactionsByTypeAndPeriodPeriod" name="period" required><br><br>
+                    <label for="getTransactionsByTypeAndPeriodFundType">Fund Type:</label> 
+                    <select name="fundType" id="getTransactionsByTypeAndPeriodFundType" required>
+                        <option value="DEBIT">DEBIT</option>
+                        <option value="CREDIT">CREDIT</option>
+                        <option value="FREE">FREE</option>
+                    </select><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Transaction Management</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Display Transaction Details by</h4> 
+                <form id="formGetTransactionsByDepartmentAndPeriod">
+                    <label for="getTransactionsByDepartmentAndPeriodPeriod">Period:</label> 
+                    <input type="text" id="getTransactionsByDepartmentAndPeriodPeriod" name="period" required><br><br>
+                    <label for="getTransactionsByDepartmentAndPeriodDepartment">Department:</label> 
+                    <select name="department" id="getTransactionsByDepartmentAndPeriodDepartment" required>
+                        <option value="ROOM_DIVISION">Room Division</option>
+                        <option value="KITCHEN_FOOD">Kitchen, Food and Beverage</option>
+                        <option value="HR">Human Resource</option>
+                        <option value="MAINTENANCE">Maintenance</option>
+                        <option value="FINANCE">Finance</option>
+                        <option value="PURCHASE">Purchase</option>
+                        <option value="SALES">Sales</option>
+                        <option value="SECURITY">Security</option>
+                    </select><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Display Transaction Details by</h4> 
+                <form id="formGetTransactionsMadeBetweenDates">
+                    <label for="getTransactionsMadeBetweenDatesFrom">From Date:</label> 
+                    <input type="date" id="getTransactionsMadeBetweenDatesFrom" name="fromDate" required><br><br>
+                    <label for="getTransactionsMadeBetweenDatesTo">To Date:</label> 
+                    <input type="date" id="getTransactionsMadeBetweenDatesTo" name="toDate" required><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Display Transaction Details by</h4> 
+                <form id="formGetTransactionsMadeBetweenAmount">
+                    <label for="getTransactionsMadeBetweenAmountFrom">From Amout:</label> 
+                    <input type="number" step="0.01" id="getTransactionsMadeBetweenAmountFrom" name="fromAmount" required><br><br>
+                    <label for="getTransactionsMadeBetweenAmountTo">To Amount:</label> 
+                    <input type="number" step="0.01" id="getTransactionsMadeBetweenAmountTo" name="toAmount" required><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
