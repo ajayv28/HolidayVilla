@@ -8,8 +8,25 @@
 </head>
 <body>
 
-    <div class="loginlogout">
-        <button id="logoutButton">Logout</button>
+    <div class="header">
+        <div class="logo">
+            <h2>Holiday Villa</h2>
+            <p>Experience luxury and comfort </p>
+        </div>
+        <a href="home.html">Home</a>
+        <a href="staff_dashboard.html">Staff Dashboard</a>
+        <a href="booking.html">Booking</a>
+        <a href="food_order.html">Food Order</a>
+        <a href="material_requisition.html">Material Requisition</a>
+        <a href="maintenance.html">Maintenance</a>
+        <a href="material.html">Material</a>
+        <a href="room.html">Room</a>
+        <a href="transaction.html">Transaction</a>
+        <a href="staff.html">HR</a>
+        <a href="coupon.html">Coupon</a>
+        <div class="loginlogout">
+            <button id="logoutButton">Logout</button>
+        </div>
     </div>
         
     <div id="room-posting-popup" class="posting-popup">
@@ -68,36 +85,6 @@
                         <option value="OUT_OF_ORDER">Out Of Order</option>
                     </select><br><br>
                     <button type="submit">Change Status</button> 
-                </form> 
-            </div>
-        </div>
-    </div>
-
-    <div class="container-noflex">    
-        <h2>Room Management - Check-In / Check-Out</h2><br>
-        <div class="flex-container-center">
-            <div class="registerForm">
-                <h4>On Time Check-In</h4> 
-                <form id="formCheckInWithBookingId">
-                    <label for="checkInWithBookingId">Booking ID:</label> 
-                    <input type="text" id="checkInWithBookingId" name="bookingId" required><br><br>
-                    <button type="submit">Check-In</button> 
-                </form> 
-            </div>
-            <div class="registerForm">
-                <h4>On Time Check-Out</h4> 
-                <form id="formCheckOutWithBookingId">
-                    <label for="checkOutWithBookingId">Booking ID:</label> 
-                    <input type="text" id="checkOutWithBookingId" name="bookingId" required><br><br>
-                    <button type="submit">Check-Out</button> 
-                </form> 
-            </div>
-            <div class="registerForm">
-                <h4>Early Check-Out</h4> 
-                <form id="formEarlyCheckOutWithBookingId">
-                    <label for="earlyCheckOutWithBookingId">Booking ID:</label> 
-                    <input type="text" id="earlyCheckOutWithBookingId" name="bookingId" required><br><br>
-                    <button type="submit">Check-Out</button> 
                 </form> 
             </div>
         </div>

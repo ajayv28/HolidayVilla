@@ -8,8 +8,25 @@
 </head>
 <body>
     
-    <div class="loginlogout">
-        <button id="logoutButton">Logout</button>
+    <div class="header">
+        <div class="logo">
+            <h2>Holiday Villa</h2>
+            <p>Experience luxury and comfort </p>
+        </div>
+        <a href="home.html">Home</a>
+        <a href="staff_dashboard.html">Staff Dashboard</a>
+        <a href="booking.html">Booking</a>
+        <a href="food_order.html">Food Order</a>
+        <a href="material_requisition.html">Material Requisition</a>
+        <a href="maintenance.html">Maintenance</a>
+        <a href="material.html">Material</a>
+        <a href="room.html">Room</a>
+        <a href="transaction.html">Transaction</a>
+        <a href="staff.html">HR</a>
+        <a href="coupon.html">Coupon</a>
+        <div class="loginlogout">
+            <button id="logoutButton">Logout</button>
+        </div>
     </div>
         
     <div id="maintenance-posting-popup" class="posting-popup">
@@ -73,7 +90,7 @@
                 </form> 
             </div> 
             <div class="registerForm">
-                <h4>All Guest Rooms with FollowUps</h4> 
+                <h4>All Maintenance with FollowUps</h4> 
                 <form id="formAllMaintenanceWithFollowupsByRoomNo">
                     <label for="allMaintenanceWithFollowupsByRoomNo">Room Number:</label> 
                     <input type="text" id="allMaintenanceWithFollowupsByRoomNo" name="roomNo" required maxlength="3"><br><br>
@@ -101,7 +118,7 @@
                 <form id="formAllMaintenanceByLoggedInStaffBetweenDates">
                     <label for="allMaintenanceByLoggedInStaffBetweenDatesFrom">From Date:</label> 
                     <input type="date" id="allMaintenanceBetweenDatesFrom" name="fromDate" required><br><br>
-                    <label for="allMaintenanceBetweenDatesTo">To Date:</label> 
+                    <label for="allMaintenanceByLoggedInStaffBetweenDatesTo">To Date:</label> 
                     <input type="date" id="allMaintenanceByLoggedInStaffBetweenDatesTo" name="toDate" required><br><br>
                     <button type="submit">Display</button> 
                 </form> 

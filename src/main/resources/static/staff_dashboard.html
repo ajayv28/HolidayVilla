@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holiday Villa - Staff Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">
+            <h2>Holiday Villa</h2>
+            <p>Experience luxury and comfort </p>
+        </div>
+        <a href="home.html">Home</a>
+        <a href="staff_dashboard.html">Staff Dashboard</a>
+        <a href="booking.html">Booking</a>
+        <a href="food_order.html">Food Order</a>
+        <a href="material_requisition.html">Material Requisition</a>
+        <a href="maintenance.html">Maintenance</a>
+        <a href="material.html">Material</a>
+        <a href="room.html">Room</a>
+        <a href="transaction.html">Transaction</a>
+        <a href="staff.html">HR</a>
+        <a href="coupon.html">Coupon</a>
+        <div class="loginlogout">
+            <button id="logoutButton">Logout</button>
+        </div>
+    </div>
+        
+    <div class="flex-container-right">
+        <h3 id="staffWelcome"></h3>
+        <div class="container-noflex"><p id="staffDetail"></p></div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+
+        async function fetchStaffData() {
+        const response = await fetch("http://localhost:8081/api/logged-in-staff-detail");
+        const data = await response.json();
+        displayStaffData(data);
+    }
+
+    function displayStaffData(data) {
+    const response = document.getElementById("staffDetail");            
+    response.innerHTML = `
+        Name: ${data.name}<br>
+        Email: ${data.email}<br>
+        Phone: ${data.phoneNumber}<br>
+        DOB: ${data.dob}<br>
+        Gender: ${data.gender}<br>
+    `;
+    }
+
+    async function setStaffName() {
+        const name = await staffName(); 
+        document.getElementById("staffWelcome").innerHTML = `Welcome ${name}`; 
+    }
+
+    async function staffName() {
+        const response = await fetch("http://localhost:8081/api/logged-in-staff-name");
+        const data = await response.text();
+        return data;
+    }
+        
+
+    window.onload = async function() {
+        await setStaffName(); 
+        await fetchStaffData();
+    };
+
+    </script>
+</body>
+</html>

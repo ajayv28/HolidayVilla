@@ -2,7 +2,9 @@ body{
     font: 1em sans-serif;
 }
 
-
+.cursor-not-allowed{
+    cursor: not-allowed;
+}
 /* ********************************** HEADER ITEMS ********************************** */
 
 .loginlogout{
@@ -10,6 +12,8 @@ body{
     justify-content: right;
     position: sticky;
     top:0;
+    right: 0;
+    margin: 0;
 }
 
 .loginlogout button{
@@ -20,6 +24,64 @@ body{
     background-color: #f87224;
     color: white;
     cursor: pointer;
+}
+
+.loginlogout button:hover{
+    background-color: #b3490c;
+}
+
+.logo{
+    margin-right: 100px;
+    margin-left: 30px;
+}
+.logo h2{
+    margin-bottom: 2px;
+    padding-bottom: 2px;
+}
+.logo p{
+    margin-top: 2px;
+    padding-top: 2px;
+    font-size: 0.8em;
+}
+
+.header{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #9de6b5    ;
+    height: 80px;
+    font-size: 16px;
+    position: sticky;
+    top:0;
+    border: 2px double rgb(0, 82, 0);
+}
+
+.header a{
+    color: rgb(0, 0, 0);
+    text-decoration: none; 
+    font-weight: bold;
+    padding: 10px;
+}
+
+.header a:hover {
+    background-color: #156900;
+    color: white; 
+    border-radius: 5px; 
+}
+
+.header a.active {
+    background-color: #156900; 
+    color: white; 
+    border-radius: 5px; 
+}
+
+
+.inactive {
+    cursor: not-allowed !important;
+}
+
+.inactive a{
+    color: #999 !important;
 }
 
 /* **********************************POPUP ITEMS ********************************** */
@@ -146,11 +208,15 @@ form button:hover{
     justify-content: center;
 }
 
+.flex-container-right{
+    display: flex;
+    justify-content: right;
+}
 .container-noflex{
-    border: 2px dotted black;
-    padding:20px;
-    margin: 30px;
-    width: 190vh;
+    border: 2px solid black;
+    padding:10px;
+    margin: 10px;
+    width: 195vh;
     background-color: rgb(247, 247, 247);
     border-radius: 8px;
 }
@@ -159,7 +225,7 @@ form button:hover{
     border: 2px solid black;
     padding:10px;
     margin: 10px;
-    width: 180vh;
+    width: 195vh;
     height: auto;
     background-color: honeydew;
     display:flex;
@@ -185,3 +251,7 @@ button{
 button:hover{
     background-color: #061177;
 }
+
+
+
+

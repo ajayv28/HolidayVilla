@@ -5,10 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - HolidayVilla Welcomes You | Your partner in vacation stay</title>
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body{
+        background: url("images/home_bg.jpg");
+        background-size: cover;
+        }
+        h1 {
+            font-size: 3em;
+            margin: 0;
+            color: #0056b3;
+        }
+        p {
+            font-size: 1.1em;
+            margin: 10px 0 20px;
+            color: #555;
+        }
+        .slogan {
+            font-size: 0.8em;
+            color: #777;
+            margin-top: 10px;
+        }
+        .semi_trans {
+            width:150vh;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .whole_container{
+            display: flex;
+        }
+        .footer {
+            position: relative;
+            bottom: 0;
+            background-color: #001e36; 
+            font-size: 0.8em;
+            color: rgb(255, 255, 255);
+            padding: 10px 1px;
+            line-height: 0.2;
+        }
+        .footer p{
+            color:white
+        }
+    </style>
 </head>
 <body>
+
+<br><br><br><br>
+<div class="header">
+        <div class="logo">
+            <h2>Holiday Villa</h2>
+            <p>Experience luxury and comfort </p>
+        </div>
+        <a href="guest.html" id="guestButton">Guest Dashboard</a>
+        <a href="staff_dashboard.html" id="staffButton">Staff Dashboard</a>
+        <div class="loginlogout">
+            <button id="logoutButton">Logout</button>
+        </div>
+
+</div>
+<br><br><br><br>
+
+<div class="whole_container">
+
+<div class="semi_trans">
+    <h1>Holiday Villa</h1>
+    <p>Hospitality beyond expectations.</p>
+    <div class="slogan">
+        <p>Your getaway awaits!  |  Experience luxury and comfort  |  Where every stay is a delight.</p>
+        <p>Creating memories that last a lifetime.</p>
+    </div>
+    <div class="footer">
+        <p><b>Contact Us</b></p>
+        <p>Address: Bannerghatta Road, Bangalore</p>
+        <p>Phone: (+91) 98765-43210</p>
+        <p>Email: info@holidayvilla.com</p>
+    </div>
+</div>
+
+<div id="home-posting-popup" class="posting-popup">
+    <div class="posting-popup-content">
+        <span class="posting-close" id="home-posting-closePopup">&times</span>
+        <h3 id="home-posting-responseHeading"></h3>
+        <p id="home-posting-responseMessage"></p>
+    </div>
+</div>
+
+
+<div class="flex-container-right">
     <div class="registerForm">
-        <h1>Register New Guest</h1> 
+        <h3>Register New Guest</h3> 
         <form id="guestRegisterForm">
                 <label for="guestRegisterEmail">Email Id:</label> 
                 <input type="email" id="guestRegisterEmail" name="email" required><br><br>
@@ -30,7 +116,39 @@
                 <button type="submit">Submit</button> 
          </form> 
     </div>
+</div>
     
+</div>
+
     <script src="js/script.js"></script>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", () => {
+            checkLoginStatus();
+        });
+
+        async function checkLoginStatus() {
+            const response = await fetch("http://localhost:8081/api/login-status");
+            const data = await response.text();
+            updateButtonStatus(data);
+        }
+
+        function updateButtonStatus(response) {
+            
+            const button1 = document.getElementById("guestButton");
+            const button2 = document.getElementById("staffButton");
+            const button3 = document.getElementById("logoutButton");
+
+
+            if (response === "none") {
+                button3.remove();
+            } else if (response === "GUEST") {
+                button2.remove();
+            } else if (response === "STAFF") {
+                button1.remove();
+
+            }
+        }
+    </script>
 </body>
 </html>
