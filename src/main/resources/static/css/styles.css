@@ -84,6 +84,11 @@ body{
     color: #999 !important;
 }
 
+
+#staffWelcome{
+    width: 190vh;
+    text-align: center;
+}
 /* **********************************POPUP ITEMS ********************************** */
 
 .posting-popup {

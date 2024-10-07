@@ -35,6 +35,11 @@
     </div>
 </div>
 
+<div class="flex-container-right">
+    <h2 id="staffWelcome"></h2>
+    <div class="container-noflex"><p id="staffDetail"></p></div>
+</div>
+
 <div class="flex-container-center">
     <div class="registerForm">
         <h1>Book my room</h1> 
@@ -85,5 +90,44 @@
 </div>
 
 <script src="js/script.js"></script>
+<script>
+
+    async function fetchStaffData() {
+    const response = await fetch("http://localhost:8081/api/logged-in-guest-detail");
+    const data = await response.json();
+    displayStaffData(data);
+}
+
+function displayStaffData(data) {
+const response = document.getElementById("staffDetail");
+response.style.fontFamily = "sans-serif";         
+response.innerHTML = `
+    Your Details :-<br><br>
+    Name: ${data.name}<br>
+    Email: ${data.email}<br>
+    Phone: ${data.phoneNumber}<br>
+    DOB: ${data.dob}<br>
+    Gender: ${data.gender}<br>
+`;
+}
+
+async function setStaffName() {
+    const name = await staffName(); 
+    document.getElementById("staffWelcome").innerHTML = `Welcome ${name}`; 
+}
+
+async function staffName() {
+    const response = await fetch("http://localhost:8081/api/logged-in-guest-name");
+    const data = await response.text();
+    return data;
+}
+    
+
+window.onload = async function() {
+    await setStaffName(); 
+    await fetchStaffData();
+};
+
+</script>
 </body>
 </html>

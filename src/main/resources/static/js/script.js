@@ -174,7 +174,6 @@ async function getOrPutFunction(getOrPut, api, table, popup, heading, headingMes
 
 
 
-// JS CODE FOR STAFF_DASHBOARD.HTML    *****************************************************************
 
 
 
@@ -398,6 +397,14 @@ document.getElementById("food_order-posting-closePopup").addEventListener("click
 
 document.getElementById("food_order-getter-closePopup").addEventListener("click", function() {
     document.getElementById("food_order-getter-popup").style.display = "none";
+});
+
+document.getElementById("formOrderCompensationFood").addEventListener("submit", function(event){ 
+    event.preventDefault();
+    const heading = document.getElementById("food_order-posting-responseHeading");
+    const message = document.getElementById("food_order-posting-responseMessage");
+    const popup = document.getElementById("food_order-posting-popup");
+    postingFunction(this, "http://localhost:8081/api/food-order/order-compensation-food", "Below is order detail", "Food order is created successfully", heading, message, popup);
 });
 
 document.getElementById("formGetAllTodayFoodOrder").addEventListener("submit", function(event){ 
@@ -1040,9 +1047,51 @@ document.getElementById("formGetAllRoomByRoomStatus").addEventListener("submit",
 });
 
 
+document.getElementById("formOrderCompensationFoodRoomController").addEventListener("submit", function(event){ 
+    event.preventDefault();
+    const heading = document.getElementById("room-posting-responseHeading");
+    const message = document.getElementById("room-posting-responseMessage");
+    const popup = document.getElementById("room-posting-popup");
+    postingFunction(this, "http://localhost:8081/api/food-order/order-compensation-food", "Below is order detail", "Food order is created successfully", heading, message, popup);
+});
 
 
 
+
+
+
+
+
+
+
+// JS CODE FOR STAFF_DASHBOARD.HTML    *****************************************************************
+document.getElementById("staffDashboard-posting-closePopup").addEventListener("click", function() {
+    document.getElementById("staffDashboard-posting-popup").style.display = "none";
+});
+
+document.getElementById("staffDashboard-getter-closePopup").addEventListener("click", function() {
+    document.getElementById("staffDashboard-getter-popup").style.display = "none";
+});
+
+
+document.getElementById("formMaterialRequisitionRegister").addEventListener("submit", function(event){ 
+    event.preventDefault();
+    const heading = document.getElementById("staffDashboard-posting-responseHeading");
+    const message = document.getElementById("staffDashboard-posting-responseMessage");
+    const popup = document.getElementById("staffDashboard-posting-popup");
+    const api = "http://localhost:8081/api/material-requisition/raise-requisition";
+    postingFunction(this, api, "Below is your material requisition detail", "Your material requisition is raised successfully", heading, message, popup);
+});
+
+document.getElementById("formCancelRequisition").addEventListener("submit", function(event){ 
+    event.preventDefault();
+    const id = document.getElementById("cancelRequisition").value;
+    const heading = document.getElementById("staffDashboard-getter-responseHeading");
+    const table = document.getElementById("staffDashboard-getter-responseTable");
+    const popup = document.getElementById("staffDashboard-getter-popup");
+    const api = `http://localhost:8081/api/material-requisition/cancel-requisition?requisitionId=${id}`;
+    getOrPutFunction("PUT", api, table, popup, heading, "Entered email is updated successfully");
+});
 
 
 

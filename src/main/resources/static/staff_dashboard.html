@@ -30,8 +30,62 @@
     </div>
         
     <div class="flex-container-right">
-        <h3 id="staffWelcome"></h3>
+        <h2 id="staffWelcome"></h2>
         <div class="container-noflex"><p id="staffDetail"></p></div>
+    </div>
+
+
+    <div id="staffDashboard-posting-popup" class="posting-popup">
+        <div class="posting-popup-content">
+            <span class="posting-close" id="staffDashboard-posting-closePopup">&times</span>
+            <h3 id="staffDashboard-posting-responseHeading"></h3>
+             <p id="staffDashboard-posting-responseMessage"></p>
+        </div>
+    </div>
+        
+    <div id="staffDashboard-getter-popup" class="getter-popup">
+        <div class="getter-popup-content">
+            <span class="getter-close" id="staffDashboard-getter-closePopup">&times</span>
+            <h3 id="staffDashboard-getter-responseHeading"></h3>
+            <table id="staffDashboard-getter-responseTable" class="getter-responseTable"></table>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Material Requisition</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Raise Material Requisition</h4> 
+                <form id="formMaterialRequisitionRegister">
+                    <label for="materialRequisitionRegisterDepartment">Department:</label> 
+                    <select name="department" id="materialRequisitionRegisterDepartment" required>
+                        <option value="ROOM_DIVISION">Room Division</option>
+                        <option value="KITCHEN_FOOD">Kitchen, Food and Beverage</option>
+                        <option value="HR">Human Resource</option>
+                        <option value="MAINTENANCE">Maintenance</option>
+                        <option value="FINANCE">Finance</option>
+                        <option value="PURCHASE">Purchase</option>
+                        <option value="SALES">Sales</option>
+                        <option value="SECURITY">Security</option>
+                    </select><br><br>
+                    <label for="materialRequisitionDate">Expected Delivery Date:</label> 
+                    <input type="date" id="materialRequisitionDate" name="expectingDeliveryDate" required><br><br>
+                    <label for="materialRequisitionRequisitionQuantity">Quantity:</label> 
+                    <input type="number" step="0.01" id="materialRequisitionRequisitionQuantity" name="requisitionQuantity"><br><br>
+                    <label for="materialRequisitionRequisitionMaterial">Material Name:</label> 
+                    <input type="text" id="materialRequisitionRequisitionMaterial" name="requisitionMaterial"><br><br>
+                    <button type="submit">Raise</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Cancel Material Requisition</h4> 
+                <form id="formCancelRequisition">
+                    <label for="cancelRequisition">Requisition ID:</label> 
+                    <input type="text" id="cancelRequisition" name="requisitionId" required><br><br>
+                    <button type="submit">Cancel</button> 
+                </form> 
+            </div>
+        </div>
     </div>
 
     <script src="js/script.js"></script>
@@ -44,8 +98,10 @@
     }
 
     function displayStaffData(data) {
-    const response = document.getElementById("staffDetail");            
+    const response = document.getElementById("staffDetail");
+    response.style.fontFamily = "sans-serif";         
     response.innerHTML = `
+        Your Details :-<br><br>
         Name: ${data.name}<br>
         Email: ${data.email}<br>
         Phone: ${data.phoneNumber}<br>
