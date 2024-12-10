@@ -19,7 +19,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain getSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
-        httpSecurity.csrf().disable()
+        httpSecurity.csrf().disable()   //TO DISABLE CROSS SITE REQUESTFORGERY
                 .authorizeHttpRequests()
                 .requestMatchers("/home.html/**")
                 .permitAll()
@@ -69,6 +69,8 @@ public class SecurityConfig {
                 .hasAnyRole("FINANCE","MANAGER")
                 .requestMatchers("/transaction.html/**")
                 .hasAnyRole("FINANCE","MANAGER")
+                .requestMatchers("/staff_dashboard.html/**")
+                .hasAnyRole("MANAGER","MAINTENANCE","PURCHASE","ROOM_DIVISION","KITCHEN_FOOD","FINANCE","HR","SALES","SECURITY")
                 .anyRequest()
                 .authenticated()
                 .and()
