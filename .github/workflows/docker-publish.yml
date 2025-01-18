@@ -9,7 +9,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}  # Store Render Deploy Hook as a secret
+  RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
 
 jobs:
   build-and-publish:
@@ -20,6 +20,7 @@ jobs:
       id-token: write
 
     steps:
+      # Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -28,13 +29,19 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 17
-          java-package: jdk
-          distribution: 'temurin'  # Use 'temurin' distribution for Java 17
+          distribution: 'temurin'
+          cache: maven
 
-      # Set up Maven and Build the application
-      - name: Set up Maven
-        run: sudo apt-get install maven
+      # Cache Maven dependencies
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
 
+      # Build with Maven
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
@@ -50,7 +57,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Extract metadata for Docker image
+      # Extract Docker metadata
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v3
@@ -71,7 +78,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # Sign the Docker image (optional)
+      # Sign the Docker image
       - name: Sign the Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
