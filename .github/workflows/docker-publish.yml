@@ -57,7 +57,7 @@ jobs:
             type=raw,value=latest
             type=ref,context=github.sha
 
-      # Build and push Docker image
+      # Build and push Docker image with distribution argument
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v3
@@ -68,6 +68,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          distribution: 'linux/amd64'  # Specify the distribution architecture
 
       # Optional: Sign the Docker image using cosign (if configured)
       - name: Sign the Docker image
