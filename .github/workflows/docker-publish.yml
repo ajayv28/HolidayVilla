@@ -78,6 +78,13 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      # Install cosign for signing Docker image
+      - name: Install cosign
+        run: |
+          curl -Lo cosign https://github.com/sigstore/cosign/releases/download/v1.11.0/cosign-linux-amd64
+          chmod +x cosign
+          sudo mv cosign /usr/local/bin/
+
       # Sign the Docker image
       - name: Sign the Docker image
         if: ${{ github.event_name != 'pull_request' }}
