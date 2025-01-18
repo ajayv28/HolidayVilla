@@ -3,7 +3,7 @@ FROM maven:3.9.2-eclipse-temurin-21-alpine as builder
 COPY ./src src/
 COPY ./pom.xml pom.xml
 
-RUN mvn clean package
+RUN mvn clean install -X
 
 FROM eclipse-temurin:21-jre-alpine
 COPY --from=builder target/*.jar app.jar
