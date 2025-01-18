@@ -78,10 +78,10 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # Sign the Docker image using cosign-action (No installation needed)
+      # Sign the Docker image using cosign-action
       - name: Sign Docker image using cosign
         if: ${{ github.event_name != 'pull_request' }}
-        uses: sigstore/cosign-action@v1
+        uses: google-github-actions/cosign-action@v0.1.0
         with:
           image: ghcr.io/${{ github.repository }}:latest
           cosign-key: ${{ secrets.COSIGN_PRIVATE_KEY }}  # Store private key in GitHub Secrets
