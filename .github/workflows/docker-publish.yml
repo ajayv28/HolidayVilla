@@ -23,9 +23,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Set up Maven and Build the application
-      - name: Set up Maven
-        run: sudo apt-get install maven
+      # Set up Java 17
+      - name: Set up Java 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'  # Set Java version to 17
+
+      - name: Install Maven
+        run: sudo apt-get install -y maven
 
       - name: Build with Maven
         run: mvn clean package -DskipTests
@@ -42,7 +47,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Extract metadata for Docker image
+      # Extract metadata for Docker image (tags, labels)
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v3
@@ -50,6 +55,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=latest
+            type=ref,context=github.sha
 
       # Build and push Docker image
       - name: Build and push Docker image
@@ -63,7 +69,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # Sign the Docker image (optional)
+      # Optional: Sign the Docker image using cosign (if configured)
       - name: Sign the Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
