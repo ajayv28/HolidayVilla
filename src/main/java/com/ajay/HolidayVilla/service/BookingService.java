@@ -89,8 +89,8 @@ public class BookingService {
             booking.setGuest(currGuest);
             booking.setRoom(currRoom);
 
-            currRoom.getBookingList().addLast(booking);
-            currGuest.getBookings().addLast(booking);
+            currRoom.getBookingList().add(booking);
+            currGuest.getBookings().add(booking);
             currGuest.setCurrentlyActiveBooking(true);
 
             //******* send mail to HSK, FO that booking made on OOS room*******
@@ -170,8 +170,8 @@ public class BookingService {
         newBooking.setGuest(currGuest);
         newBooking.setRoom(currRoom);
 
-        currRoom.getBookingList().addLast(newBooking);
-        currGuest.getBookings().addLast(newBooking);
+        currRoom.getBookingList().add(newBooking);
+        currGuest.getBookings().add(newBooking);
         currGuest.setCurrentlyActiveBooking(true);
 
         //******* send mail to HSK, FO that booking made on OOS room*******
@@ -258,7 +258,7 @@ public class BookingService {
         if(currGuest.isCurrentlyActiveBooking()==false)
             throw new NoOngoingBookingException("Sorry, there is no upcoming booking found for you");
 
-        Booking booking = currGuest.getBookings().getLast();
+        Booking booking = currGuest.getBookings().get(currGuest.getBookings().size()-1);
 
         if(booking.getBookingStatus().toString().equals("GUEST_IN_HOUSE"))
             throw new CancellationNotAllowedException("Guest already checked in. Cancellation not allowed");
