@@ -10,7 +10,7 @@ links.forEach(link => {
 
 
 document.getElementById("logoutButton").addEventListener("click", async function() {
-    await fetch("http://localhost:8081/logout", {
+    await fetch("https://holidayvilla-production.up.railway.app/logout", {
         method: "POST",
         credentials: "include"
     });
@@ -30,7 +30,7 @@ document.getElementById("guestRegisterForm").addEventListener("submit", function
     const heading = document.getElementById("home-posting-responseHeading");
     const message = document.getElementById("home-posting-responseMessage");
     const popup = document.getElementById("home-posting-popup");
-    postingFunction(this, "http://localhost:8081/api/guest/register", "Below is your account detail", "Your account is created successfully", heading, message, popup);
+    postingFunction(this, "https://holidayvilla-production.up.railway.app/api/guest/register", "Below is your account detail", "Your account is created successfully", heading, message, popup);
 });
 
 

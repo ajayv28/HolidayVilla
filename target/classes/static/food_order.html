@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HolidayVilla - Food Order Management Page</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">
+            <h2>Holiday Villa</h2>
+            <p>Experience luxury and comfort </p>
+        </div>
+        <a href="home.html">Home</a>
+        <a href="staff_dashboard.html">Staff Dashboard</a>
+        <a href="booking.html">Booking</a>
+        <a href="food_order.html">Food Order</a>
+        <a href="material_requisition.html">Material Requisition</a>
+        <a href="maintenance.html">Maintenance</a>
+        <a href="material.html">Material</a>
+        <a href="room.html">Room</a>
+        <a href="transaction.html">Transaction</a>
+        <a href="staff.html">HR</a>
+        <a href="coupon.html">Coupon</a>
+        <div class="loginlogout">
+            <button id="logoutButton">Logout</button>
+        </div>
+    </div>
+        
+    <div id="food_order-posting-popup" class="posting-popup">
+        <div class="posting-popup-content">
+            <span class="posting-close" id="food_order-posting-closePopup">&times</span>
+            <h3 id="food_order-posting-responseHeading"></h3>
+             <p id="food_order-posting-responseMessage"></p>
+        </div>
+    </div>
+        
+    <div id="food_order-getter-popup" class="getter-popup">
+        <div class="getter-popup-content">
+            <span class="getter-close" id="food_order-getter-closePopup">&times</span>
+            <h3 id="food_order-getter-responseHeading"></h3>
+            <table id="food_order-getter-responseTable" class="getter-responseTable"></table>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Compensation Food Order</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Order compensation food</h4> 
+                <form id="formOrderCompensationFood">
+                    <label id="orderCompensationFoodFoodType">What would you like to order ?</label> 
+                        <select name="foodType" id="orderCompensationFoodFoodType" required>
+                            <option value="BREAKFAST">Breakfast</option>
+                            <option value="LUNCH">Lunch</option>
+                            <option value="DINNER">Dinner</option>
+                        </select><br><br>
+                    <label for="orderCompensationFoodRoomNumber">Enter room number:</label> 
+                    <input type="text" id="orderCompensationFoodFoodType" name="roomNo" maxlength="3"><br><br>
+                    <button type="submit">Order food</button> 
+                </form> 
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Food Order Management</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>All today's food orders</h4> 
+                <form id="formGetAllTodayFoodOrder">
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>  
+            <div class="registerForm">
+                <h4>Food Order Details by Order ID</h4> 
+                <form id="formGetFoodOrderByOrderId">
+                    <label for="getFoodOrderByOrderId">Order ID:</label> 
+                    <input type="text" id="getFoodOrderByOrderId" name="orderId" required><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div> 
+            <div class="registerForm">
+                <h4>All food orders by food type</h4> 
+                <form id="formGetAllFoodOrderByFoodType">
+                    <label for="getAllFoodOrderByFoodType">Food Type:</label> 
+                    <select name="foodType" id="getAllFoodOrderByFoodType" required>
+                        <option value="BREAKFAST">Breakfast</option>
+                        <option value="LUNCH">Lunch</option>
+                        <option value="DINNER">Dinner</option>
+                    </select><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>All food orders by order date</h4> 
+                <form id="formGetAllFoodOrderByOrderDate">
+                    <label for="getAllFoodOrderByOrderDate">Order Date:</label> 
+                    <input type="date" id="getAllFoodOrderByOrderDate" name="date" required><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div> 
+            <div class="registerForm">
+                <h4>All food orders by room number</h4> 
+                <form id="formGetAllFoodOrderByRoomNo">
+                    <label for="getAllFoodOrderByRoomNo">Room Number:</label> 
+                    <input type="text" id="getAllFoodOrderByRoomNo" name="roomNo" required maxlength="3"><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div> 
+            <div class="registerForm">
+                <h4>All food orders by Guest Email</h4> 
+                <form id="formGetAllFoodOrderByGuestEmail">
+                    <label for="getAllFoodOrderByGuestEmail">Guest Email:</label> 
+                    <input type="email" id="getAllFoodOrderByGuestEmail" name="guestEmail" required><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div> 
+        </div>
+    </div>
+
+    <script type="module" src="js/food_order_script.js"></script>
+</body>
+</html>

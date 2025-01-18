@@ -10,7 +10,7 @@ links.forEach(link => {
 
 
 document.getElementById("logoutButton").addEventListener("click", async function() {
-    await fetch("http://localhost:8081/logout", {
+    await fetch("https://holidayvilla-production.up.railway.app/logout", {
         method: "POST",
         credentials: "include"
     });
@@ -33,7 +33,7 @@ document.getElementById("formMaterialRequisitionRegister").addEventListener("sub
     const heading = document.getElementById("staffDashboard-posting-responseHeading");
     const message = document.getElementById("staffDashboard-posting-responseMessage");
     const popup = document.getElementById("staffDashboard-posting-popup");
-    const api = "http://localhost:8081/api/material-requisition/raise-requisition";
+    const api = "https://holidayvilla-production.up.railway.app/api/material-requisition/raise-requisition";
     postingFunction(this, api, "Below is your material requisition detail", "Your material requisition is raised successfully", heading, message, popup);
 });
 
@@ -43,7 +43,7 @@ document.getElementById("formCancelRequisition").addEventListener("submit", func
     const heading = document.getElementById("staffDashboard-getter-responseHeading");
     const table = document.getElementById("staffDashboard-getter-responseTable");
     const popup = document.getElementById("staffDashboard-getter-popup");
-    const api = `http://localhost:8081/api/material-requisition/cancel-requisition?requisitionId=${id}`;
+    const api = `https://holidayvilla-production.up.railway.app/api/material-requisition/cancel-requisition?requisitionId=${id}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Entered email is updated successfully");
 });
 

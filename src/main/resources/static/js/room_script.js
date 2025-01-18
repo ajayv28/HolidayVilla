@@ -10,7 +10,7 @@ links.forEach(link => {
 
 
 document.getElementById("logoutButton").addEventListener("click", async function() {
-    await fetch("http://localhost:8081/logout", {
+    await fetch("https://holidayvilla-production.up.railway.app/logout", {
         method: "POST",
         credentials: "include"
     });
@@ -35,7 +35,7 @@ document.getElementById("formCheckInWithBookingId").addEventListener("submit", f
     const heading = document.getElementById("room-getter-responseHeading");
     const table = document.getElementById("room-getter-responseTable");
     const popup = document.getElementById("room-getter-popup");
-    const api = `http://localhost:8081/api/room/check-in-with-bookingId?bookingId=${id}`;
+    const api = `https://holidayvilla-production.up.railway.app/api/room/check-in-with-bookingId?bookingId=${id}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Successfully Checked In");
 });
 
@@ -45,7 +45,7 @@ document.getElementById("formCheckOutWithBookingId").addEventListener("submit", 
     const heading = document.getElementById("room-getter-responseHeading");
     const table = document.getElementById("room-getter-responseTable");
     const popup = document.getElementById("room-getter-popup");
-    const api = `http://localhost:8081/api/room/check-out-with-bookingId?bookingId=${id}`;
+    const api = `https://holidayvilla-production.up.railway.app/api/room/check-out-with-bookingId?bookingId=${id}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Successfully Checked Out");
 });
 
@@ -55,7 +55,7 @@ document.getElementById("formEarlyCheckOutWithBookingId").addEventListener("subm
     const heading = document.getElementById("room-getter-responseHeading");
     const table = document.getElementById("room-getter-responseTable");
     const popup = document.getElementById("room-getter-popup");
-    const api = `http://localhost:8081/api/room/early-check-out-with-bookingId?bookingId=${id}`;
+    const api = `https://holidayvilla-production.up.railway.app/api/room/early-check-out-with-bookingId?bookingId=${id}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Successfully (Early) Checked Out");
 });
 
@@ -66,7 +66,7 @@ document.getElementById("formChangeRoomStatusByRoomNo").addEventListener("submit
     const heading = document.getElementById("room-getter-responseHeading");
     const table = document.getElementById("room-getter-responseTable");
     const popup = document.getElementById("room-getter-popup");
-    const api = `http://localhost:8081/api/room/change-room-status-by-roomNo?roomNo=${room}&roomStatus=${status}`;
+    const api = `https://holidayvilla-production.up.railway.app/api/room/change-room-status-by-roomNo?roomNo=${room}&roomStatus=${status}`;
     getOrPutFunction("PUT", api, table, popup, heading, `Successfully Room No. ${room}'s Status Changed to ${status}`);
 });
 
@@ -75,7 +75,7 @@ document.getElementById("formGetAllTodayInHouseRoom").addEventListener("submit",
     const heading = document.getElementById("room-getter-responseHeading");
     const table = document.getElementById("room-getter-responseTable");
     const popup = document.getElementById("room-getter-popup");
-    const api = "http://localhost:8081/api/room/get-all-today-inhouse-room";
+    const api = "https://holidayvilla-production.up.railway.app/api/room/get-all-today-inhouse-room";
     getOrPutFunction("GET", api, table, popup, heading, "Today's In-House Rooms:");
 });
 
@@ -83,7 +83,7 @@ document.getElementById("formGetCountOfTodayInHouseRoom").addEventListener("subm
     event.preventDefault();
     const heading = document.getElementById("room-getter-responseHeading");
     const popup = document.getElementById("room-getter-popup");
-    const api = "http://localhost:8081/api/room/get-count-of-today-inhouse-room";
+    const api = "https://holidayvilla-production.up.railway.app/api/room/get-count-of-today-inhouse-room";
     //getOrPutFunction("GET", api, table, popup, heading, `Today's Total In-House Rooms: `);
     const response = await fetch(api, {
         method: "GET", 
@@ -97,7 +97,7 @@ document.getElementById("formGetAllTodayInHouseGuest").addEventListener("submit"
     const heading = document.getElementById("room-getter-responseHeading");
     const table = document.getElementById("room-getter-responseTable");
     const popup = document.getElementById("room-getter-popup");
-    const api = "http://localhost:8081/api/room/get-all-today-inhouse-guest";
+    const api = "https://holidayvilla-production.up.railway.app/api/room/get-all-today-inhouse-guest";
     getOrPutFunction("GET", api, table, popup, heading, "Today's In-House Guests:");
 });
 
@@ -107,7 +107,7 @@ document.getElementById("formGetAllRoomByRoomStatus").addEventListener("submit",
     const heading = document.getElementById("room-getter-responseHeading");
     const table = document.getElementById("room-getter-responseTable");
     const popup = document.getElementById("room-getter-popup");
-    const api = `http://localhost:8081/api/room/get-all-room-by-room-status?roomStatus=${status}`;
+    const api = `https://holidayvilla-production.up.railway.app/api/room/get-all-room-by-room-status?roomStatus=${status}`;
     getOrPutFunction("GET", api, table, popup, heading, `All Rooms with Status - ${status}`);
 });
 
@@ -117,7 +117,7 @@ document.getElementById("formOrderCompensationFoodRoomController").addEventListe
     const heading = document.getElementById("room-posting-responseHeading");
     const message = document.getElementById("room-posting-responseMessage");
     const popup = document.getElementById("room-posting-popup");
-    postingFunction(this, "http://localhost:8081/api/food-order/order-compensation-food", "Below is order detail", "Food order is created successfully", heading, message, popup);
+    postingFunction(this, "https://holidayvilla-production.up.railway.app/api/food-order/order-compensation-food", "Below is order detail", "Food order is created successfully", heading, message, popup);
 });
 
 

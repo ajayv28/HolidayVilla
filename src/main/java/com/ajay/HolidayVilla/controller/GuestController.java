@@ -35,8 +35,8 @@ public class GuestController {
 
 
     //**TESTED* *FRONTEND ADDED**
-    @PostMapping("/register")
     @PreAuthorize("permitAll()")
+    @PostMapping("/register")
     public ResponseEntity registerGuest(@RequestBody GuestRequest guestRequest){
 
         GuestResponse guestResponse = guestService.registerGuest(guestRequest);

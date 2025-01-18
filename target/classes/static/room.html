@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HolidayVilla - Room Management Page</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">
+            <h2>Holiday Villa</h2>
+            <p>Experience luxury and comfort </p>
+        </div>
+        <a href="home.html">Home</a>
+        <a href="staff_dashboard.html">Staff Dashboard</a>
+        <a href="booking.html">Booking</a>
+        <a href="food_order.html">Food Order</a>
+        <a href="material_requisition.html">Material Requisition</a>
+        <a href="maintenance.html">Maintenance</a>
+        <a href="material.html">Material</a>
+        <a href="room.html">Room</a>
+        <a href="transaction.html">Transaction</a>
+        <a href="staff.html">HR</a>
+        <a href="coupon.html">Coupon</a>
+        <div class="loginlogout">
+            <button id="logoutButton">Logout</button>
+        </div>
+    </div>
+        
+    <div id="room-posting-popup" class="posting-popup">
+        <div class="posting-popup-content">
+            <span class="posting-close" id="room-posting-closePopup">&times</span>
+            <h3 id="room-posting-responseHeading"></h3>
+             <p id="room-posting-responseMessage"></p>
+        </div>
+    </div>
+        
+    <div id="room-getter-popup" class="getter-popup">
+        <div class="getter-popup-content">
+            <span class="getter-close" id="room-getter-closePopup">&times</span>
+            <h3 id="room-getter-responseHeading"></h3>
+            <table id="room-getter-responseTable" class="getter-responseTable"></table>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Room Management - Check-In / Check-Out</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>On Time Check-In</h4> 
+                <form id="formCheckInWithBookingId">
+                    <label for="checkInWithBookingId">Booking ID:</label> 
+                    <input type="text" id="checkInWithBookingId" name="bookingId" required><br><br>
+                    <button type="submit">Check-In</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>On Time Check-Out</h4> 
+                <form id="formCheckOutWithBookingId">
+                    <label for="checkOutWithBookingId">Booking ID:</label> 
+                    <input type="text" id="checkOutWithBookingId" name="bookingId" required><br><br>
+                    <button type="submit">Check-Out</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Early Check-Out</h4> 
+                <form id="formEarlyCheckOutWithBookingId">
+                    <label for="earlyCheckOutWithBookingId">Booking ID:</label> 
+                    <input type="text" id="earlyCheckOutWithBookingId" name="bookingId" required><br><br>
+                    <button type="submit">Check-Out</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Change Room Status</h4> 
+                <form id="formChangeRoomStatusByRoomNo">
+                    <label for="changeRoomStatusByRoomNoRoomNo">Room No.:</label> 
+                    <input type="text" id="changeRoomStatusByRoomNoRoomNo" name="roomNo"  maxlength="3" required><br><br>
+                    <label for="changeRoomStatusByRoomNoStatus">Status:</label> 
+                    <select name="roomStatus" id="changeRoomStatusByRoomNoStatus" required>
+                        <option value="VACANT">Vacant</option>
+                        <option value="OCCUPIED">Occupied</option>
+                        <option value="OUT_OF_SERVICE">Out Of Service</option>
+                        <option value="OUT_OF_ORDER">Out Of Order</option>
+                    </select><br><br>
+                    <button type="submit">Change Status</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+
+    <div class="container-noflex">    
+        <h2>Room Management - Custom Filter</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Display all Occupied Room</h4> 
+                <form id="formGetAllTodayInHouseRoom">
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Display count of all Occupied Room</h4> 
+                <form id="formGetCountOfTodayInHouseRoom">
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Display all In-House Guest</h4> 
+                <form id="formGetAllTodayInHouseGuest">
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+            <div class="registerForm">
+                <h4>Display Rooms by Room Status</h4> 
+                <form id="formGetAllRoomByRoomStatus">
+                    <label for="getAllRoomByRoomStatus">Status:</label> 
+                    <select name="roomStatus" id="getAllRoomByRoomStatus" required>
+                        <option value="VACANT">Vacant</option>
+                        <option value="OCCUPIED">Occupied</option>
+                        <option value="OUT_OF_SERVICE">Out Of Service</option>
+                        <option value="OUT_OF_ORDER">Out Of Order</option>
+                    </select><br><br>
+                    <button type="submit">Display</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container-noflex">    
+        <h2>Compensation Food Order</h2><br>
+        <div class="flex-container-center">
+            <div class="registerForm">
+                <h4>Order compensation food</h4> 
+                <form id="formOrderCompensationFoodRoomController">
+                    <label id="orderCompensationFoodFoodTypeRoomController">What would you like to order ?</label> 
+                        <select name="foodType" id="orderCompensationFoodFoodTypeRoomController" required>
+                            <option value="BREAKFAST">Breakfast</option>
+                            <option value="LUNCH">Lunch</option>
+                            <option value="DINNER">Dinner</option>
+                        </select><br><br>
+                    <label for="orderCompensationFoodRoomNumberRoomController">Enter room number:</label> 
+                    <input type="text" id="orderCompensationFoodRoomNumberRoomController" name="roomNo" maxlength="3" required><br><br>
+                    <button type="submit">Order food</button> 
+                </form> 
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="js/room_script.js"></script>
+</body>
+</html>
