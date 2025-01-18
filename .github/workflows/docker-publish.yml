@@ -78,20 +78,16 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # Install cosign for signing Docker image
-      - name: Install cosign
-        run: |
-          curl -Lo cosign https://github.com/sigstore/cosign/releases/download/v1.11.0/cosign-linux-amd64
-          chmod +x cosign
-          sudo mv cosign /usr/local/bin/
-
-      # Sign the Docker image
-      - name: Sign the Docker image
+      # Sign the Docker image using cosign-action (No installation needed)
+      - name: Sign Docker image using cosign
         if: ${{ github.event_name != 'pull_request' }}
+        uses: sigstore/cosign-action@v1
+        with:
+          image: ghcr.io/${{ github.repository }}:latest
+          cosign-key: ${{ secrets.COSIGN_PRIVATE_KEY }}  # Store private key in GitHub Secrets
+          cosign-public-key: ${{ secrets.COSIGN_PUBLIC_KEY }}  # Optional: Store public key in GitHub Secrets
         env:
-          TAGS: ${{ steps.meta.outputs.tags }}
-          DIGEST: ${{ steps.build-and-push.outputs.digest }}
-        run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+          COSIGN_EXPERIMENTAL: "true"
 
   deploy-to-render:
     runs-on: ubuntu-latest
