@@ -92,7 +92,7 @@
     <script>
 
         async function fetchStaffData() {
-        const response = await fetch("http://localhost:8081/api/logged-in-staff-detail");
+        const response = await fetch("https://holidayvilla-production.up.railway.app/api/common/logged-in-staff-detail");
         const data = await response.json();
         displayStaffData(data);
     }
@@ -116,7 +116,7 @@
     }
 
     async function staffName() {
-        const response = await fetch("http://localhost:8081/api/logged-in-staff-name");
+        const response = await fetch("https://holidayvilla-production.up.railway.app/api/common/logged-in-staff-name");
         const data = await response.text();
         return data;
     }

@@ -10,7 +10,7 @@ links.forEach(link => {
 
 
 document.getElementById("logoutButton").addEventListener("click", async function() {
-    await fetch("http://localhost:8081/logout", {
+    await fetch("https://holidayvilla-production.up.railway.app/logout", {
         method: "POST",
         credentials: "include"
     });
@@ -33,7 +33,7 @@ document.getElementById("formPostMaintenanceJob").addEventListener("submit", fun
     const heading = document.getElementById("maintenance-posting-responseHeading");
     const message = document.getElementById("maintenance-posting-responseMessage");
     const popup = document.getElementById("maintenance-posting-popup");
-    const api = "http://localhost:8081/api/maintenance/post-maintenance-job";
+    const api = "https://holidayvilla-production.up.railway.app/api/maintenance/post-maintenance-job";
     postingFunction(this, api, "Below is your mainteance job detail", "Your maintenance job is created successfully", heading, message, popup);
 });
 
@@ -44,7 +44,7 @@ document.getElementById("formUpdateFollowupsByMaintenanceId").addEventListener("
     const heading = document.getElementById("maintenance-getter-responseHeading");
     const table = document.getElementById("maintenance-getter-responseTable");
     const popup = document.getElementById("maintenance-getter-popup");
-    const api = `http://localhost:8081/api/maintenance/update-followups-by-maintenanceId?maintenanceId=${id}&newFollowup=${encodeURIComponent(msg)}`;
+    const api = `https://holidayvilla-production.up.railway.app/api/maintenance/update-followups-by-maintenanceId?maintenanceId=${id}&newFollowup=${encodeURIComponent(msg)}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Entered followup message is updated successfully");
 });
 
@@ -53,7 +53,7 @@ document.getElementById("formAllVacantRoomsDueForMaintenance").addEventListener(
     const heading = document.getElementById("maintenance-getter-responseHeading");
     const table = document.getElementById("maintenance-getter-responseTable");
     const popup = document.getElementById("maintenance-getter-popup");
-    const api = "http://localhost:8081/api/maintenance/all-vacant-rooms-due-for-maintenance";
+    const api = "https://holidayvilla-production.up.railway.app/api/maintenance/all-vacant-rooms-due-for-maintenance";
     getOrPutFunction("GET", api, table, popup, heading, "All Vacant Rooms due for Maintenance");
 });
 
@@ -62,7 +62,7 @@ document.getElementById("formAllRoomsWithFollowups").addEventListener("submit", 
     const heading = document.getElementById("maintenance-getter-responseHeading");
     const table = document.getElementById("maintenance-getter-responseTable");
     const popup = document.getElementById("maintenance-getter-popup");
-    const api = "http://localhost:8081/api/maintenance/all-rooms-with-followups";
+    const api = "https://holidayvilla-production.up.railway.app/api/maintenance/all-rooms-with-followups";
     getOrPutFunction("GET", api, table, popup, heading, "All Guest Rooms with FollowUps");
 });
 
@@ -72,7 +72,7 @@ document.getElementById("formAllMaintenanceWithFollowupsByRoomNo").addEventListe
     const heading = document.getElementById("maintenance-getter-responseHeading");
     const table = document.getElementById("maintenance-getter-responseTable");
     const popup = document.getElementById("maintenance-getter-popup");
-    const api = `http://localhost:8081/api/maintenance/all-maintenance-with-followups-by-roomNo?roomNo=${room}`;
+    const api = `https://holidayvilla-production.up.railway.app/api/maintenance/all-maintenance-with-followups-by-roomNo?roomNo=${room}`;
     getOrPutFunction("GET", api, table, popup, heading, `All Maintenance with FollowUps in Room No. ${room}`);
 });
 
@@ -83,7 +83,7 @@ document.getElementById("formAllMaintenanceBetweenDates").addEventListener("subm
     const heading = document.getElementById("maintenance-getter-responseHeading");
     const table = document.getElementById("maintenance-getter-responseTable");
     const popup = document.getElementById("maintenance-getter-popup");
-    const api = `http://localhost:8081/api/maintenance/all-maintenance-between-dates?fromDate=${from}&toDate=${to}`;
+    const api = `https://holidayvilla-production.up.railway.app/api/maintenance/all-maintenance-between-dates?fromDate=${from}&toDate=${to}`;
     getOrPutFunction("GET", api, table, popup, heading, `All maintenance conducted between ${from} and ${to}`);
 });
 
@@ -94,7 +94,7 @@ document.getElementById("formAllMaintenanceByLoggedInStaffBetweenDates").addEven
     const heading = document.getElementById("maintenance-getter-responseHeading");
     const table = document.getElementById("maintenance-getter-responseTable");
     const popup = document.getElementById("maintenance-getter-popup");
-    const api = `http://localhost:8081/api/maintenance/all-maintenance-by-logged-in-staff-between-dates?fromDate=${from}&toDate=${to}`;
+    const api = `https://holidayvilla-production.up.railway.app/api/maintenance/all-maintenance-by-logged-in-staff-between-dates?fromDate=${from}&toDate=${to}`;
     getOrPutFunction("GET", api, table, popup, heading, `All maintenance conducted by you between ${from} and ${to}`);
 });
 
@@ -106,7 +106,7 @@ document.getElementById("formAllMaintenanceByStaffEmailBetweenDates").addEventLi
     const heading = document.getElementById("maintenance-getter-responseHeading");
     const table = document.getElementById("maintenance-getter-responseTable");
     const popup = document.getElementById("maintenance-getter-popup");
-    const api = `http://localhost:8081/api/maintenance/all-maintenance-by-staffEmail-between-dates?fromDate=${from}&toDate=${to}&staffEmail=${mail}`;
+    const api = `https://holidayvilla-production.up.railway.app/api/maintenance/all-maintenance-by-staffEmail-between-dates?fromDate=${from}&toDate=${to}&staffEmail=${mail}`;
     getOrPutFunction("GET", api, table, popup, heading, `All maintenance conducted by given staff between ${from} and ${to}`);
 });
 

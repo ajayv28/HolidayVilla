@@ -10,7 +10,7 @@ links.forEach(link => {
 
 
 document.getElementById("logoutButton").addEventListener("click", async function() {
-    await fetch("http://localhost:8081/logout", {
+    await fetch("https://holidayvilla-production.up.railway.app/logout", {
         method: "POST",
         credentials: "include"
     });
@@ -33,7 +33,7 @@ document.getElementById("formAddMaterial").addEventListener("submit", function(e
     const heading = document.getElementById("material-posting-responseHeading");
     const message = document.getElementById("material-posting-responseMessage");
     const popup = document.getElementById("material-posting-popup");
-    const api = "http://localhost:8081/api/material/addMaterial";
+    const api = "https://holidayvilla-production.up.railway.app/api/material/addMaterial";
     postingFunction(this, api, "Below is your material detail", "Your materials is added to database successfully", heading, message, popup);
 });
 
@@ -44,7 +44,7 @@ document.getElementById("formEditSupplierEmail").addEventListener("submit", func
     const heading = document.getElementById("material-getter-responseHeading");
     const table = document.getElementById("material-getter-responseTable");
     const popup = document.getElementById("material-getter-popup");
-    const api = `http://localhost:8081/api/material/edit-supplier-email?materialName=${name}&newEmail=${mail}`;
+    const api = `https://holidayvilla-production.up.railway.app/api/material/edit-supplier-email?materialName=${name}&newEmail=${mail}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Entered email is updated successfully");
 });
 
@@ -55,7 +55,7 @@ document.getElementById("formEditSupplierName").addEventListener("submit", funct
     const heading = document.getElementById("material-getter-responseHeading");
     const table = document.getElementById("material-getter-responseTable");
     const popup = document.getElementById("material-getter-popup");
-    const api = `http://localhost:8081/api/material/edit-supplier-name?materialName=${encodeURIComponent(name)}&newName=${encodeURIComponent(newName)}`;
+    const api = `https://holidayvilla-production.up.railway.app/api/material/edit-supplier-name?materialName=${encodeURIComponent(name)}&newName=${encodeURIComponent(newName)}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Entered new supplier name is updated successfully");
 });
 
@@ -66,7 +66,7 @@ document.getElementById("formEditPrice").addEventListener("submit", function(eve
     const heading = document.getElementById("material-getter-responseHeading");
     const table = document.getElementById("material-getter-responseTable");
     const popup = document.getElementById("material-getter-popup");
-    const api = `http://localhost:8081/api/material/edit-price?materialName=${name}&newPrice=${newPrice}`;
+    const api = `https://holidayvilla-production.up.railway.app/api/material/edit-price?materialName=${name}&newPrice=${newPrice}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Entered new price is updated successfully");
 });
 

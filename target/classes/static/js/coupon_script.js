@@ -10,7 +10,7 @@ links.forEach(link => {
 
 
 document.getElementById("logoutButton").addEventListener("click", async function() {
-    await fetch("http://localhost:8081/logout", {
+    await fetch("https://holidayvilla-production.up.railway.app/logout", {
         method: "POST",
         credentials: "include"
     });
@@ -32,7 +32,7 @@ document.getElementById("couponRequestForm").addEventListener("submit", function
     const heading = document.getElementById("coupon-posting-responseHeading");
     const message = document.getElementById("coupon-posting-responseMessage");
     const popup = document.getElementById("coupon-posting-popup");
-    postingFunction(this, "http://localhost:8081/api/coupon/register", "Below is your coupon detail", "Your coupon is created successfully", heading, message, popup);
+    postingFunction(this, "https://holidayvilla-production.up.railway.app/api/coupon/register", "Below is your coupon detail", "Your coupon is created successfully", heading, message, popup);
 });
 
 
@@ -43,7 +43,7 @@ document.getElementById("couponChangeQuantityForm").addEventListener("submit", f
     const heading = document.getElementById("coupon-getter-responseHeading");
     const table = document.getElementById("coupon-getter-responseTable");
     const popup = document.getElementById("coupon-getter-popup");
-    const api = `http://localhost:8081/api/coupon/changeQuantity?couponCode=${code}&newQuantity=${qty}`;
+    const api = `https://holidayvilla-production.up.railway.app/api/coupon/changeQuantity?couponCode=${code}&newQuantity=${qty}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Coupon is edited successfully");
 });
 

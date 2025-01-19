@@ -48,7 +48,7 @@ public class BookingService {
 
         Guest currGuest = guestRepository.findByEmail(guestEmail);
         if (currGuest.isCurrentlyActiveBooking() == true)
-            throw new AlreadyBookingOngoingException("Already an booking is schedules with this user. Only one booking possible");
+            throw new AlreadyBookingOngoingException("Already an booking is scheduled with this user. Only one booking possible at a time");
 
         boolean isOutOfService = false;
 
