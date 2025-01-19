@@ -30,6 +30,8 @@ public class SecurityConfig {
                 .permitAll()
                 .requestMatchers("/images/**")
                 .permitAll()
+                .requestMatchers("/api/common/**")
+                .permitAll()
                 .requestMatchers("/api/guest/register")
                 .permitAll()
                 .requestMatchers("/api/guest/**")
