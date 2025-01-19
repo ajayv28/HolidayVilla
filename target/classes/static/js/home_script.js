@@ -14,8 +14,8 @@ document.getElementById("logoutButton").addEventListener("click", async function
         method: "POST",
         credentials: "include"
     });
-    //window.location.href = "/home.html";  
-    window.location.reload(true);  
+    window.location.href = "home.html";  
+    //window.location.reload(true);  
 });
 
 // JS CODE FOR HOME.HTML    *****************************************************************

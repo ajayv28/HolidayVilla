@@ -92,10 +92,14 @@ export async function getOrPutFunction(getOrPut, api, table, popup, heading, hea
     
     switch (responseValue.status) {
     case 200:
-        const responseList = await responseValue.json();
-        if (!Array.isArray(responseList)) {
-            responseList = [responseList]; // to wrap single object in an array
+        let responseList = await responseValue.json();
+
+        if (!responseList) {
+            responseList = []; // Handle null or undefined
+        } else if (typeof responseList === "object" && !Array.isArray(responseList)) {
+            responseList = [responseList]; // Wrap single object in an array
         }
+
         heading.innerText = headingMessage;
         table.innerHTML = ""; 
 
