@@ -40,7 +40,11 @@ public class FoodOrderService {
 
 
     public FoodOrderResponse orderFood(FoodOrderRequest foodOrderRequest, String guestEmail) {
-        Guest guest = guestRepository.findByEmail(guestEmail);
+
+        Guest guest = null;
+        if(guestEmail != null)
+        guest = guestRepository.findByEmail(guestEmail);
+
         FoodOrder foodOrder = FoodOrderTransformer.foodOrderRequestToFoodOrder(foodOrderRequest);
         FoodOrder savedFoodOrder = foodOrderRepository.save(foodOrder);
         if(foodOrderRequest.getRoomNo()!=null && foodOrderRequest.getRoomNo().length()>0) {
@@ -50,9 +54,11 @@ public class FoodOrderService {
             roomRepository.save(room);
         }
         savedFoodOrder.setGuest(guest);
-        guest.getFoodOrderList().add(savedFoodOrder);
 
-        guestRepository.save(guest);
+        if(guest != null) {
+            guest.getFoodOrderList().add(savedFoodOrder);
+            guestRepository.save(guest);
+        }
 
         double currAmount = 0.0;
         if (savedFoodOrder.getFoodType().toString() == "BREAKFAST")
@@ -75,8 +81,10 @@ public class FoodOrderService {
         transaction.setRoom(savedFoodOrder.getRoom());
         transaction = transactionRepository.save(transaction);
 
-        guest.getTransactionList().add(transaction);
-        guestRepository.save(guest);
+        if(guest != null) {
+            guest.getTransactionList().add(transaction);
+            guestRepository.save(guest);
+        }
 
         savedFoodOrder.setTransaction(transaction);
         savedFoodOrder = foodOrderRepository.save(savedFoodOrder);

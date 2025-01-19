@@ -26,8 +26,8 @@ public class FoodOrderController {
     //**TESTED**
     @PreAuthorize("hasAnyRole('ROOM_DIVISION','KITCHEN_FOOD')")
     @PostMapping("/order-compensation-food")
-    public ResponseEntity orderCompensationFood(@RequestBody FoodOrderRequest foodOrderRequest, @RequestParam String guestEmail){
-        FoodOrderResponse foodOrderResponse = foodOrderService.orderCompensationFood(foodOrderRequest, guestEmail);
+    public ResponseEntity orderCompensationFood(@RequestBody FoodOrderRequest foodOrderRequest, @AuthenticationPrincipal UserDetails userDetails){
+        FoodOrderResponse foodOrderResponse = foodOrderService.orderCompensationFood(foodOrderRequest, userDetails.getUsername() != null ? userDetails.getUsername(): null);
         return new ResponseEntity(foodOrderResponse, HttpStatus.CREATED);
     }
 

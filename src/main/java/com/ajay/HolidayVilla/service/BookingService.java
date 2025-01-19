@@ -152,6 +152,7 @@ public class BookingService {
         newBooking.setToDate(currBooking.getToDate());
         newBooking.setCouponCode(currBooking.getCouponCode());
         newBooking.setBookingId(String.valueOf(UUID.randomUUID()));
+        newBooking.setTransaction(new ArrayList<>());
 
         double offerPercent = 0.0;
 

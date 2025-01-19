@@ -32,7 +32,7 @@ public class MaterialRequisitionController {
     public ResponseEntity raiseMaterialRequisition(@RequestBody MaterialRequisitionRequest materialRequisitionRequest, @AuthenticationPrincipal UserDetails userDetails) {
         String staffEmail = userDetails.getUsername();
         MaterialRequisitionResponse materialRequisitionResponse = materialRequisitionService.raiseMaterialRequisition(materialRequisitionRequest, staffEmail);
-        return new ResponseEntity(materialRequisitionResponse, HttpStatus.OK);
+        return new ResponseEntity(materialRequisitionResponse, HttpStatus.CREATED);
     }
 
     //**TESTED**
