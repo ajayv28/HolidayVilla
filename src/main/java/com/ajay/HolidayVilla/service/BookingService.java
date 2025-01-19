@@ -255,7 +255,7 @@ public class BookingService {
         if(currGuest == null)
             throw new UserNotExistException("Sorry no guest exist with given email id");
 
-        if(currGuest.isCurrentlyActiveBooking()==false)
+        if(currGuest.isCurrentlyActiveBooking() == false)
             throw new NoOngoingBookingException("Sorry, there is no upcoming booking found for you");
 
         Booking booking = currGuest.getBookings().get(currGuest.getBookings().size()-1);

@@ -90,12 +90,21 @@ export async function getOrPutFunction(getOrPut, api, table, popup, heading, hea
     method: getOrPut, 
     });
     
-    switch (responseValue.status) {
-    case 200:
-        const responseList = await responseValue.json();
-        if (!Array.isArray(responseList)) {
-            responseList = [responseList]; // to wrap single object in an array
+    
+        if (!responseValue.ok) {
+            throw new Error(`${responseValue.message} (Error code - ${responseValue.status})`); 
         }
+
+
+        let responseList = await responseValue.json();
+
+        if (!responseList) {
+            responseList = []; // Handle null or undefined
+
+        } else if (typeof responseList === "object" && !Array.isArray(responseList)) {
+            responseList = [responseList]; // Wrap single object in an array
+        }
+
         heading.innerText = headingMessage;
         table.innerHTML = ""; 
 
@@ -159,16 +168,8 @@ export async function getOrPutFunction(getOrPut, api, table, popup, heading, hea
         });
         table.appendChild(tbody);
 
-        popup.style.display = "block";
-        break;
+        popup.style.display = "block";  
 
-    default: 
-        const response = await response.json();
-        heading.innerText = `${response.message} (Error code - ${response.status})`;
-        table.innerHTML = ""; 
-        popup.style.display = "block";
-        break;
-    }
     }catch(error){ 
         heading.innerText = `Error: ${error.message}`; 
         table.innerHTML = ""; 

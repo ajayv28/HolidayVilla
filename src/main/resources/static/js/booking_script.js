@@ -14,7 +14,7 @@ document.getElementById("logoutButton").addEventListener("click", async function
         method: "POST",
         credentials: "include"
     });
-    window.location.href = "home.html";  
+    window.location.href = "https://holidayvilla-production.up.railway.app/home.html";
 });
 
 // JS CODE FOR BOOKING.HTML    *****************************************************************
