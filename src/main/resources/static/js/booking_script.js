@@ -10,7 +10,6 @@ links.forEach(link => {
 
 
 document.getElementById("logoutButton").addEventListener("click", function() {
-    
     window.location.href = "/logout";
 });
 

@@ -42,21 +42,17 @@ export async function postingFunction(thisElement, api, customMessage, headingMe
             body: JSON.stringify(data),
         });
 
-        switch(response.status){
-            case 201:
-                const jsonResponse = await response.json();
-                  heading.innerText = headingMessage;
-                  message.innerText = jsonToText(customMessage, jsonResponse, 0);
-                  popup.style.display = "block";
-                  break;
 
-            default:
-                const jsonBodyResponse = await response.json();
-                heading.innerText = `Error code - ${jsonBodyResponse.status}`;
-                message.innerText = `${jsonBodyResponse.message}` + "\n" + "Kindly contact the admin / IT team if this error keeps on generating";
-                popup.style.display = "block";
-                break;
+        if (response.status !== 201) {
+            const errorResponse = await response.json();
+            throw new Error(`${errorResponse.message} (Error code - ${response.status})`); 
         }
+
+        const jsonResponse = await response.json();
+        heading.innerText = headingMessage;
+        message.innerText = jsonToText(customMessage, jsonResponse, 0);
+        popup.style.display = "block";
+               
     }catch(error){
         heading.innerText = `Error - ${error.message}`;
         message.innerText = "Kindly contact the admin / IT team to resolve this. \n Feel free to drop an email with screenshot of this page to info@holidayvilla.com";
