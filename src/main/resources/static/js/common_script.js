@@ -92,7 +92,8 @@ export async function getOrPutFunction(getOrPut, api, table, popup, heading, hea
     
     
         if (!responseValue.ok) {
-            throw new Error(`${responseValue.message} (Error code - ${responseValue.status})`); 
+            const errorResponse = await responseValue.json();
+            throw new Error(`${errorResponse.message} (Error code - ${responseValue.status})`); 
         }
 
 

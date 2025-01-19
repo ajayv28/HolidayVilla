@@ -9,12 +9,9 @@ links.forEach(link => {
 }); //to show active in header
 
 
-document.getElementById("logoutButton").addEventListener("click", async function() {
-    await fetch("https://holidayvilla-production.up.railway.app/logout", {
-        method: "POST",
-        credentials: "include"
-    });
-    window.location.href = "https://holidayvilla-production.up.railway.app/home.html";
+document.getElementById("logoutButton").addEventListener("click", function() {
+    
+    window.location.href = "/logout";
 });
 
 // JS CODE FOR BOOKING.HTML    *****************************************************************
