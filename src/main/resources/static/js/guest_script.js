@@ -54,6 +54,7 @@ document.getElementById("guestCancelLastBooking").addEventListener("click", func
     const heading = document.getElementById("guest-getter-responseHeading");
     const message = document.getElementById("guest-getter-responseMessage");
     const popup = document.getElementById("guest-getter-popup");
+    const table = document.getElementById("guest-getter-responseTable");
     getOrPutFunction("PUT", "https://holidayvilla-production.up.railway.app/api/guest/cancel-last-booking", table, popup, heading, "Your Booking is CANCELLED successfully");
 });
 
@@ -62,6 +63,7 @@ document.getElementById("guestGetAllBooking").addEventListener("click", async fu
     const heading = document.getElementById("guest-getter-responseHeading");
     const message = document.getElementById("guest-getter-responseMessage");
     const popup = document.getElementById("guest-getter-popup");
+    const table = document.getElementById("guest-getter-responseTable");
     getOrPutFunction("GET", "https://holidayvilla-production.up.railway.app/api/guest/get-all-my-booking", table, popup, heading, "Below is the list of all bookings by you");
 });
 
@@ -70,6 +72,7 @@ document.getElementById("guestCheckedOutBooking").addEventListener("click", asyn
     const heading = document.getElementById("guest-getter-responseHeading");
     const message = document.getElementById("guest-getter-responseMessage");
     const popup = document.getElementById("guest-getter-popup");
+    const table = document.getElementById("guest-getter-responseTable");
     getOrPutFunction("GET", "https://holidayvilla-production.up.railway.app/api/guest/get-all-my-checked_out-booking", table, popup, heading, "Below is the list of all checked-out bookings by you");
 });
 
@@ -77,6 +80,7 @@ document.getElementById("guestCancelledBooking").addEventListener("click", async
     const heading = document.getElementById("guest-getter-responseHeading");
     const message = document.getElementById("guest-getter-responseMessage");
     const popup = document.getElementById("guest-getter-popup");
+    const table = document.getElementById("guest-getter-responseTable");
     getOrPutFunction("GET", "https://holidayvilla-production.up.railway.app/api/guest/get-all-my-cancelled-booking", table, popup, heading, "Below is the list of all cancelled bookings by you");
 });
 
@@ -85,6 +89,7 @@ document.getElementById("guestFoodOrder").addEventListener("click", async functi
     const heading = document.getElementById("guest-getter-responseHeading");
     const message = document.getElementById("guest-getter-responseMessage");
     const popup = document.getElementById("guest-getter-popup");
+    const table = document.getElementById("guest-getter-responseTable");
     getOrPutFunction("GET", "https://holidayvilla-production.up.railway.app/api/guest/get-all-my-food-order", table, popup, heading, "Below is the list of all food order made by you");
 });
 
