@@ -9,12 +9,8 @@ links.forEach(link => {
 }); //to show active in header
 
 
-document.getElementById("logoutButton").addEventListener("click", async function() {
-    await fetch("https://holidayvilla-production.up.railway.app/logout", {
-        method: "POST",
-        credentials: "include"
-    });
-    window.location.href = "home.html";  
+document.getElementById("logoutButton").addEventListener("click", function() {
+    window.location.href = "/logout";
 });
 
 // JS CODE FOR ROOM.HTML    *****************************************************************
@@ -82,13 +78,18 @@ document.getElementById("formGetAllTodayInHouseRoom").addEventListener("submit",
 document.getElementById("formGetCountOfTodayInHouseRoom").addEventListener("submit", async function(event){ 
     event.preventDefault();
     const heading = document.getElementById("room-getter-responseHeading");
+    const table = document.getElementById("room-getter-responseTable");
     const popup = document.getElementById("room-getter-popup");
     const api = "https://holidayvilla-production.up.railway.app/api/room/get-count-of-today-inhouse-room";
     //getOrPutFunction("GET", api, table, popup, heading, `Today's Total In-House Rooms: `);
     const response = await fetch(api, {
         method: "GET", 
         });
-    heading.innerText = `Today's Total In-House Rooms: ${response}`;
+
+    const value = await response.text();
+    
+    heading.innerText = `Today's Total In-House Rooms: ${value}`;
+    table.innerHTML = "";
     popup.style.display = "block";
 });
 

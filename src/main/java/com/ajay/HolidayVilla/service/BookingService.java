@@ -14,6 +14,8 @@ import com.ajay.HolidayVilla.exception.*;
 import com.ajay.HolidayVilla.model.*;
 import com.ajay.HolidayVilla.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.sql.ClientInfoStatus;
@@ -43,7 +45,24 @@ public class BookingService {
     @Autowired
     TransactionRepository transactionRepository;
 
-    
+    @Autowired
+    JavaMailSender javaMailSender;
+
+
+    public void sendConfirmationMail (Booking booking, String customMessage) {
+        String text = "Dear Mr./Mrs. " + booking.getGuest().getName() + ", your booking with HolidayVilla is " + customMessage +"  from " + booking.getFromDate() + " to " + booking.getToDate() + " in Room Number - " + booking.getRoom().getRoomNo() + ". Kindly disclose your Booking ID - " + booking.getBookingId() + " during CheckIn time and pay Rs. " + booking.getTotalFare() + ". Kindly call our 24x7 support hotline for any assistance.";
+
+
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom("noreply.holiday.villa.1@gmail.com");
+        simpleMailMessage.setTo(booking.getGuest().getEmail());
+        simpleMailMessage.setSubject("HolidayVilla - Booking Confirmation");
+        simpleMailMessage.setText(text);
+
+        javaMailSender.send(simpleMailMessage);
+    }
+
+
     public BookingResponse createBooking(BookingRequest bookingRequest, String guestEmail) {
 
         Guest currGuest = guestRepository.findByEmail(guestEmail);
@@ -93,8 +112,6 @@ public class BookingService {
             currGuest.getBookings().add(booking);
             currGuest.setCurrentlyActiveBooking(true);
 
-            //******* send mail to HSK, FO that booking made on OOS room*******
-            //*********send confrimation mail to guest
 
             TransactionRequest transactionRequest = new TransactionRequest();
             transactionRequest.setFundType(FundType.CREDIT);
@@ -114,6 +131,10 @@ public class BookingService {
             Booking savedBooking = bookingRepository.save(booking);
             transaction.setBooking(savedBooking);
             transactionRepository.save(transaction);
+
+            //******* send mail to HSK, FO that booking made on room******
+            sendConfirmationMail(savedBooking, "confirmed");
+
             return BookingTransformer.bookingToBookingResponse(savedBooking);
 
 
@@ -175,8 +196,6 @@ public class BookingService {
         currGuest.getBookings().add(newBooking);
         currGuest.setCurrentlyActiveBooking(true);
 
-        //******* send mail to HSK, FO that booking made on OOS room*******
-        //*********send changing  mail to guest
 
         TransactionRequest transactionRequest = new TransactionRequest();
         transactionRequest.setFundType(FundType.FREE);
@@ -200,6 +219,10 @@ public class BookingService {
         Booking savedBooking = bookingRepository.save(newBooking);
         transaction.setBooking(savedBooking);
         transactionRepository.save(transaction);
+
+        //******* send mail to HSK, FO that booking made on OOS room******
+        sendConfirmationMail(savedBooking, "changed to another room");
+
         return BookingTransformer.bookingToBookingResponse(savedBooking);
 
     }

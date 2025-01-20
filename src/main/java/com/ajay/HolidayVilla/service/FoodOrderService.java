@@ -42,9 +42,11 @@ public class FoodOrderService {
 
     public FoodOrderResponse orderFood(FoodOrderRequest foodOrderRequest, String guestEmail) {
 
-        Room room = roomRepository.findByRoomNo(foodOrderRequest.getRoomNo());
-        if(room == null)
-            throw new InvalidInputException("Given room number does not exist");
+        if(foodOrderRequest.getRoomNo()!=null && foodOrderRequest.getRoomNo().length()>0) {
+            Room room = roomRepository.findByRoomNo(foodOrderRequest.getRoomNo());
+            if (room == null)
+                throw new InvalidInputException("Given room number does not exist");
+        }
 
         Guest guest = null;
         guest = guestRepository.findByEmail(guestEmail);
@@ -52,6 +54,7 @@ public class FoodOrderService {
         FoodOrder foodOrder = FoodOrderTransformer.foodOrderRequestToFoodOrder(foodOrderRequest);
         FoodOrder savedFoodOrder = foodOrderRepository.save(foodOrder);
         if(foodOrderRequest.getRoomNo()!=null && foodOrderRequest.getRoomNo().length()>0) {
+            Room room = roomRepository.findByRoomNo(foodOrderRequest.getRoomNo());
             savedFoodOrder.setRoom(room);
             room.getFoodOrderList().add(savedFoodOrder);
             roomRepository.save(room);
