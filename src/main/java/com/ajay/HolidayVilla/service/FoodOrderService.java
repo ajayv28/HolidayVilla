@@ -8,6 +8,7 @@ import com.ajay.HolidayVilla.Transformer.TransactionTransformer;
 import com.ajay.HolidayVilla.dto.request.FoodOrderRequest;
 import com.ajay.HolidayVilla.dto.request.TransactionRequest;
 import com.ajay.HolidayVilla.dto.response.FoodOrderResponse;
+import com.ajay.HolidayVilla.exception.InvalidInputException;
 import com.ajay.HolidayVilla.model.FoodOrder;
 import com.ajay.HolidayVilla.model.Guest;
 import com.ajay.HolidayVilla.model.Room;
@@ -41,14 +42,16 @@ public class FoodOrderService {
 
     public FoodOrderResponse orderFood(FoodOrderRequest foodOrderRequest, String guestEmail) {
 
+        Room room = roomRepository.findByRoomNo(foodOrderRequest.getRoomNo());
+        if(room == null)
+            throw new InvalidInputException("Given room number does not exist");
+
         Guest guest = null;
-        if(guestEmail != null)
         guest = guestRepository.findByEmail(guestEmail);
 
         FoodOrder foodOrder = FoodOrderTransformer.foodOrderRequestToFoodOrder(foodOrderRequest);
         FoodOrder savedFoodOrder = foodOrderRepository.save(foodOrder);
         if(foodOrderRequest.getRoomNo()!=null && foodOrderRequest.getRoomNo().length()>0) {
-            Room room = roomRepository.findByRoomNo(foodOrderRequest.getRoomNo());
             savedFoodOrder.setRoom(room);
             room.getFoodOrderList().add(savedFoodOrder);
             roomRepository.save(room);

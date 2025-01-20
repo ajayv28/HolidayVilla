@@ -150,7 +150,7 @@ document.getElementById("createTransactionForPayroll").addEventListener("submit"
     const table = document.getElementById("staff-getter-responseTable");
     const popup = document.getElementById("staff-getter-popup");
     const api = "https://holidayvilla-production.up.railway.app/api/staff/create-transaction-for-payroll";
-    getOrPutFunction("PUT", api, table, popup, heading, "Salary Transactions has been created for all current staff successfully" );
+    getOrPutFunction("GET", api, table, popup, heading, "Salary Transactions has been created for all current staff successfully" );
 });
 
 

@@ -78,6 +78,7 @@ document.getElementById("formGetAllTodayInHouseRoom").addEventListener("submit",
 document.getElementById("formGetCountOfTodayInHouseRoom").addEventListener("submit", async function(event){ 
     event.preventDefault();
     const heading = document.getElementById("room-getter-responseHeading");
+    const table = document.getElementById("room-getter-responseTable");
     const popup = document.getElementById("room-getter-popup");
     const api = "https://holidayvilla-production.up.railway.app/api/room/get-count-of-today-inhouse-room";
     //getOrPutFunction("GET", api, table, popup, heading, `Today's Total In-House Rooms: `);
