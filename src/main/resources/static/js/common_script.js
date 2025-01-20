@@ -126,34 +126,34 @@ export async function getOrPutFunction(getOrPut, api, table, popup, heading, hea
             headers.forEach(header => {
                 const td = document.createElement("td");
                 const value = getValue(response, header);
-                if (header.includes("guestResponse")) {
+                if (header.includes("guestResponse") && response.guestResponse) {
                     const guestDetails = response.guestResponse;
                     td.textContent = jsonToText("Guest Details", guestDetails, 0);
-                } else if (header.includes("roomResponse")) {
+                } else if (header.includes("roomResponse") && response.roomResponse) {
                     const roomDetails = response.roomResponse;
                     td.textContent = jsonToText("Room Details", roomDetails, 0); 
-                } else if (header.includes("bookingResponse")) {
+                } else if (header.includes("bookingResponse") && response.bookingResponse) {
                     const bookingDetails = response.bookingResponse;
                     td.textContent = jsonToText("Booking Details", bookingDetails, 0); 
-                } else if (header.includes("couponResponse")) {
+                } else if (header.includes("couponResponse") && response.couponResponse) {
                     const couponDetails = response.couponResponse;
                     td.textContent = jsonToText("Coupon Details", couponDetails, 0); 
-                } else if (header.includes("foodOrderResponse")) {
+                } else if (header.includes("foodOrderResponse") && response.foodOrderResponse) {
                     const foodOrderDetails = response.foodOrderResponse;
                     td.textContent = jsonToText("Food Order Details", foodOrderDetails, 0); 
-                } else if (header.includes("maintenanceResponse")) {
+                } else if (header.includes("maintenanceResponse") && response.maintenanceResponse) {
                     const maintenanceDetails = response.maintenanceResponse;
                     td.textContent = jsonToText("Maintenance Details", maintenanceDetails, 0); 
-                } else if (header.includes("materialResponse")) {
+                } else if (header.includes("materialResponse") && response.materialResponse) {
                     const materialDetails = response.materialResponse;
                     td.textContent = jsonToText("Material Details", materialDetails, 0); 
-                } else if (header.includes("materialRequisitionResponse")) {
+                } else if (header.includes("materialRequisitionResponse") && response.materialRequisitionResponse) {
                     const materialRequisitionDetails = response.materialRequisitionResponse;
                     td.textContent = jsonToText("Material Requisition Details", materialRequisitionDetails, 0); 
-                } else if (header.includes("staffResponse")) {
+                } else if (header.includes("staffResponse") && response.staffResponse) {
                     const staffDetails = response.staffResponse;
                     td.textContent = jsonToText("Staff Details", staffDetails, 0); 
-                } else if (header.includes("transactionResponse")) {
+                } else if (header.includes("transactionResponse") && response.transactionResponse) {
                     const transactionDetails = response.transactionResponse;
                     td.textContent = jsonToText("Transaction Details", transactionDetails, 0); 
                 } else {

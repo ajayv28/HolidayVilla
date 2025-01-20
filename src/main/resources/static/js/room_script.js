@@ -84,7 +84,11 @@ document.getElementById("formGetCountOfTodayInHouseRoom").addEventListener("subm
     const response = await fetch(api, {
         method: "GET", 
         });
-    heading.innerText = `Today's Total In-House Rooms: ${response}`;
+
+    const value = await response.text();
+    
+    heading.innerText = `Today's Total In-House Rooms: ${value}`;
+    table.innerHTML = "";
     popup.style.display = "block";
 });
 

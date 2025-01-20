@@ -118,12 +118,18 @@ document.getElementById("formGetStaffSalaryByStaffEmail").addEventListener("subm
     event.preventDefault();
     const mail = document.getElementById("getStaffSalaryByStaffEmail").value;
     const heading = document.getElementById("staff-getter-responseHeading");
+    const table = document.getElementById("staff-getter-responseTable");
     const popup = document.getElementById("staff-getter-popup");
     const api = `https://holidayvilla-production.up.railway.app/api/staff/get-staff-salary-by-staffEmail?staffEmail=${mail}`;
     const response = await fetch(api, {
         method: "GET", 
         });
-    heading.innerText = `Salary of given staff: ${response}`;
+
+    const value = await response.text(); // Use .text() since it's a raw value, not JSON
+    const doubleValue = parseFloat(value);
+
+    heading.innerText = `Salary of given staff: ${doubleValue}`;
+    table.innerHTML = "";
     popup.style.display = "block";
 });
 
