@@ -7,6 +7,7 @@ import com.ajay.HolidayVilla.dto.request.RoomRequest;
 import com.ajay.HolidayVilla.dto.response.RoomResponse;
 import com.ajay.HolidayVilla.exception.AlreadyBookingOngoingException;
 import com.ajay.HolidayVilla.exception.AlreadyRegisteredException;
+import com.ajay.HolidayVilla.exception.InvalidInputException;
 import com.ajay.HolidayVilla.exception.NoOngoingBookingException;
 import com.ajay.HolidayVilla.model.Booking;
 import com.ajay.HolidayVilla.model.Guest;
@@ -115,6 +116,8 @@ public class RoomService {
 
     public RoomResponse changeRoomStatusByRoomNo(String roomNo, RoomStatus roomStatus) {
         Room room = roomRepository.findByRoomNo(roomNo);
+        if(room.getRoomStatus().toString().equals("OCCUPIED"))
+            throw new InvalidInputException("Sorry room is occupied. Pls change guest to another room before changing this room status");
         room.setRoomStatus(roomStatus);
         return RoomTransformer.roomToRoomResponse(roomRepository.save(room));
     }
