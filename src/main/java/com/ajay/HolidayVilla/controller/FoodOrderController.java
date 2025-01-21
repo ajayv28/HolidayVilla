@@ -23,8 +23,8 @@ public class FoodOrderController {
     @Autowired
     FoodOrderService foodOrderService;
 
-    //**TESTED**
-    @PreAuthorize("hasAnyRole('ROOM_DIVISION','KITCHEN_FOOD')")
+    //**TESTED* *FRONTEND ADDED**
+    @PreAuthorize("hasAnyRole('ROOM_DIVISION','MANAGER','KITCHEN_FOOD')")
     @PostMapping("/order-compensation-food")
     public ResponseEntity orderCompensationFood(@RequestBody FoodOrderRequest foodOrderRequest, @AuthenticationPrincipal UserDetails userDetails){
         FoodOrderResponse foodOrderResponse = foodOrderService.orderCompensationFood(foodOrderRequest, userDetails.getUsername() != null ? userDetails.getUsername(): null);
