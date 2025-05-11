@@ -1,4 +1,4 @@
-import { camelCaseToNormal, jsonToText, postingFunction, extractKeys, getValue, getOrPutFunction} from './common_script.js';
+import { camelCaseToNormal, jsonToText, postingFunction, extractKeys, getValue, getOrPutFunction, backendUrl} from './common_script.js';
 
 const links = document.querySelectorAll(".header a");
 
@@ -29,7 +29,7 @@ document.getElementById("staffRegisterForm").addEventListener("submit", function
     const heading = document.getElementById("staff-posting-responseHeading");
     const message = document.getElementById("staff-posting-responseMessage");
     const popup = document.getElementById("staff-posting-popup");
-    const api = "https://holidayvilla-production.up.railway.app/api/staff/onBoard";
+    const api = `${backendUrl}/api/staff/onBoard`;
     postingFunction(this, api, "Below is the onboarded staff detail", "Staff is on-boarded successfully", heading, message, popup);
 });
 
@@ -39,7 +39,7 @@ document.getElementById("formOffBoardStaff").addEventListener("submit", function
     const heading = document.getElementById("staff-getter-responseHeading");
     const table = document.getElementById("staff-getter-responseTable");
     const popup = document.getElementById("staff-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/staff/offBoard?staffEmail=${mail}`;
+    const api = `${backendUrl}/api/staff/offBoard?staffEmail=${mail}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Staff Off-Boarded Successfully");
 });
 
@@ -49,7 +49,7 @@ document.getElementById("formGetStaffByStaffEmail").addEventListener("submit", f
     const heading = document.getElementById("staff-getter-responseHeading");
     const table = document.getElementById("staff-getter-responseTable");
     const popup = document.getElementById("staff-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/staff/get-staff-by-staffEmail?staffEmail=${mail}`;
+    const api = `${backendUrl}/api/staff/get-staff-by-staffEmail?staffEmail=${mail}`;
     getOrPutFunction("GET", api, table, popup, heading, "Staff Detail:");
 });
 
@@ -60,7 +60,7 @@ document.getElementById("formResetPassword").addEventListener("submit", function
     const heading = document.getElementById("staff-getter-responseHeading");
     const table = document.getElementById("staff-getter-responseTable");
     const popup = document.getElementById("staff-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/staff/reset-password?staffEmail=${mail}&newPassword=${pass}`;
+    const api = `${backendUrl}/api/staff/reset-password?staffEmail=${mail}&newPassword=${pass}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Password Reset Successful:");
 });
 
@@ -71,7 +71,7 @@ document.getElementById("formChangeDepartment").addEventListener("submit", funct
     const heading = document.getElementById("staff-getter-responseHeading");
     const table = document.getElementById("staff-getter-responseTable");
     const popup = document.getElementById("staff-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/staff/change-department?staffEmail=${mail}&department=${dept}`;
+    const api = `${backendUrl}/api/staff/change-department?staffEmail=${mail}&department=${dept}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Department Change Successful:");
 });
 
@@ -80,7 +80,7 @@ document.getElementById("getAllCurrentStaff").addEventListener("submit", functio
     const heading = document.getElementById("staff-getter-responseHeading");
     const table = document.getElementById("staff-getter-responseTable");
     const popup = document.getElementById("staff-getter-popup");
-    const api = "https://holidayvilla-production.up.railway.app/api/staff/all-current-staff";
+    const api = `${backendUrl}/api/staff/all-current-staff`;
     getOrPutFunction("GET", api, table, popup, heading, "All Current Staff");
 });
 
@@ -90,7 +90,7 @@ document.getElementById("getAllExStaff").addEventListener("submit", function(eve
     const heading = document.getElementById("staff-getter-responseHeading");
     const table = document.getElementById("staff-getter-responseTable");
     const popup = document.getElementById("staff-getter-popup");
-    const api = "https://holidayvilla-production.up.railway.app/api/staff/all-ex-staff";
+    const api = `${backendUrl}/api/staff/all-ex-staff`;
     getOrPutFunction("GET", api, table, popup, heading, "All Ex Staff");
 });
 
@@ -100,7 +100,7 @@ document.getElementById("formGetAllCurrentStaffByDepartment").addEventListener("
     const heading = document.getElementById("staff-getter-responseHeading");
     const table = document.getElementById("staff-getter-responseTable");
     const popup = document.getElementById("staff-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/staff/all-current-staff-by-department?department=${dept}`;
+    const api = `${backendUrl}/api/staff/all-current-staff-by-department?department=${dept}`;
     getOrPutFunction("GET", api, table, popup, heading, `All Current Staff of ${dept}` );
 });
 
@@ -110,7 +110,7 @@ document.getElementById("formGetAllExStaffByDepartment").addEventListener("submi
     const heading = document.getElementById("staff-getter-responseHeading");
     const table = document.getElementById("staff-getter-responseTable");
     const popup = document.getElementById("staff-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/staff/all-ex-staff-by-department?department=${dept}`;
+    const api = `${backendUrl}/api/staff/all-ex-staff-by-department?department=${dept}`;
     getOrPutFunction("GET", api, table, popup, heading, `All Ex Staff of ${dept}` );
 });
 
@@ -120,7 +120,7 @@ document.getElementById("formGetStaffSalaryByStaffEmail").addEventListener("subm
     const heading = document.getElementById("staff-getter-responseHeading");
     const table = document.getElementById("staff-getter-responseTable");
     const popup = document.getElementById("staff-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/staff/get-staff-salary-by-staffEmail?staffEmail=${mail}`;
+    const api = `${backendUrl}/api/staff/get-staff-salary-by-staffEmail?staffEmail=${mail}`;
     const response = await fetch(api, {
         method: "GET", 
         });
@@ -140,7 +140,7 @@ document.getElementById("formChangeStaffSalaryByStaffEmail").addEventListener("s
     const heading = document.getElementById("staff-getter-responseHeading");
     const table = document.getElementById("staff-getter-responseTable");
     const popup = document.getElementById("staff-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/staff/change-staff-salary-by-staffEmail?staffEmail=${mail}&newSalary=${salary}`;
+    const api = `${backendUrl}/api/staff/change-staff-salary-by-staffEmail?staffEmail=${mail}&newSalary=${salary}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Salary of given staff updated successfully" );
 });
 
@@ -149,7 +149,7 @@ document.getElementById("createTransactionForPayroll").addEventListener("submit"
     const heading = document.getElementById("staff-getter-responseHeading");
     const table = document.getElementById("staff-getter-responseTable");
     const popup = document.getElementById("staff-getter-popup");
-    const api = "https://holidayvilla-production.up.railway.app/api/staff/create-transaction-for-payroll";
+    const api = `${backendUrl}/api/staff/create-transaction-for-payroll`;
     getOrPutFunction("GET", api, table, popup, heading, "Salary Transactions has been created for all current staff successfully" );
 });
 

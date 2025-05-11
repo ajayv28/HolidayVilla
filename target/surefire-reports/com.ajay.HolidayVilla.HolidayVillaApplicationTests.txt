@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.ajay.HolidayVilla.HolidayVillaApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 36.08 s -- in com.ajay.HolidayVilla.HolidayVillaApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 48.26 s -- in com.ajay.HolidayVilla.HolidayVillaApplicationTests

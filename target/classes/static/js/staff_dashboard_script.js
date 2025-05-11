@@ -1,4 +1,4 @@
-import { camelCaseToNormal, jsonToText, postingFunction, extractKeys, getValue, getOrPutFunction} from './common_script.js';
+import { camelCaseToNormal, jsonToText, postingFunction, extractKeys, getValue, getOrPutFunction, backendUrl} from './common_script.js';
 
 const links = document.querySelectorAll(".header a");
 
@@ -29,7 +29,7 @@ document.getElementById("formMaterialRequisitionRegister").addEventListener("sub
     const heading = document.getElementById("staffDashboard-posting-responseHeading");
     const message = document.getElementById("staffDashboard-posting-responseMessage");
     const popup = document.getElementById("staffDashboard-posting-popup");
-    const api = "https://holidayvilla-production.up.railway.app/api/material-requisition/raise-requisition";
+    const api = `${backendUrl}/api/material-requisition/raise-requisition`;
     postingFunction(this, api, "Below is your material requisition detail", "Your material requisition is raised successfully", heading, message, popup);
 });
 
@@ -39,7 +39,7 @@ document.getElementById("formCancelRequisition").addEventListener("submit", func
     const heading = document.getElementById("staffDashboard-getter-responseHeading");
     const table = document.getElementById("staffDashboard-getter-responseTable");
     const popup = document.getElementById("staffDashboard-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/material-requisition/cancel-requisition?requisitionId=${id}`;
+    const api = `${backendUrl}/api/material-requisition/cancel-requisition?requisitionId=${id}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Entered email is updated successfully");
 });
 

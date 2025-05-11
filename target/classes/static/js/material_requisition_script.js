@@ -1,4 +1,4 @@
-import { camelCaseToNormal, jsonToText, postingFunction, extractKeys, getValue, getOrPutFunction} from './common_script.js';
+import { camelCaseToNormal, jsonToText, postingFunction, extractKeys, getValue, getOrPutFunction, backendUrl} from './common_script.js';
 
 const links = document.querySelectorAll(".header a");
 
@@ -29,7 +29,7 @@ document.getElementById("formGetMaterialRequisitionByRequisitionId").addEventLis
     const heading = document.getElementById("materialRequisition-getter-responseHeading");
     const table = document.getElementById("materialRequisition-getter-responseTable");
     const popup = document.getElementById("materialRequisition-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/material-requisition/get-material-requisition-by-requisitionId?requisitionId=${id}`;
+    const api = `${backendUrl}/api/material-requisition/get-material-requisition-by-requisitionId?requisitionId=${id}`;
     getOrPutFunction("GET", api, table, popup, heading, "Material Requisition details of given Requisition ID:");
 });
 
@@ -39,7 +39,7 @@ document.getElementById("formMarkReceivedByRequisitionId").addEventListener("sub
     const heading = document.getElementById("materialRequisition-getter-responseHeading");
     const table = document.getElementById("materialRequisition-getter-responseTable");
     const popup = document.getElementById("materialRequisition-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/material-requisition/mark-received-by-requisitionId?requisitionId=${id}`;
+    const api = `${backendUrl}/api/material-requisition/mark-received-by-requisitionId?requisitionId=${id}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Material Requisition is marked received for given Requisition ID:");
 });
 
@@ -49,7 +49,7 @@ document.getElementById("formProcessRequisitionByRequisitionId").addEventListene
     const heading = document.getElementById("materialRequisition-getter-responseHeading");
     const table = document.getElementById("materialRequisition-getter-responseTable");
     const popup = document.getElementById("materialRequisition-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/material-requisition/process-requisition-by-requisitionId?requisitionId=${id}`;
+    const api = `${backendUrl}/api/material-requisition/process-requisition-by-requisitionId?requisitionId=${id}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Material Requisition is processed for given Requisition ID:");
 });
 
@@ -58,7 +58,7 @@ document.getElementById("formFollowUpOnAllElapsedRequisition").addEventListener(
     const heading = document.getElementById("materialRequisition-getter-responseHeading");
     const table = document.getElementById("materialRequisition-getter-responseTable");
     const popup = document.getElementById("materialRequisition-getter-popup");
-    const api = "https://holidayvilla-production.up.railway.app/api/material-requisition/followUp-on-all-elapsed-requisition";
+    const api = `${backendUrl}/api/material-requisition/followUp-on-all-elapsed-requisition`;
     getOrPutFunction("GET", api, table, popup, heading, "Followup mail sent to all elapsed delivery dated Material Requisitions");
 });
 
@@ -69,7 +69,7 @@ document.getElementById("formChangeExpectedDeliveryDate").addEventListener("subm
     const heading = document.getElementById("materialRequisition-getter-responseHeading");
     const table = document.getElementById("materialRequisition-getter-responseTable");
     const popup = document.getElementById("materialRequisition-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/material-requisition/change-expected-delivery-date?requisitionId=${id}&newDate=${date}`;
+    const api = `${backendUrl}/api/material-requisition/change-expected-delivery-date?requisitionId=${id}&newDate=${date}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Delivery Date changed for below Material Requisition:");
 });
 
@@ -80,7 +80,7 @@ document.getElementById("formChangeRequisitionQuantity").addEventListener("submi
     const heading = document.getElementById("materialRequisition-getter-responseHeading");
     const table = document.getElementById("materialRequisition-getter-responseTable");
     const popup = document.getElementById("materialRequisition-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/material-requisition/change-requisition-quantity?requisitionId=${id}&newQuantity=${qty}`;
+    const api = `${backendUrl}/api/material-requisition/change-requisition-quantity?requisitionId=${id}&newQuantity=${qty}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Quantity changed for below Material Requisition:");
 });
 
@@ -89,7 +89,7 @@ document.getElementById("formGetAllInProgressMaterialRequisition").addEventListe
     const heading = document.getElementById("materialRequisition-getter-responseHeading");
     const table = document.getElementById("materialRequisition-getter-responseTable");
     const popup = document.getElementById("materialRequisition-getter-popup");
-    const api = "https://holidayvilla-production.up.railway.app/api/material-requisition/get-all-inprogress-material-requisition";
+    const api = `${backendUrl}/api/material-requisition/get-all-inprogress-material-requisition`;
     getOrPutFunction("GET", api, table, popup, heading, "All In-Progress Material Requisitions:");
 });
 
@@ -99,7 +99,7 @@ document.getElementById("formGetAllInProgressMaterialRequisitionByDepartment").a
     const heading = document.getElementById("materialRequisition-getter-responseHeading");
     const table = document.getElementById("materialRequisition-getter-responseTable");
     const popup = document.getElementById("materialRequisition-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/material-requisition/get-all-inprogress-material-requisition-by-department?department=${dept}`;
+    const api = `${backendUrl}/api/material-requisition/get-all-inprogress-material-requisition-by-department?department=${dept}`;
     getOrPutFunction("GET", api, table, popup, heading, `All In-Progress Material Requisitions of ${dept}`);
 });
 
@@ -108,7 +108,7 @@ document.getElementById("formGetAllNotProcessedMaterialRequisition").addEventLis
     const heading = document.getElementById("materialRequisition-getter-responseHeading");
     const table = document.getElementById("materialRequisition-getter-responseTable");
     const popup = document.getElementById("materialRequisition-getter-popup");
-    const api = "https://holidayvilla-production.up.railway.app/api/material-requisition/get-all-not-processed-material-requisition";
+    const api = `${backendUrl}/api/material-requisition/get-all-not-processed-material-requisition`;
     getOrPutFunction("GET", api, table, popup, heading, "All Not-Processed Material Requisitions:");
 });
 
@@ -118,7 +118,7 @@ document.getElementById("formGetAllNotProcessedMaterialRequisitionByDepartment")
     const heading = document.getElementById("materialRequisition-getter-responseHeading");
     const table = document.getElementById("materialRequisition-getter-responseTable");
     const popup = document.getElementById("materialRequisition-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/material-requisition/get-all-not-processed-material-requisition-by-department?department=${dept}`;
+    const api = `${backendUrl}/api/material-requisition/get-all-not-processed-material-requisition-by-department?department=${dept}`;
     getOrPutFunction("GET", api, table, popup, heading, `All Not-Processed Material Requisitions of ${dept}`);
 });
 
@@ -127,7 +127,7 @@ document.getElementById("formGetAllCancelledMaterialRequisition").addEventListen
     const heading = document.getElementById("materialRequisition-getter-responseHeading");
     const table = document.getElementById("materialRequisition-getter-responseTable");
     const popup = document.getElementById("materialRequisition-getter-popup");
-    const api = "https://holidayvilla-production.up.railway.app/api/material-requisition/get-all-cancelled-material-requisition";
+    const api = `${backendUrl}/api/material-requisition/get-all-cancelled-material-requisition`;
     getOrPutFunction("GET", api, table, popup, heading, "All Cancelled Material Requisitions:");
 });
 
@@ -137,7 +137,7 @@ document.getElementById("formGetAllCancelledMaterialRequisitionByDepartment").ad
     const heading = document.getElementById("materialRequisition-getter-responseHeading");
     const table = document.getElementById("materialRequisition-getter-responseTable");
     const popup = document.getElementById("materialRequisition-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/material-requisition/get-all-cancelled-material-requisition-by-department?department=${dept}`;
+    const api = `${backendUrl}/api/material-requisition/get-all-cancelled-material-requisition-by-department?department=${dept}`;
     getOrPutFunction("GET", api, table, popup, heading, `All Cancelled Material Requisitions of ${dept}`);
 });
 
@@ -147,7 +147,7 @@ document.getElementById("formGetAllMaterialRequisitionByDeliveryDate").addEventL
     const heading = document.getElementById("materialRequisition-getter-responseHeading");
     const table = document.getElementById("materialRequisition-getter-responseTable");
     const popup = document.getElementById("materialRequisition-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/material-requisition/get-all-material-requisition-by-deliveryDate?date=${date}`;
+    const api = `${backendUrl}/api/material-requisition/get-all-material-requisition-by-deliveryDate?date=${date}`;
     getOrPutFunction("GET", api, table, popup, heading, `All Material Requisition Delivery Expected on ${date}`);
 });
 
@@ -158,7 +158,7 @@ document.getElementById("formGetAllMaterialRequisitionBetweenDeliveryDate").addE
     const heading = document.getElementById("materialRequisition-getter-responseHeading");
     const table = document.getElementById("materialRequisition-getter-responseTable");
     const popup = document.getElementById("materialRequisition-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/material-requisition/get-all-material-requisition-between-deliveryDate?fromDate=${from}&toDate=${to}`;
+    const api = `${backendUrl}/api/material-requisition/get-all-material-requisition-between-deliveryDate?fromDate=${from}&toDate=${to}`;
     getOrPutFunction("GET", api, table, popup, heading, `All Material Requisition Delivery Expected between ${from} and ${to}`);
 });
 
@@ -168,7 +168,7 @@ document.getElementById("formGetAllMaterialRequisitionByMaterialName").addEventL
     const heading = document.getElementById("materialRequisition-getter-responseHeading");
     const table = document.getElementById("materialRequisition-getter-responseTable");
     const popup = document.getElementById("materialRequisition-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/material-requisition/get-all-material-requisition-by-materialName?materialName=${name}`;
+    const api = `${backendUrl}/api/material-requisition/get-all-material-requisition-by-materialName?materialName=${name}`;
     getOrPutFunction("GET", api, table, popup, heading, `All Material Requisition of ${name}`);
 });
 
@@ -178,7 +178,7 @@ document.getElementById("formGetAllMaterialRequisitionByStaffEmail").addEventLis
     const heading = document.getElementById("materialRequisition-getter-responseHeading");
     const table = document.getElementById("materialRequisition-getter-responseTable");
     const popup = document.getElementById("materialRequisition-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/material-requisition/get-all-material-requisition-by-staffEmail?staffEmail=${mail}`;
+    const api = `${backendUrl}/api/material-requisition/get-all-material-requisition-by-staffEmail?staffEmail=${mail}`;
     getOrPutFunction("GET", api, table, popup, heading, "All Material Requisition requested by given staff");
 });
 
@@ -188,7 +188,7 @@ document.getElementById("formGetAllReceivedMaterialRequisitionByDepartment").add
     const heading = document.getElementById("materialRequisition-getter-responseHeading");
     const table = document.getElementById("materialRequisition-getter-responseTable");
     const popup = document.getElementById("materialRequisition-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/material-requisition/get-all-received-material-requisition-by-department?department=${dept}`;
+    const api = `${backendUrl}/api/material-requisition/get-all-received-material-requisition-by-department?department=${dept}`;
     getOrPutFunction("GET", api, table, popup, heading, `All Material Requisition requested for ${dept}`);
 });
 

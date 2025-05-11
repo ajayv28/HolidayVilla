@@ -1,4 +1,4 @@
-import { camelCaseToNormal, jsonToText, postingFunction, extractKeys, getValue, getOrPutFunction} from './common_script.js';
+import { camelCaseToNormal, jsonToText, postingFunction, extractKeys, getValue, getOrPutFunction, backendUrl} from './common_script.js';
 
 const links = document.querySelectorAll(".header a");
 
@@ -30,7 +30,7 @@ document.getElementById("formChangeBookingRoomIfPossible").addEventListener("sub
     const heading = document.getElementById("booking-getter-responseHeading");
     const table = document.getElementById("booking-getter-responseTable");
     const popup = document.getElementById("booking-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/booking/change-booking-room-ifPossible?bookingId=${id}`;
+    const api = `${backendUrl}/api/booking/change-booking-room-ifPossible?bookingId=${id}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Booking Room is changed successfully");
 });
 
@@ -40,7 +40,7 @@ document.getElementById("formCancelBookingByBookingId").addEventListener("submit
     const heading = document.getElementById("booking-getter-responseHeading");
     const table = document.getElementById("booking-getter-responseTable");
     const popup = document.getElementById("booking-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/booking/cancel-booking-by-bookingId?bookingId=${id}`;
+    const api = `${backendUrl}/api/booking/cancel-booking-by-bookingId?bookingId=${id}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Booking is cancelled successfully");
 });
 
@@ -50,7 +50,7 @@ document.getElementById("formCancelLastBookingByGuestEmail").addEventListener("s
     const heading = document.getElementById("booking-getter-responseHeading");
     const table = document.getElementById("booking-getter-responseTable");
     const popup = document.getElementById("booking-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/booking/cancel-last-booking-by-guestEmail?guestEmail=${email}`;
+    const api = `${backendUrl}/api/booking/cancel-last-booking-by-guestEmail?guestEmail=${email}`;
     getOrPutFunction("PUT", api, table, popup, heading, "Booking is cancelled successfully");
 });
 
@@ -60,7 +60,7 @@ document.getElementById("formGetBookingByBookingId").addEventListener("submit", 
     const heading = document.getElementById("booking-getter-responseHeading");
     const table = document.getElementById("booking-getter-responseTable");
     const popup = document.getElementById("booking-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/booking/get-booking-by-bookingId?bookingId=${id}`;
+    const api = `${backendUrl}/api/booking/get-booking-by-bookingId?bookingId=${id}`;
     getOrPutFunction("GET", api, table, popup, heading, "Booking Detail for given Booking ID:");
 });
 
@@ -70,7 +70,7 @@ document.getElementById("formGetAllBookingByGuestEmail").addEventListener("submi
     const heading = document.getElementById("booking-getter-responseHeading");
     const table = document.getElementById("booking-getter-responseTable");
     const popup = document.getElementById("booking-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/booking/get-all-booking-by-guestEmail?guestEmail=${mail}`;
+    const api = `${backendUrl}/api/booking/get-all-booking-by-guestEmail?guestEmail=${mail}`;
     getOrPutFunction("GET", api, table, popup, heading, "All Bookings by given Guest:");
 });
 
@@ -81,7 +81,7 @@ document.getElementById("formGetAllBookingBetweenDates").addEventListener("submi
     const heading = document.getElementById("booking-getter-responseHeading");
     const table = document.getElementById("booking-getter-responseTable");
     const popup = document.getElementById("booking-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/booking/get-all-booking-between-dates?fromDate=${from}&toDate=${to}`;
+    const api = `${backendUrl}/api/booking/get-all-booking-between-dates?fromDate=${from}&toDate=${to}`;
     getOrPutFunction("GET", api, table, popup, heading, "All Bookings between given dates:");
 });
 
@@ -91,7 +91,7 @@ document.getElementById("formGetAllBookingOccupiedOnGivenDate").addEventListener
     const heading = document.getElementById("booking-getter-responseHeading");
     const table = document.getElementById("booking-getter-responseTable");
     const popup = document.getElementById("booking-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/booking/get-all-booking-occupied-on-given-date?date=${date}`;
+    const api = `${backendUrl}/api/booking/get-all-booking-occupied-on-given-date?date=${date}`;
     getOrPutFunction("GET", api, table, popup, heading, "All Bookings on given date:");
 });
 
@@ -100,7 +100,7 @@ document.getElementById("formGetAllUpcomingArrivalBooking").addEventListener("su
     const heading = document.getElementById("booking-getter-responseHeading");
     const table = document.getElementById("booking-getter-responseTable");
     const popup = document.getElementById("booking-getter-popup");
-    const api = "https://holidayvilla-production.up.railway.app/api/booking/get-all-upcoming-arrival-booking";
+    const api = `${backendUrl}/api/booking/get-all-upcoming-arrival-booking`;
     getOrPutFunction("GET", api, table, popup, heading, "All Arrival Bookings:");
 });
 
@@ -110,7 +110,7 @@ document.getElementById("formGetAllUpcomingArrivalBookingByRoomNo").addEventList
     const heading = document.getElementById("booking-getter-responseHeading");
     const table = document.getElementById("booking-getter-responseTable");
     const popup = document.getElementById("booking-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/booking/get-all-upcoming-arrival-booking-by-roomNo?roomNo=${room}`;
+    const api = `${backendUrl}/api/booking/get-all-upcoming-arrival-booking-by-roomNo?roomNo=${room}`;
     getOrPutFunction("GET", api, table, popup, heading, "All Arrival Bookings of given Room:");
 });
 
@@ -120,7 +120,7 @@ document.getElementById("formGetAllUpcomingArrivalBookingByGuestEmail").addEvent
     const heading = document.getElementById("booking-getter-responseHeading");
     const table = document.getElementById("booking-getter-responseTable");
     const popup = document.getElementById("booking-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/booking/get-all-upcoming-arrival-booking-by-guestEmail?guestEmail=${mail}`;
+    const api = `${backendUrl}/api/booking/get-all-upcoming-arrival-booking-by-guestEmail?guestEmail=${mail}`;
     getOrPutFunction("GET", api, table, popup, heading, "All Arrival Bookings of given Guest:");
 });
 
@@ -130,7 +130,7 @@ document.getElementById("formGetAllUpcomingArrivalStayMoreThanNDays").addEventLi
     const heading = document.getElementById("booking-getter-responseHeading");
     const table = document.getElementById("booking-getter-responseTable");
     const popup = document.getElementById("booking-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/booking/get-all-upcoming-arrival-stay-more-than-n-days?n=${n}`;
+    const api = `${backendUrl}/api/booking/get-all-upcoming-arrival-stay-more-than-n-days?n=${n}`;
     getOrPutFunction("GET", api, table, popup, heading, `All Arrival Bookings staying more than ${n} days:`);
 });
 
@@ -142,7 +142,7 @@ document.getElementById("formGetAllCheckedOutBookingBetweenDates").addEventListe
     const heading = document.getElementById("booking-getter-responseHeading");
     const table = document.getElementById("booking-getter-responseTable");
     const popup = document.getElementById("booking-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/booking/get-all-checkedOut-booking-between-dates?fromDate=${from}&toDate=${to}`;
+    const api = `${backendUrl}/api/booking/get-all-checkedOut-booking-between-dates?fromDate=${from}&toDate=${to}`;
     getOrPutFunction("GET", api, table, popup, heading, "All Checked Out Bookings between given dates:");
 });
 
@@ -152,7 +152,7 @@ document.getElementById("formGetAllCheckedOutBookingByGuestEmail").addEventListe
     const heading = document.getElementById("booking-getter-responseHeading");
     const table = document.getElementById("booking-getter-responseTable");
     const popup = document.getElementById("booking-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/booking/get-all-checked_out-booking-by-guestEmail?guestEmail=${mail}`;
+    const api = `${backendUrl}/api/booking/get-all-checked_out-booking-by-guestEmail?guestEmail=${mail}`;
     getOrPutFunction("GET", api, table, popup, heading, "All Checked Out Bookings of given Guest:");
 });
 
@@ -163,7 +163,7 @@ document.getElementById("formGetAllCancelledBookingBetweenDates").addEventListen
     const heading = document.getElementById("booking-getter-responseHeading");
     const table = document.getElementById("booking-getter-responseTable");
     const popup = document.getElementById("booking-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/booking/get-all-cancelled-booking-between-dates?fromDate=${from}&toDate=${to}`;
+    const api = `${backendUrl}/api/booking/get-all-cancelled-booking-between-dates?fromDate=${from}&toDate=${to}`;
     getOrPutFunction("GET", api, table, popup, heading, "All Cancelled Bookings between given dates:");
 });
 
@@ -173,7 +173,7 @@ document.getElementById("formGetAllCancelledBookingByGuestEmail").addEventListen
     const heading = document.getElementById("booking-getter-responseHeading");
     const table = document.getElementById("booking-getter-responseTable");
     const popup = document.getElementById("booking-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/booking/get-all-cancelled-booking-by-guestEmail?guestEmail=${mail}`;
+    const api = `${backendUrl}/api/booking/get-all-cancelled-booking-by-guestEmail?guestEmail=${mail}`;
     getOrPutFunction("GET", api, table, popup, heading, "All Cancelled Bookings of given Guest:");
 });
 
