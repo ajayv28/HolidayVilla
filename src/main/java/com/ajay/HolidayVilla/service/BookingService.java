@@ -132,7 +132,7 @@ public class BookingService {
             transaction.setBooking(savedBooking);
             transactionRepository.save(transaction);
 
-            //******* send mail to HSK, FO that booking made on room******
+            //******* send mail to HSK, FO that booking made on OOS room******
             sendConfirmationMail(savedBooking, "confirmed");
 
             return BookingTransformer.bookingToBookingResponse(savedBooking);

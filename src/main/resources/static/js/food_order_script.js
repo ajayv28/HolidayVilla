@@ -1,4 +1,4 @@
-import { camelCaseToNormal, jsonToText, postingFunction, extractKeys, getValue, getOrPutFunction} from './common_script.js';
+import { camelCaseToNormal, jsonToText, postingFunction, extractKeys, getValue, getOrPutFunction, backendUrl} from './common_script.js';
 
 const links = document.querySelectorAll(".header a");
 
@@ -28,7 +28,7 @@ document.getElementById("formOrderCompensationFood").addEventListener("submit", 
     const heading = document.getElementById("food_order-posting-responseHeading");
     const message = document.getElementById("food_order-posting-responseMessage");
     const popup = document.getElementById("food_order-posting-popup");
-    postingFunction(this, "https://holidayvilla-production.up.railway.app/api/food-order/order-compensation-food", "Below is order detail", "Food order is created successfully", heading, message, popup);
+    postingFunction(this, `${backendUrl}/api/food-order/order-compensation-food`, "Below is order detail", "Food order is created successfully", heading, message, popup);
 });
 
 document.getElementById("formGetAllTodayFoodOrder").addEventListener("submit", function(event){ 
@@ -36,7 +36,7 @@ document.getElementById("formGetAllTodayFoodOrder").addEventListener("submit", f
     const heading = document.getElementById("food_order-getter-responseHeading");
     const table = document.getElementById("food_order-getter-responseTable");
     const popup = document.getElementById("food_order-getter-popup");
-    const api = "https://holidayvilla-production.up.railway.app/api/food-order/get-all-today-food-order";
+    const api = `${backendUrl}/api/food-order/get-all-today-food-order`;
     getOrPutFunction("GET", api, table, popup, heading, "All Food Orders dated Today:");
 });
 
@@ -46,7 +46,7 @@ document.getElementById("formGetFoodOrderByOrderId").addEventListener("submit", 
     const heading = document.getElementById("food_order-getter-responseHeading");
     const table = document.getElementById("food_order-getter-responseTable");
     const popup = document.getElementById("food_order-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/food-order/get-food-order-by-orderId?orderId=${id}`;
+    const api = `${backendUrl}/api/food-order/get-food-order-by-orderId?orderId=${id}`;
     getOrPutFunction("GET", api, table, popup, heading, "Food Orders detail of given Order ID:");
 });
 
@@ -56,7 +56,7 @@ document.getElementById("formGetAllFoodOrderByFoodType").addEventListener("submi
     const heading = document.getElementById("food_order-getter-responseHeading");
     const table = document.getElementById("food_order-getter-responseTable");
     const popup = document.getElementById("food_order-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/food-order/get-all-food-order-by-foodType?foodType=${type}`;
+    const api = `${backendUrl}/api/food-order/get-all-food-order-by-foodType?foodType=${type}`;
     getOrPutFunction("GET", api, table, popup, heading, "All Food Orders of given food type:");
 });
 
@@ -66,7 +66,7 @@ document.getElementById("formGetAllFoodOrderByOrderDate").addEventListener("subm
     const heading = document.getElementById("food_order-getter-responseHeading");
     const table = document.getElementById("food_order-getter-responseTable");
     const popup = document.getElementById("food_order-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/food-order/get-all-food-order-by-orderDate?date=${date}`;
+    const api = `${backendUrl}/api/food-order/get-all-food-order-by-orderDate?date=${date}`;
     getOrPutFunction("GET", api, table, popup, heading, "All Food Orders of given food type:");
 });
 
@@ -76,7 +76,7 @@ document.getElementById("formGetAllFoodOrderByOrderDate").addEventListener("subm
     const heading = document.getElementById("food_order-getter-responseHeading");
     const table = document.getElementById("food_order-getter-responseTable");
     const popup = document.getElementById("food_order-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/food-order/get-all-food-order-by-orderDate?date=${date}`;
+    const api = `${backendUrl}/api/food-order/get-all-food-order-by-orderDate?date=${date}`;
     getOrPutFunction("GET", api, table, popup, heading, "All Food Orders on given order date:");
 });
 
@@ -86,7 +86,7 @@ document.getElementById("formGetAllFoodOrderByRoomNo").addEventListener("submit"
     const heading = document.getElementById("food_order-getter-responseHeading");
     const table = document.getElementById("food_order-getter-responseTable");
     const popup = document.getElementById("food_order-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/food-order/get-all-food-order-by-roomNo?roomNo=${room}`;
+    const api = `${backendUrl}/api/food-order/get-all-food-order-by-roomNo?roomNo=${room}`;
     getOrPutFunction("GET", api, table, popup, heading, "All Food Orders on given room number:");
 });
 
@@ -96,7 +96,7 @@ document.getElementById("formGetAllFoodOrderByGuestEmail").addEventListener("sub
     const heading = document.getElementById("food_order-getter-responseHeading");
     const table = document.getElementById("food_order-getter-responseTable");
     const popup = document.getElementById("food_order-getter-popup");
-    const api = `https://holidayvilla-production.up.railway.app/api/food-order/get-all-food-order-by-guestEmail?guestEmail=${mail}`;
+    const api = `${backendUrl}/api/food-order/get-all-food-order-by-guestEmail?guestEmail=${mail}`;
     getOrPutFunction("GET", api, table, popup, heading, "All Food Orders of given Guest:");
 });
 

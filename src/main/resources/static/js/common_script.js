@@ -1,3 +1,5 @@
+export const backendUrl = "https://holidayvilla.onrender.com";
+
 // FUNCTIONS RELATED TO - POSTING & GET OR PUT FUNCTION  *************************
 
 export function camelCaseToNormal(camelCaseString) {

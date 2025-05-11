@@ -93,7 +93,7 @@
 <script>
 
     async function fetchStaffData() {
-    const response = await fetch("https://holidayvilla-production.up.railway.app/api/common/logged-in-guest-detail");
+    const response = await fetch("https://holidayvilla.onrender.com/api/common/logged-in-guest-detail");
     const data = await response.json();
     displayStaffData(data);
 }
@@ -117,7 +117,7 @@ async function setStaffName() {
 }
 
 async function staffName() {
-    const response = await fetch("https://holidayvilla-production.up.railway.app/api/common/logged-in-guest-name");
+    const response = await fetch("https://holidayvilla.onrender.com/api/common/logged-in-guest-name");
     const data = await response.text();
     return data;
 }

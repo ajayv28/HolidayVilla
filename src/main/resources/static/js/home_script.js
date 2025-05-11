@@ -1,4 +1,4 @@
-import { camelCaseToNormal, jsonToText, postingFunction, extractKeys, getValue, getOrPutFunction} from './common_script.js';
+import { camelCaseToNormal, jsonToText, postingFunction, extractKeys, getValue, getOrPutFunction, backendUrl} from './common_script.js';
 
 const links = document.querySelectorAll(".header a");
 
@@ -26,7 +26,7 @@ document.getElementById("guestRegisterForm").addEventListener("submit", function
     const heading = document.getElementById("home-posting-responseHeading");
     const message = document.getElementById("home-posting-responseMessage");
     const popup = document.getElementById("home-posting-popup");
-    postingFunction(this, "https://holidayvilla-production.up.railway.app/api/guest/register", "Below is your account detail", "Your account is created successfully", heading, message, popup);
+    postingFunction(this, `${backendUrl}/api/guest/register`, "Below is your account detail", "Your account is created successfully", heading, message, popup);
 });
 
 

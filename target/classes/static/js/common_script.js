@@ -1,34 +1,42 @@
-
-
-
-
-// FUNCTIONS RELATED TO - POSTING & GET OR PUT FUNCTION  *************************************************************************
+// FUNCTIONS RELATED TO - POSTING & GET OR PUT FUNCTION  *************************
 
 export function camelCaseToNormal(camelCaseString) {
     const result = camelCaseString.replace(/([a-z])([A-Z])/g, "$1 $2"); //to insert space between each caps
     return result.replace(/\b\w/g, char => char.toUpperCase()); //making first letter in caps
 }
 
-export function jsonToText(headerText, json, space) {
+export function jsonToText(headerText, json, space, isHTML = false) {
     let extraSpace = "";
-    for (let i = 0; i <space; i++) {
+    for (let i = 0; i < space; i++) {
         extraSpace += "."; 
     }
+    
+    // Start with the header text, and format it (whether as HTML or plain text)
     let text = `${extraSpace}${camelCaseToNormal(headerText)}\n`; 
 
+    // Iterate through the object's entries and format them
     for (const [key, value] of Object.entries(json)) {
         const formattedKey = camelCaseToNormal(key);
         if (typeof value === "object" && value !== null) {
-            text += jsonToText(formattedKey, value, space + 1);       //for nested obj
+            // Recursive call for nested objects
+            text += jsonToText(formattedKey, value, space + 1, isHTML);
         } else {
-            text += `${extraSpace} ${formattedKey}: ${value}\n`; // for normal case, Add two spaces before the key-value pair
+            // For plain key-value pairs, add them to the output text
+            text += `${extraSpace} ${formattedKey}: ${value}\n`; // Add line breaks for readability
         }
     }
-    return text; 
+
+
+    if (isHTML) {
+        text = text.replace(/\n/g, "<br>");
+    }
+
+    return text;
 }
 
 
-// FUNCTIONS RELATED TO - POSTING FUNCTION  *************************************************************************
+
+// FUNCTIONS RELATED TO - POSTING FUNCTION  *************************
 
 export async function postingFunction(thisElement, api, customMessage, headingMessage, heading, message, popup) {
     const formData = new FormData(thisElement);
@@ -50,7 +58,7 @@ export async function postingFunction(thisElement, api, customMessage, headingMe
 
         const jsonResponse = await response.json();
         heading.innerText = headingMessage;
-        message.innerText = jsonToText(customMessage, jsonResponse, 0);
+        message.innerText = jsonToText(customMessage, jsonResponse, 0, false);
         popup.style.display = "block";
                
     }catch(error){
@@ -63,7 +71,7 @@ export async function postingFunction(thisElement, api, customMessage, headingMe
 
 
 
-// FUNCTIONS RELATED TO - GET / PUT  FUNCTION    *****************************************************************
+// FUNCTIONS RELATED TO - GET / PUT  FUNCTION    ***********************
 
 
 export function extractKeys(obj, headers) {
@@ -128,34 +136,34 @@ export async function getOrPutFunction(getOrPut, api, table, popup, heading, hea
                 const value = getValue(response, header);
                 if (header.includes("guestResponse") && response.guestResponse) {
                     const guestDetails = response.guestResponse;
-                    td.textContent = jsonToText("Guest Details", guestDetails, 0);
+                    td.innerHTML = jsonToText("Guest Details", guestDetails, 0, true);
                 } else if (header.includes("roomResponse") && response.roomResponse) {
                     const roomDetails = response.roomResponse;
-                    td.textContent = jsonToText("Room Details", roomDetails, 0); 
+                    td.innerHTML = jsonToText("Room Details", roomDetails, 0, true); 
                 } else if (header.includes("bookingResponse") && response.bookingResponse) {
                     const bookingDetails = response.bookingResponse;
-                    td.textContent = jsonToText("Booking Details", bookingDetails, 0); 
+                    td.innerHTML = jsonToText("Booking Details", bookingDetails, 0, true); 
                 } else if (header.includes("couponResponse") && response.couponResponse) {
                     const couponDetails = response.couponResponse;
-                    td.textContent = jsonToText("Coupon Details", couponDetails, 0); 
+                    td.innerHTML = jsonToText("Coupon Details", couponDetails, 0, true); 
                 } else if (header.includes("foodOrderResponse") && response.foodOrderResponse) {
                     const foodOrderDetails = response.foodOrderResponse;
-                    td.textContent = jsonToText("Food Order Details", foodOrderDetails, 0); 
+                    td.innerHTML = jsonToText("Food Order Details", foodOrderDetails, 0, true); 
                 } else if (header.includes("maintenanceResponse") && response.maintenanceResponse) {
                     const maintenanceDetails = response.maintenanceResponse;
-                    td.textContent = jsonToText("Maintenance Details", maintenanceDetails, 0); 
+                    td.innerHTML = jsonToText("Maintenance Details", maintenanceDetails, 0, true); 
                 } else if (header.includes("materialResponse") && response.materialResponse) {
                     const materialDetails = response.materialResponse;
-                    td.textContent = jsonToText("Material Details", materialDetails, 0); 
+                    td.innerHTML = jsonToText("Material Details", materialDetails, 0, true); 
                 } else if (header.includes("materialRequisitionResponse") && response.materialRequisitionResponse) {
                     const materialRequisitionDetails = response.materialRequisitionResponse;
-                    td.textContent = jsonToText("Material Requisition Details", materialRequisitionDetails, 0); 
+                    td.innerHTML = jsonToText("Material Requisition Details", materialRequisitionDetails, 0, true); 
                 } else if (header.includes("staffResponse") && response.staffResponse) {
                     const staffDetails = response.staffResponse;
-                    td.textContent = jsonToText("Staff Details", staffDetails, 0); 
+                    td.innerHTML = jsonToText("Staff Details", staffDetails, 0, true); 
                 } else if (header.includes("transactionResponse") && response.transactionResponse) {
                     const transactionDetails = response.transactionResponse;
-                    td.textContent = jsonToText("Transaction Details", transactionDetails, 0); 
+                    td.innerHTML = jsonToText("Transaction Details", transactionDetails, 0, true); 
                 } else {
                     td.textContent = value !== undefined ? value : "N/A"; 
                 }
@@ -173,4 +181,3 @@ export async function getOrPutFunction(getOrPut, api, table, popup, heading, hea
         popup.style.display = "block";
     }
 }
-
